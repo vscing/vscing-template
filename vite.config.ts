@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import styleImport, { VantResolve } from 'vite-plugin-style-import'
@@ -12,5 +13,10 @@ export default defineConfig({
     styleImport({
       resolves: [VantResolve()],
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    },
+  },
 })
