@@ -1,4 +1,4 @@
-# cms
+# vue2 + element
 
 ## Project setup
 ```
