@@ -10,6 +10,7 @@ const modules = import.meta.globEager('./modules/**/*.ts');
 
 const routeModuleList: AppRouteModule[] = [];
 
+console.log('%c [ modules ]-14', 'font-size:13px; background:pink; color:#bf2c9f;', modules)
 Object.keys(modules).forEach((key) => {
   const mod = modules[key].default || {};
   const modList = Array.isArray(mod) ? [...mod] : [mod];
