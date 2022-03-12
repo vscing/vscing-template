@@ -2,16 +2,17 @@ import type { AppRouteRecordRaw } from '@/router/types';
 
 export const RootRoute: AppRouteRecordRaw = {
   path: '/',
-  name: '首页',
+  name: 'Home',
+  component: () => import('@/views/home/index.vue'),
   meta: {
-    title: 'Root',
+    title: '首页',
   },
 };
 
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
   name: 'Login',
-  component: () => import('@/views/login/index.vue'),
+  component: () => import('@/views/user/login/index.vue'),
   meta: {
     title: "登录",
   },

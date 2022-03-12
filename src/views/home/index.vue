@@ -1,11 +1,17 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+  import { Tabbar, TabbarItem } from 'vant';
+  import { Button } from 'vant';
 </script>
 
 <template>
   <h1>home</h1>
   <h2>index</h2>
+  <Tabbar v-model="active">
+    <TabbarItem icon="home-o">标签</TabbarItem>
+    <TabbarItem icon="search" dot>标签</TabbarItem>
+    <TabbarItem icon="friends-o" badge="5">标签</TabbarItem>
+    <TabbarItem icon="setting-o" badge="20">标签</TabbarItem>
+  </Tabbar>
 </template>
 
 <style lang="less">

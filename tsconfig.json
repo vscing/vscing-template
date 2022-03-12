@@ -3,13 +3,13 @@
   "compileOnSave": true, // 用于 IDE 保存时是否生成编译后的文件
   // 设置编译的选项
   "compilerOptions": {
-    "target": "esnext",                           // 目标语言的版本
+    "target": "esnext",                        // 目标语言的版本
     "module": "esnext",                        // 生成代码的模块标准
     "moduleResolution": "node",                // 模块解析策略
     "strict": true,                            // 开启所有严格的类型检查
     "forceConsistentCasingInFileNames": true,  // 强制文件名保持一致
     "allowSyntheticDefaultImports": true,      // 允许合成默认导入
-    "strictFunctionTypes": true,              // 严格函数类型
+    "strictFunctionTypes": true,               // 严格函数类型
     "lib": [
       "dom",
       "dom.iterable",
@@ -29,10 +29,6 @@
     "types": [
       "vite/client"
     ],                  // , "jest"
-    "typeRoots": [
-      "./node_modules/@types", 
-      "types"
-    ],
     "noImplicitAny": false,                    // 类型推断错误
     "skipLibCheck": true,                      // 声明文件的类型检查
     "paths": {                                 // 路径设置
@@ -40,18 +36,19 @@
     }                                       
   },
   // 用于表示 ts 排除的文件
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"],
   // 用于表示 ts 管理的文件
   "include": [
+    "tests/**/*.ts",
     "src/**/*.ts",
+    "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "src", 
-    "build"
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "mock/**/*.ts",
+    "vite.config.ts"
   ],
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }
 
