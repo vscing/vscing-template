@@ -1,18 +1,27 @@
 <script setup lang="ts">
-  import { Tabbar, TabbarItem } from 'vant';
-  import { Button } from 'vant';
+  import { reactive } from 'vue';
+  import { Swipe as VanSwipe, SwipeItem as VanSwipeItem } from 'vant';
+  import { TabList } from '@/components/TabList';
+
+  const images = reactive<string[]>([
+    'https://img.yzcdn.cn/vant/apple-1.jpg',
+    'https://img.yzcdn.cn/vant/apple-2.jpg'
+  ])
 </script>
 
 <template>
-  <h1>home</h1>
-  <h2>index</h2>
-  <Tabbar v-model="active">
-    <TabbarItem icon="home-o">标签</TabbarItem>
-    <TabbarItem icon="search" dot>标签</TabbarItem>
-    <TabbarItem icon="friends-o" badge="5">标签</TabbarItem>
-    <TabbarItem icon="setting-o" badge="20">标签</TabbarItem>
-  </Tabbar>
+  <VanSwipe :autoplay="3000" lazy-render indicator-color="#040404">
+    <VanSwipeItem v-for="image in images" :key="image">
+      <img :src="image" />
+    </VanSwipeItem>
+  </VanSwipe>
+  <TabList />
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
+  ::v-deep.van-swipe {
+    margin: 10px;
+    background-color: #ffffff;
+    border-radius: 4px;
+  }
 </style>
