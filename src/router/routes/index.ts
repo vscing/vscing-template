@@ -9,6 +9,17 @@ export const RootRoute: AppRouteRecordRaw = {
   },
 };
 
+export const MainRoute: AppRouteRecordRaw[] = [
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import('@/views/user/index.vue'),
+    meta: {
+      title: '我的',
+    },
+  }
+]
+
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
   name: 'Login',
@@ -21,5 +32,6 @@ export const LoginRoute: AppRouteRecordRaw = {
 // Basic routing without permission
 export const basicRoutes = [
   LoginRoute,
-  RootRoute
+  RootRoute,
+  ...MainRoute
 ];

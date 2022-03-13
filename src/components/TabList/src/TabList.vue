@@ -7,10 +7,10 @@ const active = ref<number>(0);
 </script>
 
 <template>
-  <Tabbar v-model="active" active-color="#040404" inactive-color="#bfbfbf">
-    <TabbarItem icon="home-o">首页</TabbarItem>
+  <Tabbar v-model="active" route active-color="#040404" inactive-color="#bfbfbf">
+    <TabbarItem replace to="/" icon="home-o">首页</TabbarItem>
     <TabbarItem icon="bag-o">市场</TabbarItem>
-    <TabbarItem icon="friends-o">我的</TabbarItem>
+    <TabbarItem replace to="/user" icon="friends-o">我的</TabbarItem>
   </Tabbar>
 </template>
 
