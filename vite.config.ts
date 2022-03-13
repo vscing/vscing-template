@@ -72,7 +72,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
     css: {
       preprocessorOptions: {
-        less: {},
+        less: {
+          charset: false,
+          additionalData: '@import "./src/assets/style/global.less";',
+        },
       },
     },
 

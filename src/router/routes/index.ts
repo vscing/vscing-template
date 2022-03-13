@@ -11,6 +11,14 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/goods',
+    name: 'goods',
+    component: () => import('@/views/goods/index.vue'),
+    meta: {
+      title: '市场',
+    },
+  },
+  {
     path: '/user',
     name: 'User',
     component: () => import('@/views/user/index.vue'),

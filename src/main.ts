@@ -11,6 +11,7 @@ import { setupRouterGuard } from '@/router/guard';
 import { setupStore } from '@/store';
 import { setupGlobDirectives } from '@/directives';
 import { registerGlobComp } from '@/components/registerGlobComp';
+import { Lazyload } from 'vant';
 
 async function bootstrap() {
   // vue实例
@@ -33,6 +34,12 @@ async function bootstrap() {
 
   // Configure global error handling
   setupErrorHandle(app);
+
+  // 懒加载
+  app.use(Lazyload, {
+    loading: new URL('./assets/images/loading.png', import.meta.url).href, // 图片加载时默认图片
+    error: new URL('./assets/images/error.png', import.meta.url).href// 图片加载失败时默认图片
+  });
 
   // 挂载
   app.mount('#app');

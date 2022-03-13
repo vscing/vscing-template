@@ -6034,7 +6034,7 @@ kolorist@^1.5.1:
 
 less@^4.1.2:
   version "4.1.2"
-  resolved "https://registry.npmmirror.com/less/-/less-4.1.2.tgz"
+  resolved "https://registry.npmmirror.com/less/-/less-4.1.2.tgz#6099ee584999750c2624b65f80145f8674e4b4b0"
   integrity sha512-EoQp/Et7OSOVu0aJknJOtlXZsnr8XE8KwuzTHOLeVSEx8pVWUICc8Q0VYRHgzyjX78nMEyC/oztWFbgyhtNfDA==
   dependencies:
     copy-anything "^2.0.1"
