@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
+  import { useRouter } from 'vue-router';
   import {
     Icon as VantIcon,
     Search as VantSearch,
@@ -17,6 +18,13 @@
     'https://nft.ysxqfeicui.com/banner.png',
     'https://nft.ysxqfeicui.com/banner.png'
   ])
+
+  const router = useRouter();
+
+  const onDetail = () => {
+    router.push('/goods/detail')
+  }
+
 </script>
 
 <template>
@@ -41,7 +49,7 @@
   <div class="product">
     <h2>产品发售</h2>
     <ul class="product-sell-box">
-      <li class="product-sell-item">
+      <li class="product-sell-item" @click="onDetail">
         <VantImage
           :src="`https://nft.ysxqfeicui.com/banner.png`"
           fit="cover"
@@ -49,11 +57,7 @@
           :radius="4"
           :show-loading="false"
           :show-error="false"
-        >
-          <template v-slot:loading>
-            <VantLoading type="spinner" size="20" />
-          </template>
-        </VantImage>
+        />
         <div class="product-item-info">
           <div class="product-title-box">
             <h2>唐 门神</h2>
@@ -76,7 +80,7 @@
   <div class="product">
     <h2>产品展示</h2>
     <ul class="product-list">
-      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item">
+      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
         <VantImage 
           class="product-item-img"
           :src="`https://nft.ysxqfeicui.com/banner.png?v=${item}`"
