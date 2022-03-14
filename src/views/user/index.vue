@@ -8,6 +8,9 @@ const router = useRouter();
 const onDistribut = () => {
   router.push('/distribut')  
 }
+const onSetup = () => {
+  router.push('/setup')  
+}
 </script>
 
 <template>
@@ -16,7 +19,7 @@ const onDistribut = () => {
       <div class="header-box-icon">
         <VantIcon name="scan" size="25" />
       </div>
-      <div class="header-box-icon">
+      <div class="header-box-icon" @click="onSetup">
         <VantIcon name="setting-o" size="25" />
       </div>
     </div>

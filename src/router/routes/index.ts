@@ -35,6 +35,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/setup',
+    name: 'Setup',
+    component: () => import('@/views/user/setup/index.vue'),
+    meta: {
+      title: '设置',
+    },
+  },
+  {
     path: '/distribut',
     name: 'Distribut',
     component: () => import('@/views/user/distribut/index.vue'),
