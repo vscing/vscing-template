@@ -20,10 +20,10 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
     </div>
 
     <div class="dashboard">
-      <div class="dashboard-item">
+      <!-- <div class="dashboard-item">
         <VantIcon name="service-o" size="20" />
         <span>客服电话</span>
-      </div>
+      </div> -->
       <!-- <div class="dashboard-item">
         <VantIcon name="chat-o" size="20" />
         <span>客服微信</span>
@@ -37,9 +37,17 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
         <span>任务清单</span>
       </div>
       <div class="dashboard-item">
+        <VantIcon name="balance-pay" size="25" />
+        <span>支付管理</span>
+      </div>
+      <div class="dashboard-item">
+        <VantIcon name="share-o" size="25" />
+        <span>赠予管理</span>
+      </div>
+      <!-- <div class="dashboard-item">
         <VantIcon name="shop-collect-o" size="20" />
         <span>个人藏品</span>
-      </div>
+      </div> -->
     </div>
 
     <div class="dashboard2">
@@ -55,8 +63,8 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
       </div>
       <div class="dashboard2-item">
         <div class="dashboard2-item-left">
-          <VantIcon name="balance-o" size="20" color="#333" />
-          <span>个人余额</span>
+          <VantIcon name="goods-collect-o" size="20" color="#333" />
+          <span>锁藏品</span>
         </div>
         <div class="dashboard2-item-right">
           <span>0</span>
@@ -65,7 +73,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
       </div>
       <div class="dashboard2-item">
         <div class="dashboard2-item-left">
-          <VantIcon name="paid" size="20" color="#333" />
+          <VantIcon name="after-sale" size="20" color="#333" />
           <span>产品合成</span>
         </div>
         <div class="dashboard2-item-right">
@@ -75,8 +83,8 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
       </div>
       <div class="dashboard2-item">
         <div class="dashboard2-item-left">
-          <VantIcon name="goods-collect-o" size="20" color="#333" />
-          <span>锁藏品</span>
+          <VantIcon name="balance-o" size="20" color="#333" />
+          <span>个人余额</span>
         </div>
         <div class="dashboard2-item-right">
           <span>0</span>
