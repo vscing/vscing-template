@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { DropdownMenu, DropdownItem, List as VantList, Image as VantImage } from 'vant';
+  import { DropdownMenu, DropdownItem, List as VantList, Image as VantImage, Icon as VantIcon } from 'vant';
   import { TabList } from '@/components/TabList';
+  import { useRouter } from 'vue-router';
 
   const timeVal = ref<number>(0);
   const priceVal = ref<number>(0);
@@ -18,6 +19,12 @@
     { text: '价格升序', value: 1 },
     { text: '价格降序', value: 2 },
   ];
+
+  const router = useRouter();
+
+  const onDetail = () => {
+    router.push('/goods/detail')
+  }
 
   const onLoad = () => {}
 
@@ -36,7 +43,7 @@
     @load="onLoad"
   >
     <ul class="product-list">
-      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item">
+      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
         <VantImage 
           class="product-item-img"
           :src="`https://nft.ysxqfeicui.com/banner.png?v=${item}`"

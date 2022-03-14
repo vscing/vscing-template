@@ -62,7 +62,7 @@
           <div class="product-title-box">
             <h2>唐 门神</h2>
             <p class="product-item-price">
-              <span>产品数量</span>
+              <span>产品数量：</span>
               <span>3500份</span>
             </p>
           </div>

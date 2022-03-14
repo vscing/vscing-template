@@ -1,157 +1,323 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { ref, reactive } from 'vue';
 import { TabList } from '@/components/TabList';
-import { Image, Icon } from 'vant';
-    const username = ref('');
-    const password = ref(0);
-    //登陆页面
-    const onSubmit = () => {
-    }
-
-    //注册页面
-    const toRegister = () => {
-
-    }
-
+import { Image as VantImage, Icon as VantIcon } from 'vant';
 </script>
 
 <template>
-  <div class="containner-user">
-    <div class="views-icon">
-      <div class="views-icon-first">
-          <Icon name="scan" size="25" />
+  <div class="user-box">
+    <div class="header-box">
+      <div class="header-box-icon">
+        <VantIcon name="scan" size="25" />
       </div>
-      <div class="views-icon-last">
-          <Icon name="setting-o" size="25" />
-      </div> 
+      <div class="header-box-icon">
+        <VantIcon name="setting-o" size="25" />
+      </div>
     </div>
-    <div class="views-user">
-      <Image width="70" height="70" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+
+    <div class="user-info">
+      <VantImage round width="70" height="70" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
       <span>无涯手套7T9D1</span>
     </div>
-    <div class="order-status">
-        <div class="order-desc">
-            <Icon name="service-o" size="20" />
-            <span>客服电话</span>
-        </div>
-        <div class="order-desc">
-            <Icon name="chat-o" size="20" />
-            <span>客服微信</span>
-        </div>
-        <div class="order-desc">
-            <Icon name="friends-o" size="20" />
-            <span>需求合作</span>
-        </div>
-        <div class="order-desc">
-            <Icon name="shop-collect-o" size="20" />
-            <span>个人藏品</span>
-        </div>
+
+    <div class="dashboard">
+      <div class="dashboard-item">
+        <VantIcon name="service-o" size="20" />
+        <span>客服电话</span>
+      </div>
+      <div class="dashboard-item">
+        <VantIcon name="chat-o" size="20" />
+        <span>客服微信</span>
+      </div>
+      <div class="dashboard-item">
+        <VantIcon name="friends-o" size="20" />
+        <span>需求合作</span>
+      </div>
+      <div class="dashboard-item">
+        <VantIcon name="shop-collect-o" size="20" />
+        <span>个人藏品</span>
+      </div>
     </div>
-    <div class="views-moneny">
-        <div class="views-moneny-sum">
-            <div class="views-moneny-amount">
-              <Icon name="star-o" size="20" color="#333"/>
-              <span>收藏</span>
-            </div>
-            <div class="views-moneny-button">
-              <span>0</span>
-              <Icon name="arrow" size="10" />
-            </div>
+
+    <div class="dashboard2">
+      <div class="dashboard2-item">
+        <div class="dashboard2-item-left">
+          <VantIcon name="star-o" size="20" color="#333" />
+          <span>收藏</span>
         </div>
-        <div class="views-moneny-sum">
-            <div class="views-moneny-amount">
-              <Icon name="balance-o" size="18" color="#333" />
-              <span>个人余额</span>
-            </div>
-            <div class="views-moneny-button">
-              <span>0</span>
-              <Icon name="arrow" size="10" />
-            </div>
-        </div>
-        <div class="views-moneny-sum">
-            <div class="views-moneny-amount">
-              <Icon name="paid" size="18" color="#333" />
-              <span>产品合成</span>
-            </div>
-            <div class="views-moneny-button">
-              <span>0</span>
-              <Icon name="arrow" size="10" />
-            </div>
-        </div>
-        <div class="views-moneny-sum">
-            <div class="views-moneny-amount">
-              <Icon name="goods-collect-o" size="18" color="#333" />
-              <span>锁藏品</span>
-            </div>
-            <div class="views-moneny-button">
-              <span>0</span>
-              <Icon name="arrow" size="10" />
-            </div>
-        </div>
-    </div>
-    <div class="views-order">
-        <div class="views-order-amount">
-          <span>我的订单</span>
-        </div>
-        <div class="views-order-button">
+        <div class="dashboard2-item-right">
           <span>0</span>
-          <Icon name="arrow" size="10" />
+          <VantIcon name="arrow" size="16" color="#00000059" />
         </div>
+      </div>
+      <div class="dashboard2-item">
+        <div class="dashboard2-item-left">
+          <VantIcon name="balance-o" size="20" color="#333" />
+          <span>个人余额</span>
+        </div>
+        <div class="dashboard2-item-right">
+          <span>0</span>
+          <VantIcon name="arrow" size="16" color="#00000059" />
+        </div>
+      </div>
+      <div class="dashboard2-item">
+        <div class="dashboard2-item-left">
+          <VantIcon name="paid" size="20" color="#333" />
+          <span>产品合成</span>
+        </div>
+        <div class="dashboard2-item-right">
+          <span>0</span>
+          <VantIcon name="arrow" size="16" color="#00000059" />
+        </div>
+      </div>
+      <div class="dashboard2-item">
+        <div class="dashboard2-item-left">
+          <VantIcon name="goods-collect-o" size="20" color="#333" />
+          <span>锁藏品</span>
+        </div>
+        <div class="dashboard2-item-right">
+          <span>0</span>
+          <VantIcon name="arrow" size="16" color="#00000059" />
+        </div>
+      </div>
+    </div>
+
+    <div class="views-order">
+      <div class="views-order-amount">
+        我的订单
+      </div>
+      <div class="views-order-button">
+        <span>0</span>
+        <VantIcon name="arrow" size="10" />
+      </div>
     </div>
     <div class="order-status">
-        <div class="order-desc">
-            <Icon name="credit-pay" size="20" />
-            <span>待付款</span>
-        </div>
-        <div class="order-desc">
-            <Icon name="peer-pay" size="20" />
-            <span>待发货</span>
-        </div>
-        <div class="order-desc">
-            <Icon name="logistics" size="20" />
-            <span>待收货</span>
-        </div>
-        <div class="order-desc">
-            <Icon name="cash-back-record" size="20" />
-            <span>退款售后</span>
-        </div>
+      <div class="order-desc">
+        <VantIcon name="cart-o" size="20" />
+        <span>我买到的</span>
+      </div>
+      <div class="order-desc">
+        <VantIcon name="guide-o" size="20" />
+        <span>我发布的</span>
+      </div>
+      <div class="order-desc">
+        <VantIcon name="cash-back-record" size="20" />
+        <span>我卖出的</span>
+      </div>
     </div>
+
     <div class="views-distribution">
-        <div class="views-distribution-sum">
-            <div class="views-distribution-amount">
-              <div class="views-distribution-desc">
-                    <Icon name="cluster-o" size="20" color="#333"/>
-                    <span>分销</span>
-              </div>
-              <div class="views-distribution-title">
-                    <span>邀请好友领奖励</span>
-              </div>
-            </div>
-            <div class="views-distribution-button">
-              <Icon name="arrow" size="10" />
-            </div>
+      <div class="views-distribution-sum">
+        <div class="views-distribution-amount">
+          <div class="views-distribution-desc">
+            <VantIcon name="cluster-o" size="20" color="#333" />
+            <span>分销</span>
+          </div>
+          <div class="views-distribution-title">
+            <span>邀请好友领奖励</span>
+          </div>
         </div>
-        <div class="views-distribution-sum">
-            <div class="views-distribution-amount">
-                <div class="views-distribution-desc">
-                    <Icon name="shop-o" size="18" color="#333" />
-                    <span>商品出售</span>
-                </div>
-                <div class="views-distribution-title">
-                    <span>商品售卖价格</span>
-                </div>
-            </div>
-            <div class="views-distribution-button">
-              <Icon name="arrow" size="10" />
-            </div>
+        <div class="views-distribution-button">
+          <VantIcon name="arrow" size="10" />
         </div>
-    </div>>
+      </div>
+      <div class="views-distribution-sum views-distribution-right">
+        <div class="views-distribution-amount">
+          <div class="views-distribution-desc">
+            <VantIcon name="shop-o" size="18" color="#333" />
+            <span>商品出售</span>
+          </div>
+          <div class="views-distribution-title">
+            <span>商品售卖价格</span>
+          </div>
+        </div>
+        <div class="views-distribution-button">
+          <VantIcon name="arrow" size="10" />
+        </div>
+      </div>
+    </div>
   </div>
   <TabList />
 </template>
 
-<style lang="less">
-@import url('./index.less');
+<style lang="less" scoped>
+.user-box {
+  font-size: 14px;
+  font-weight: 500px;
+}
+.header-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  position: fixed;
+  top: env(safe-area-inset-top);
+  top: constant(safe-area-inset-top);
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  .header-box-icon {
+    display: flex;
+    align-items: center;
+  }
+}
+.user-info {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  span {
+    padding-left: 10px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.dashboard {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px;
+  .dashboard-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > span {
+      margin-top: 5px;
+    }
+  }
+}
+.dashboard2 {
+  display: flex;
+  flex-flow: row wrap;
+  background-color: #fff;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  .dashboard2-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(50% - 10px);
+    &:nth-child(2n) {
+      margin-left: 20px;
+    }
+    & > div {
+      display: flex;
+      align-items: center;
+      & > span {
+        margin-right: 5px;
+        line-height: 20px;
+      }
+    }
+    .dashboard2-item-left {
+      & > span {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+.views-order {
+  background-color: #fff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  .views-order-amount {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    height: 24px;
+    color: #000;
+  }
+  .views-order-button {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    span {
+      font-size: 14px;
+      line-height: 20px;
+      height: 20px;
+      padding-right: 5px;
+    }
+  }
+}
+.order-status {
+  display: flex;
+  background-color: #fff;
+  padding: 5px 10px 15px;
+  margin-bottom: 10px;
+  .order-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    .van-icon {
+      display: flex;
+      justify-content: center;
+      color: #333;
+    }
+    span {
+      display: flex;
+      justify-content: center;
+      color: #999;
+      font-size: 0.55rem;
+      padding-top: 5px;
+    }
+  }
+}
+.views-distribution {
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px;
+  .views-distribution-sum {
+    display: flex;
+    width: 50%;
+    padding-left: 10px;
+    .views-distribution-amount {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .views-distribution-desc {
+        span {
+          font-weight: 500;
+          color: #333;
+          font-size: 14px;
+          line-height: 24px;
+        }
+      }
+      .views-distribution-title {
+        span {
+          font-weight: 400;
+          color: #999;
+          font-size: 12px;
+          line-height: 20px;
+        }
+      }
+    }
+    .views-distribution-button {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      span {
+        font-weight: 400;
+        font-size: 12px;
+      }
+    }
+  }
+  .views-distribution-right {
+    border-left: 1px solid #eaeaea;
+  }
+}
 </style>

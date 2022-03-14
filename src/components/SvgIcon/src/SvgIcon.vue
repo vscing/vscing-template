@@ -3,10 +3,10 @@
   import { computed, withDefaults, defineProps } from 'vue';
 
   interface Props{
-    prefix?: string,
-    color?: string,
-    name: string,
-    size?: number | string,
+    prefix?: string
+    color?: string
+    name: string
+    size?: number | string
     spin?: boolean
   }
   const props = withDefaults(defineProps<Props>(),{
