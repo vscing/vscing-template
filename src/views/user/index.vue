@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
 import { Image as VantImage, Icon as VantIcon } from 'vant';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const onDistribut = () => {
+  router.push('/distribut')  
+}
 </script>
 
 <template>
@@ -116,7 +123,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
             <span>邀请好友领奖励</span>
           </div>
         </div>
-        <div class="views-distribution-button">
+        <div class="views-distribution-button" @click="onDistribut">
           <VantIcon name="arrow" size="10" />
         </div>
       </div>
@@ -201,7 +208,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
   margin-bottom: 10px;
   width: 100%;
   .dashboard2-item {
-    padding: 10px;
+    padding: 15px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
