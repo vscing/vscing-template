@@ -24,13 +24,17 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
         <VantIcon name="service-o" size="20" />
         <span>客服电话</span>
       </div>
-      <div class="dashboard-item">
+      <!-- <div class="dashboard-item">
         <VantIcon name="chat-o" size="20" />
         <span>客服微信</span>
-      </div>
+      </div> -->
       <div class="dashboard-item">
         <VantIcon name="friends-o" size="20" />
         <span>需求合作</span>
+      </div>
+      <div class="dashboard-item">
+        <VantIcon name="notes-o" size="25" />
+        <span>任务清单</span>
       </div>
       <div class="dashboard-item">
         <VantIcon name="shop-collect-o" size="20" />
@@ -201,7 +205,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
   margin-bottom: 10px;
   width: 100%;
   .dashboard2-item {
-    padding: 10px;
+    padding: 15px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
