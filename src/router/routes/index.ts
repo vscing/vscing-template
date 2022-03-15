@@ -50,6 +50,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '任务清单',
     },
   },
+  {
+    path: '/job/add',
+    name: 'JobForm',
+    component: () => import('@/views/user/job/form/index.vue'),
+    meta: {
+      title: '新增任务清单',
+    },
+  },
   // {
   //   path: '/setup',
   //   name: 'Setup',

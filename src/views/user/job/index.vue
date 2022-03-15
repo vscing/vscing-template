@@ -1,17 +1,23 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
   import { List as VantList, Search as VantSearch, Icon as VantIcon } from 'vant';
 
   const loading = ref<boolean>(false);
   const finished = ref<boolean>(false);
 
   const onLoad = () => {}
+
+  const router = useRouter();
+  const add = () => {
+    router.push('/job/add')
+  }
 </script>
 
 <template>
   <div>
     <VantSearch/>
-    <VantIcon name="add-o" />
+    <VantIcon name="add-o" @click="add"/>
   </div>
 
   <VantList
