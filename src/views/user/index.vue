@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
 import { Image as VantImage, Icon as VantIcon } from 'vant';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const onDistribut = () => {
+  router.push('/distribut')  
+}
+const onSetup = () => {
+  router.push('/setup')  
+}
 </script>
 
 <template>
@@ -9,7 +19,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
       <div class="header-box-icon">
         <VantIcon name="scan" size="25" />
       </div>
-      <div class="header-box-icon">
+      <div class="header-box-icon" @click="onSetup">
         <VantIcon name="setting-o" size="25" />
       </div>
     </div>
@@ -128,7 +138,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
             <span>邀请好友领奖励</span>
           </div>
         </div>
-        <div class="views-distribution-button">
+        <div class="views-distribution-button" @click="onDistribut">
           <VantIcon name="arrow" size="10" />
         </div>
       </div>
