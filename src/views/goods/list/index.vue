@@ -56,7 +56,7 @@
         <div class="product-item-info">
           <h2>唐 门神</h2>
           <p>******</p>
-          <p>
+          <p class="product-item-price">
             <span>￥150</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
@@ -95,10 +95,13 @@
         color: #5a5f6d;
         font-size: 14px;
         font-weight: 300;
+        .product-item-price {
+          font-weight: 500;
+        }
         & > h2 {
           color: #000000;
           font-size: 16px;
-          font-weight: 500;
+          font-weight: 600;
           margin-bottom: 10px;
         }
         & > p {

@@ -15,8 +15,8 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
     </div>
 
     <div class="user-info">
-      <VantImage round width="70" height="70" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
-      <span>无涯手套7T9D1</span>
+      <VantImage round width="70" height="70" src="https://pic3.zhimg.com/v2-4b647d2db75f90ecc3dc8390659a9a6a_is.jpg?source=32738c0c" />
+      <span>聚宝阁-00001</span>
     </div>
 
     <div class="dashboard">
@@ -281,8 +281,7 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
     span {
       display: flex;
       justify-content: center;
-      color: #999;
-      font-size: 0.55rem;
+      font-size: 14px;
       padding-top: 5px;
     }
   }

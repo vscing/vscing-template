@@ -69,8 +69,8 @@
           <p class="product-item-time">发售时间：<span>2022-03-10 08:00:00</span></p>
           <p class="product-item-desc">简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊</p>
           <p class="btn-list">
-            <VantButton size="mini" color="#393742">VIP提前预购</VantButton>
-            <VantButton size="mini" color="#01c2c3">限时抢购</VantButton>
+            <VantButton color="#393742">VIP提前预购</VantButton>
+            <VantButton color="#01c2c3">限时抢购</VantButton>
           </p>
         </div>
       </li>
@@ -93,7 +93,7 @@
         <div class="product-item-info">
           <h2>唐 门神</h2>
           <p>******</p>
-          <p>
+          <p class="product-item-price">
             <span>￥150</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
@@ -120,6 +120,9 @@
     }
     :deep(.van-search) {
       flex: 1;
+      .van-cell {
+        background-color: var(--van-search-content-background-color);
+      }
     }
   }
   .swiper-img {
@@ -157,7 +160,7 @@
             & > h2 {
               color: #000000;
               font-size: 16px;
-              font-weight: 500;
+              font-weight: 600;
             }
           }
           & > p {
@@ -165,6 +168,7 @@
           }
           .product-item-price {
             color: #000000; 
+            font-weight: 500;
           }
           .product-item-desc {
             .ellipsis(2);
@@ -201,10 +205,13 @@
           color: #5a5f6d;
           font-size: 14px;
           font-weight: 300;
+          .product-item-price {
+            font-weight: 500;
+          }
           & > h2 {
             color: #000000;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 10px;
           }
           & > p {

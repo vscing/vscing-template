@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build:tsc": "vue-tsc --noEmit && vite build",
+    "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "@vueuse/shared": "^8.0.0",
     "axios": "^0.26.0",
     "dayjs": "^1.10.8",
+    "echarts": "^5.3.1",
     "mockjs": "^1.1.0",
     "pinia": "^2.0.11",
     "qs": "^6.10.3",
