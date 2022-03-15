@@ -4,13 +4,10 @@ import { Image as VantImage, Icon as VantIcon } from 'vant';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const goTo = (path: string) => {
+  router.push(path)
+}
 
-const onDistribut = () => {
-  router.push('/distribut')  
-}
-const onSetup = () => {
-  router.push('/setup')  
-}
 </script>
 
 <template>
@@ -19,7 +16,7 @@ const onSetup = () => {
       <div class="header-box-icon">
         <VantIcon name="scan" size="25" />
       </div>
-      <div class="header-box-icon" @click="onSetup">
+      <div class="header-box-icon" @click="goTo('/setup')">
         <VantIcon name="setting-o" size="25" />
       </div>
     </div>
@@ -38,20 +35,20 @@ const onSetup = () => {
         <VantIcon name="chat-o" size="20" />
         <span>客服微信</span>
       </div> -->
-      <div class="dashboard-item">
+      <div class="dashboard-item" @click="goTo('/about')">
         <VantIcon name="friends-o" size="20" />
         <span>需求合作</span>
       </div>
-      <div class="dashboard-item">
-        <VantIcon name="notes-o" size="25" />
+      <div class="dashboard-item" @click="goTo('/job')">
+        <VantIcon name="notes-o" size="20" />
         <span>任务清单</span>
       </div>
       <div class="dashboard-item">
-        <VantIcon name="balance-pay" size="25" />
+        <VantIcon name="balance-pay" size="20" />
         <span>支付管理</span>
       </div>
       <div class="dashboard-item">
-        <VantIcon name="share-o" size="25" />
+        <VantIcon name="share-o" size="20" />
         <span>赠予管理</span>
       </div>
       <!-- <div class="dashboard-item">
@@ -138,7 +135,7 @@ const onSetup = () => {
             <span>邀请好友领奖励</span>
           </div>
         </div>
-        <div class="views-distribution-button" @click="onDistribut">
+        <div class="views-distribution-button" @click="goTo('/distribut')">
           <VantIcon name="arrow" size="10" />
         </div>
       </div>
@@ -219,7 +216,6 @@ const onSetup = () => {
   display: flex;
   flex-flow: row wrap;
   background-color: #fff;
-  padding: 0 10px;
   margin-bottom: 10px;
   width: 100%;
   .dashboard2-item {
@@ -305,7 +301,7 @@ const onSetup = () => {
   .views-distribution-sum {
     display: flex;
     width: 50%;
-    padding-left: 10px;
+    padding-right: 10px;
     .views-distribution-amount {
       flex: 1;
       display: flex;
@@ -330,7 +326,6 @@ const onSetup = () => {
     .views-distribution-button {
       display: flex;
       align-items: center;
-      margin-right: 10px;
       span {
         font-weight: 400;
         font-size: 12px;
@@ -339,6 +334,8 @@ const onSetup = () => {
   }
   .views-distribution-right {
     border-left: 1px solid #eaeaea;
+    padding-left: 10px;
+    padding-right: 0;
   }
 }
 </style>

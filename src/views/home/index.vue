@@ -49,11 +49,12 @@
   <div class="product">
     <h2>产品发售</h2>
     <ul class="product-sell-box">
-      <li class="product-sell-item" @click="onDetail">
+      <li class="product-sell-item" v-for="item in [1,2,3,4]" :key="item" @click="onDetail">
         <VantImage
-          :src="`https://nft.ysxqfeicui.com/banner.png`"
+          :src="`https://source.theone.art/watermarkResize/eb92c60ef6173ee4abc507185d3fe9d7/92898b7dfd077feb141766351378657e-16443987121450.25.gif`"
           fit="cover"
           lazy-load
+          width="100%"
           :radius="4"
           :show-loading="false"
           :show-error="false"
@@ -77,7 +78,7 @@
     </ul>
   </div>
 
-  <div class="product">
+  <!-- <div class="product">
     <h2>产品展示</h2>
     <ul class="product-list">
       <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
@@ -103,7 +104,7 @@
         </div>
       </li>
     </ul>
-  </div>
+  </div> -->
 
   <TabList />
 </template>
@@ -148,6 +149,7 @@
         background-color: #ffffff;
         padding: 10px;
         box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
+        margin-bottom: 20px;
         .product-item-info {
           margin-top: 10px;
           color: #5a5f6d;

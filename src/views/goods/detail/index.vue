@@ -24,8 +24,10 @@
     safe-area-inset-top
   />
 
-  <VantImage width="100%" height="auto" src="https://nft.ysxqfeicui.com/banner.png" />
-
+  <div class="image-box">
+    <VantImage width="100%" height="auto" src="https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg" />
+  </div>
+  
   <div class="config-box">
     <h2>唐 门神</h2>
     <div class="price-box">
@@ -101,12 +103,21 @@
 <style lang="less" scoped>
   .nav-bar {
     width: 100%;
+    position: fixed;
+    top: env(safe-area-inset-top);
+    top: constant(safe-area-inset-top);
+    left: 0;
+    width: 100%;
+    z-index: 9999;
     :deep(.van-icon) {
       color: #000000;
     }
     :deep(.van-nav-bar__title) {
       color: #000000;
     }
+  }
+  .image-box {
+    margin-top: var(--van-nav-bar-height);
   }
   .config-box {
     padding: 10px;

@@ -31,7 +31,11 @@
 </script>
 
 <template>
-  <DropdownMenu active-color="#01c2c3">
+  <DropdownMenu
+    class="screen-box"
+    :z-index="9999"
+    active-color="#01c2c3"
+  >
     <DropdownItem v-model="timeVal" :options="option1" />
     <DropdownItem v-model="priceVal" :options="option2" />
   </DropdownMenu>
@@ -46,9 +50,10 @@
       <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
         <VantImage 
           class="product-item-img"
-          :src="`https://nft.ysxqfeicui.com/banner.png?v=${item}`"
+          :src="`https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=${item}`"
           :show-loading="false"
           :show-error="false"
+          width="100%"
           fit="cover"
           lazy-load
           :radius="4"
@@ -72,12 +77,22 @@
 </template>
 
 <style lang="less" scoped>
+  .screen-box {
+    position: fixed;
+    top: env(safe-area-inset-top);
+    top: constant(safe-area-inset-top);
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+  }
   .product-list {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+    margin-top: var(--van-dropdown-menu-height);
     margin-bottom: 10px;
+    padding: 0 10px;
     .product-item {
       padding: 10px;
       margin-top: 10px;
