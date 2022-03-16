@@ -58,22 +58,87 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '新增任务清单',
     },
   },
-  // {
-  //   path: '/setup',
-  //   name: 'Setup',
-  //   component: () => import('@/views/user/setup/index.vue'),
-  //   meta: {
-  //     title: '设置',
-  //   },
-  // },
-  // {
-  //   path: '/distribut',
-  //   name: 'Distribut',
-  //   component: () => import('@/views/user/distribut/index.vue'),
-  //   meta: {
-  //     title: '分销中心',
-  //   },
-  // },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: () => import('@/views/user/payment/index.vue'),
+    meta: {
+      title: '支付管理',
+    },
+  },
+  {
+    path: '/distribut',
+    name: 'Distribut',
+    component: () => import('@/views/user/distribut/index.vue'),
+    meta: {
+      title: '分销中心',
+    },
+  },
+  {
+    path: '/collect',
+    name: 'Collect',
+    component: () => import('@/views/user/collect/index.vue'),
+    meta: {
+      title: '我的收藏',
+    },
+  },
+  {
+    path: '/locked',
+    name: 'Locked',
+    component: () => import('@/views/user/locked/index.vue'),
+    meta: {
+      title: '锁藏品',
+    },
+  },
+  {
+    path: '/compound',
+    name: 'Compound',
+    component: () => import('@/views/user/compound/index.vue'),
+    meta: {
+      title: '产品合成',
+    },
+  },
+  {
+    path: '/grant',
+    name: 'Grant',
+    component: () => import('@/views/user/grant/index.vue'),
+    meta: {
+      title: '赠予管理',
+    },
+  },
+  {
+    path: '/order/buy',
+    name: 'Buy',
+    component: () => import('@/views/user/order/buy/index.vue'),
+    meta: {
+      title: '我买到的',
+    },
+  },
+  {
+    path: '/order/publish',
+    name: 'Publish',
+    component: () => import('@/views/user/order/publish/index.vue'),
+    meta: {
+      title: '我发布的',
+    },
+  },
+  {
+    path: '/order/sale',
+    name: 'Sale',
+    component: () => import('@/views/user/order/sale/index.vue'),
+    meta: {
+      title: '我卖出的',
+    },
+  },
+  {
+    path: '/setup',
+    name: 'Setup',
+    component: () => import('@/views/user/setup/index.vue'),
+    meta: {
+      title: '设置',
+    },
+  },
+  
   // {
   //   path: '/myTearm',
   //   name: 'MyTearm',

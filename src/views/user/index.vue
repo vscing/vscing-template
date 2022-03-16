@@ -35,21 +35,21 @@ const goTo = (path: string) => {
         <VantIcon name="chat-o" size="20" />
         <span>客服微信</span>
       </div> -->
-      <div class="dashboard-item" @click="goTo('/about')">
-        <VantIcon name="friends-o" size="20" />
-        <span>需求合作</span>
-      </div>
       <div class="dashboard-item" @click="goTo('/job')">
         <VantIcon name="notes-o" size="20" />
         <span>任务清单</span>
       </div>
-      <div class="dashboard-item">
+      <div class="dashboard-item" @click="goTo('/payment')">
         <VantIcon name="balance-pay" size="20" />
         <span>支付管理</span>
       </div>
-      <div class="dashboard-item">
-        <VantIcon name="share-o" size="20" />
-        <span>赠予管理</span>
+      <div class="dashboard-item" @click="goTo('/distribut')">
+        <VantIcon name="cluster-o" size="20" />
+        <span>分销中心</span>
+      </div>
+      <div class="dashboard-item" @click="goTo('/about')">
+        <VantIcon name="friends-o" size="20" />
+        <span>需求合作</span>
       </div>
       <!-- <div class="dashboard-item">
         <VantIcon name="shop-collect-o" size="20" />
@@ -58,7 +58,7 @@ const goTo = (path: string) => {
     </div>
 
     <div class="dashboard2">
-      <div class="dashboard2-item">
+      <div class="dashboard2-item" @click="goTo('/collect')">
         <div class="dashboard2-item-left">
           <VantIcon name="star-o" size="20" color="#333" />
           <span>收藏</span>
@@ -68,7 +68,7 @@ const goTo = (path: string) => {
           <VantIcon name="arrow" size="16" color="#00000059" />
         </div>
       </div>
-      <div class="dashboard2-item">
+      <div class="dashboard2-item" @click="goTo('/locked')">
         <div class="dashboard2-item-left">
           <VantIcon name="goods-collect-o" size="20" color="#333" />
           <span>锁藏品</span>
@@ -78,7 +78,7 @@ const goTo = (path: string) => {
           <VantIcon name="arrow" size="16" color="#00000059" />
         </div>
       </div>
-      <div class="dashboard2-item">
+      <div class="dashboard2-item" @click="goTo('/compound')">
         <div class="dashboard2-item-left">
           <VantIcon name="after-sale" size="20" color="#333" />
           <span>产品合成</span>
@@ -88,10 +88,10 @@ const goTo = (path: string) => {
           <VantIcon name="arrow" size="16" color="#00000059" />
         </div>
       </div>
-      <div class="dashboard2-item">
+      <div class="dashboard2-item" @click="goTo('/grant')">
         <div class="dashboard2-item-left">
-          <VantIcon name="balance-o" size="20" color="#333" />
-          <span>个人余额</span>
+          <VantIcon name="share-o" size="20" color="#333" />
+          <span>赠予管理</span>
         </div>
         <div class="dashboard2-item-right">
           <span>0</span>
@@ -104,27 +104,27 @@ const goTo = (path: string) => {
       <div class="views-order-amount">
         我的订单
       </div>
-      <div class="views-order-button">
+      <!-- <div class="views-order-button">
         <span>0</span>
         <VantIcon name="arrow" size="10" />
-      </div>
+      </div> -->
     </div>
     <div class="order-status">
-      <div class="order-desc">
+      <div class="order-desc" @click="goTo('/order/buy')">
         <VantIcon name="cart-o" size="20" />
         <span>我买到的</span>
       </div>
-      <div class="order-desc">
+      <div class="order-desc" @click="goTo('/order/publish')">
         <VantIcon name="guide-o" size="20" />
         <span>我发布的</span>
       </div>
-      <div class="order-desc">
+      <div class="order-desc" @click="goTo('/order/sale')">
         <VantIcon name="cash-back-record" size="20" />
         <span>我卖出的</span>
       </div>
     </div>
 
-    <div class="views-distribution">
+    <!-- <div class="views-distribution">
       <div class="views-distribution-sum">
         <div class="views-distribution-amount">
           <div class="views-distribution-desc">
@@ -153,7 +153,7 @@ const goTo = (path: string) => {
           <VantIcon name="arrow" size="10" />
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <TabList />
 </template>

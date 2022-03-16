@@ -102,7 +102,6 @@
 
 <style lang="less" scoped>
   .nav-bar {
-    width: 100%;
     position: fixed;
     top: env(safe-area-inset-top);
     top: constant(safe-area-inset-top);

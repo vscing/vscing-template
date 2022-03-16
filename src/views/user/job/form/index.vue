@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { 
-  Toast, 
+  Toast,
+  NavBar as VantNavBar,
   Form as VantForm, 
   Field as VantField, 
   Button as VantButton, 
@@ -28,6 +29,8 @@ const onSubmit = (values) => {
 </script>
 
 <template>
+  <VantNavBar title="新增任务" />
+
   <VantForm class="job-form" @submit="onSubmit">
     <VantCellGroup inset>
       <VantField

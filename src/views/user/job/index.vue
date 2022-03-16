@@ -15,9 +15,9 @@
 </script>
 
 <template>
-  <div>
-    <VantSearch/>
-    <VantIcon name="add-o" @click="add"/>
+  <div class="job-head">
+    <VantSearch placeholder="请输入产品名称关键词"/>
+    <VantIcon name="add-o" size="20" @click="add"/>
   </div>
 
   <VantList
@@ -28,7 +28,7 @@
   >
     <div class="job-list">
       <div class="job-box">
-        <h2>任务编号0001</h2>
+        <h2>产品名称-0001</h2>
         <div class="job-price-state">
           <p>
             <span>预付金额：</span>
@@ -44,7 +44,7 @@
       </div>
 
       <div class="job-box">
-        <h2>任务编号0002</h2>
+        <h2>产品名称-0002</h2>
         <div class="job-price-state">
           <p>
             <span>预付金额：</span>
@@ -63,6 +63,18 @@
 </template>
 
 <style lang="less" scoped>
+  .job-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    :deep(.van-search) {
+      flex: 1;
+    }
+    :deep(.van-icon) {
+      padding-right: 10px;
+    }
+  }
   .job-list {
     padding: 10px;
     .job-box {
