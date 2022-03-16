@@ -19,8 +19,8 @@
     @click-left="onClickLeft"
   />
 
-  <VantCellGroup title="基本信息">
-    <VantCell title="个人信息" value="编辑资料" is-link/>
+  <VantCellGroup class="van-cell-group__title" title="基本信息">
+    <VantCell title="个人信息" value="编辑资料" is-link to="/editMessage" />
   </VantCellGroup>
   <VantCellGroup title="安全设置">
     <VantCell title="实名认证" value="认证" is-link/>
@@ -36,19 +36,19 @@
 </template>
 
 <style lang="less" scoped>
-  .nav-bar {
-    width: 100%;
-    :deep(.van-icon) {
-      color: #000000;
-    }
-    :deep(.van-nav-bar__title) {
-      color: #000000;
-    }
+.nav-bar {
+  width: 100%;
+  :deep(.van-icon) {
+    color: #000000;
   }
-  .logout {
-    margin-top: 20px;
-    text-align: center;
-    color: #5a5f6d;
-    font-size: 12px;
+  :deep(.van-nav-bar__title) {
+    color: #000000;
   }
+}
+.logout {
+  margin-top: 20px;
+  text-align: center;
+  color: #5a5f6d;
+  font-size: 12px;
+}
 </style>

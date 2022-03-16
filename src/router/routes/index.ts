@@ -138,6 +138,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '设置',
     },
   },
+  {
+    path: '/editMessage',
+    name: 'EditMessage',
+    component: () => import('@/views/user/setup/editMessage/index.vue'),
+    meta: {
+      title: '编辑资料',
+    },
+  },
   
   // {
   //   path: '/myTearm',
