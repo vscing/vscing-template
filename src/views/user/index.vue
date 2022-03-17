@@ -12,13 +12,13 @@ const goTo = (path: string) => {
 
 <template>
   <div class="user-box">
-    <div class="user-box-background">
+    <div class="user-box-background" style="background-image: url('https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=1');">
         <div class="header-box">
           <div class="header-box-icon">
-            <VantIcon name="scan" size="25" />
+            <VantIcon name="scan" size="25" color="#ffffff" />
           </div>
           <div class="header-box-icon" @click="goTo('/setup')">
-            <VantIcon name="setting-o" size="25" />
+            <VantIcon name="setting-o" size="25" color="#ffffff" />
           </div>
         </div>
 
@@ -120,10 +120,11 @@ const goTo = (path: string) => {
 }
 .user-box-background{
   height:242px;
-  background-image: url('https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=1');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  filter: revert;
+  margin-bottom: 10px;
 }
 .header-box {
   display: flex;
@@ -150,7 +151,8 @@ const goTo = (path: string) => {
   align-items: center;
   span {
     padding-left: 10px;
-    color: #333;
+    // color: #333;
+    color: #ffffff;
     font-size: 16px;
     font-weight: 600;
   }

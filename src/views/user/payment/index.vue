@@ -62,7 +62,10 @@
     <VantCell title="银行卡绑定" is-link />
   </VantCellGroup>
 
-  <div style="margin: 16px;">
+  <div class="btn-list">
+    <VantButton round block color="#01c2c3" native-type="submit">
+      可用金额充值
+    </VantButton>
     <VantButton round block color="#01c2c3" native-type="submit">
       可用金额提现
     </VantButton>
@@ -145,6 +148,16 @@
           }
         }
       }
+    }
+  }
+  .btn-list {
+    margin-top: 20px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :deep(.van-button) {
+      margin: 0 5px;
     }
   }
 </style>
