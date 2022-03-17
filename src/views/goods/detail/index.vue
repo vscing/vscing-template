@@ -29,15 +29,14 @@
   </div>
   
   <div class="config-box">
-    <h2>唐 门神</h2>
+    <h2>火锅 白菜</h2>
+    <p>产品编号 #662 / 1000</p>
     <div class="price-box">
       <span>￥150</span>
       <div class="price-like-box">
         <VantIcon name="like-o" />
-        <span>1000</span>
       </div>
     </div>
-    <p class="config-box-desc">简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍</p>
   </div>
 
   <div class="config-box">
@@ -68,12 +67,12 @@
     </ul>
   </div>
 
-  <div class="config-box">
+  <!-- <div class="config-box">
     <h2>价格波动</h2>
     <ul>
       <li></li>
     </ul>
-  </div>
+  </div> -->
 
   <div class="config-box">
     <h2>合成信息</h2>
@@ -95,8 +94,7 @@
   </div>
   
   <div class="btn-list">
-    <VantButton type="primary" color="#01c2c3">产品购买</VantButton>
-    <VantButton type="primary" color="#01c2c3">产品赠送</VantButton>
+    <VantButton type="primary" round block color="#01c2c3">产品购买</VantButton>
   </div>
 </template>
 
@@ -189,8 +187,8 @@
     justify-content: space-between;
     background-color: #ffffff;
     box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
-    :deep(.van-button) {
-      width: 48%;
-    }
+    // :deep(.van-button) {
+    //   width: 48%;
+    // }
   }
 </style>

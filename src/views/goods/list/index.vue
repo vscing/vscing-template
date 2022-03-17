@@ -59,13 +59,12 @@
           :radius="4"
         />
         <div class="product-item-info">
-          <h2>唐 门神</h2>
-          <p>******</p>
-          <p class="product-item-price">
-            <span>￥150</span>
+          <h2>火锅 白菜</h2>
+          <p class="product-item-price">￥150</p>
+          <p class="product-item-desc">
+            <span>艺术家 小明</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
-              120000
             </span>
           </p>
         </div>
@@ -111,13 +110,17 @@
         font-size: 14px;
         font-weight: 300;
         .product-item-price {
+          font-size: 16px;
+          font-weight: 600;
+          color: #01c2c3;
+        }
+        .product-item-desc {
           font-weight: 500;
         }
         & > h2 {
           color: #000000;
           font-size: 16px;
           font-weight: 600;
-          margin-bottom: 10px;
         }
         & > p {
           display: flex;
