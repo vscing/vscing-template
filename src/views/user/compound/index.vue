@@ -76,9 +76,9 @@ const onLoad = () => {};
         </VantTab>
       </VantTabs>
     </VantList>
-    <div>
-        <div>活动须知</div>
-        <div>
+    <div class="compound-action">
+        <div class="compound-action-title">活动须知</div>
+        <div class="compound-action-desc">
             <p>活动须知： </p>
             <p>
               为更好服务唯一艺术平台的各位用户，唯一艺术特此公告数字藏
@@ -135,6 +135,7 @@ const onLoad = () => {};
       margin-top:35px;
       .compound-condition {
           text-align: center;
+          margin-bottom: 40px;
           & > h3 {
             font-size: 20px;
             font-weight: bolder;
@@ -144,6 +145,18 @@ const onLoad = () => {};
             padding: 18px 26px;
           }
       }
+  }
+  .compound-action{
+        .compound-action-title{
+            text-align:center;
+            font-size: 18px;
+        }
+        .compound-action-desc{
+          & > p {
+                padding: 10px 15px;
+                line-height: 30px;
+          }
+        }
   }
 }
 .screen-box {
