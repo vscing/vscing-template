@@ -47,9 +47,9 @@
   </VantGrid>
 
   <div class="product">
-    <h2>产品发售</h2>
+    <h2>本期发售</h2>
     <ul class="product-sell-box">
-      <li class="product-sell-item" v-for="item in [1,2,3,4]" :key="item" @click="onDetail">
+      <li class="product-sell-item" @click="onDetail">
         <VantImage
           :src="`https://source.theone.art/watermarkResize/eb92c60ef6173ee4abc507185d3fe9d7/92898b7dfd077feb141766351378657e-16443987121450.25.gif`"
           fit="cover"
@@ -61,18 +61,52 @@
         />
         <div class="product-item-info">
           <div class="product-title-box">
-            <h2>唐 门神</h2>
-            <p class="product-item-price">
+            <h2>火锅 牛肉</h2>
+            <p>
               <span>产品数量：</span>
-              <span>3500份</span>
+              <span class="product-item-value">3500份</span>
             </p>
           </div>
-          <p class="product-item-time">发售时间：<span>2022-03-10 08:00:00</span></p>
-          <p class="product-item-desc">简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊</p>
+          <p>发售价格：<span class="product-item-value">¥229</span></p>
+          <p>发售时间：<span class="product-item-value">2022-03-10 08:00:00</span></p>
+          <p>抢购倒计时：<span class="product-item-value product-item-color">00:00:00:00</span></p>
           <p class="btn-list">
-            <VantButton color="#393742">VIP提前预购</VantButton>
+            <VantButton color="#393742">优先抢购</VantButton>
             <VantButton color="#01c2c3">限时抢购</VantButton>
           </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="product">
+    <h2>上期发售</h2>
+    <ul class="product-sell-box">
+      <li class="product-sell-item" @click="onDetail">
+        <VantImage
+          :src="`https://source.theone.art/watermarkResize/eb92c60ef6173ee4abc507185d3fe9d7/92898b7dfd077feb141766351378657e-16443987121450.25.gif`"
+          fit="cover"
+          lazy-load
+          width="100%"
+          :radius="4"
+          :show-loading="false"
+          :show-error="false"
+        />
+        <div class="product-item-info">
+          <div class="product-title-box">
+            <h2>火锅 白菜</h2>
+            <p>
+              <span>产品数量：</span>
+              <span class="product-item-value">3500份</span>
+            </p>
+          </div>
+          <p>发售价格：<span class="product-item-value">已售</span></p>
+          <p>发售时间：<span class="product-item-value">2022-03-10 08:00:00</span></p>
+          <!-- <p class="product-item-desc">简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊</p> -->
+          <!-- <p class="btn-list">
+            <VantButton color="#393742">优先抢购</VantButton>
+            <VantButton color="#01c2c3">限时抢购</VantButton>
+          </p> -->
         </div>
       </li>
     </ul>
@@ -168,9 +202,12 @@
           & > p {
             margin-top: 10px;
           }
-          .product-item-price {
+          .product-item-value {
             color: #000000; 
-            font-weight: 500;
+            font-weight: 600;
+          }
+          .product-item-color {
+            color: #01c2c3;
           }
           .product-item-desc {
             .ellipsis(2);
