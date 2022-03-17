@@ -67,6 +67,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/fillmount',
+    name: 'Fillmount',
+    component: () => import('@/views/user/payment/fillmount/index.vue'),
+    meta: {
+      title: '账单',
+    },
+  },
+  {
+    path: '/bankCard',
+    name: 'BankCard',
+    component: () => import('@/views/user/payment/bankCard/index.vue'),
+    meta: {
+      title: '银行卡绑定',
+    },
+  },
+  {
     path: '/distribut',
     name: 'Distribut',
     component: () => import('@/views/user/distribut/index.vue'),
@@ -146,6 +162,38 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '编辑资料',
     },
   },
+  {
+    path: '/editBrief',
+    name: 'EditBrief',
+    component: () => import('@/views/user/setup/editBrief/index.vue'),
+    meta: {
+      title: '编辑简介',
+    },
+  },
+  {
+    path: '/realName',
+    name: 'RealName',
+    component: () => import('@/views/user/setup/realName/index.vue'),
+    meta: {
+      title: '实名认证',
+    }
+  },
+  {
+    path: '/setPayPassword',
+    name: 'SetPayPassword',
+    component: () => import('@/views/user/setup/setPayPassword/index.vue'),
+    meta: {
+      title: '设置支付密码',
+    }
+  },
+  {
+      path: '/phoneNumber',
+      name: 'PhoneNumber',
+      component: () => import('@/views/user/setup/phoneNumber/index.vue'),
+      meta: {
+        title: '手机号',
+      },
+  }
   
   // {
   //   path: '/myTearm',

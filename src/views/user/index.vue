@@ -12,29 +12,23 @@ const goTo = (path: string) => {
 
 <template>
   <div class="user-box">
-    <div class="header-box">
-      <div class="header-box-icon">
-        <VantIcon name="scan" size="25" />
-      </div>
-      <div class="header-box-icon" @click="goTo('/setup')">
-        <VantIcon name="setting-o" size="25" />
-      </div>
-    </div>
+    <div class="user-box-background">
+        <div class="header-box">
+          <div class="header-box-icon">
+            <VantIcon name="scan" size="25" />
+          </div>
+          <div class="header-box-icon" @click="goTo('/setup')">
+            <VantIcon name="setting-o" size="25" />
+          </div>
+        </div>
 
-    <div class="user-info">
-      <VantImage round width="70" height="70" src="https://pic3.zhimg.com/v2-4b647d2db75f90ecc3dc8390659a9a6a_is.jpg?source=32738c0c" />
-      <span>聚宝阁-00001</span>
+        <div class="user-info">
+          <VantImage round width="70" height="70" src="https://pic3.zhimg.com/v2-4b647d2db75f90ecc3dc8390659a9a6a_is.jpg?source=32738c0c" />
+          <span>聚宝阁-00001</span>
+        </div>
     </div>
-
+    
     <div class="dashboard">
-      <!-- <div class="dashboard-item">
-        <VantIcon name="service-o" size="20" />
-        <span>客服电话</span>
-      </div> -->
-      <!-- <div class="dashboard-item">
-        <VantIcon name="chat-o" size="20" />
-        <span>客服微信</span>
-      </div> -->
       <div class="dashboard-item" @click="goTo('/job')">
         <VantIcon name="notes-o" size="20" />
         <span>任务清单</span>
@@ -51,10 +45,6 @@ const goTo = (path: string) => {
         <VantIcon name="friends-o" size="20" />
         <span>需求合作</span>
       </div>
-      <!-- <div class="dashboard-item">
-        <VantIcon name="shop-collect-o" size="20" />
-        <span>个人藏品</span>
-      </div> -->
     </div>
 
     <div class="dashboard2">
@@ -104,10 +94,6 @@ const goTo = (path: string) => {
       <div class="views-order-amount">
         我的订单
       </div>
-      <!-- <div class="views-order-button">
-        <span>0</span>
-        <VantIcon name="arrow" size="10" />
-      </div> -->
     </div>
     <div class="order-status">
       <div class="order-desc" @click="goTo('/order/buy')">
@@ -123,37 +109,6 @@ const goTo = (path: string) => {
         <span>我卖出的</span>
       </div>
     </div>
-
-    <!-- <div class="views-distribution">
-      <div class="views-distribution-sum">
-        <div class="views-distribution-amount">
-          <div class="views-distribution-desc">
-            <VantIcon name="cluster-o" size="20" color="#333" />
-            <span>分销</span>
-          </div>
-          <div class="views-distribution-title">
-            <span>邀请好友领奖励</span>
-          </div>
-        </div>
-        <div class="views-distribution-button" @click="goTo('/distribut')">
-          <VantIcon name="arrow" size="10" />
-        </div>
-      </div>
-      <div class="views-distribution-sum views-distribution-right">
-        <div class="views-distribution-amount">
-          <div class="views-distribution-desc">
-            <VantIcon name="shop-o" size="18" color="#333" />
-            <span>商品出售</span>
-          </div>
-          <div class="views-distribution-title">
-            <span>商品售卖价格</span>
-          </div>
-        </div>
-        <div class="views-distribution-button">
-          <VantIcon name="arrow" size="10" />
-        </div>
-      </div>
-    </div> -->
   </div>
   <TabList />
 </template>
@@ -163,12 +118,18 @@ const goTo = (path: string) => {
   font-size: 14px;
   font-weight: 500px;
 }
+.user-box-background{
+  height:242px;
+  background-image: url('https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=1');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 .header-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
-  position: fixed;
+  position: relative;
   top: env(safe-area-inset-top);
   top: constant(safe-area-inset-top);
   left: 0;
@@ -187,7 +148,6 @@ const goTo = (path: string) => {
   padding: 10px;
   display: flex;
   align-items: center;
-  background-color: #fff;
   span {
     padding-left: 10px;
     color: #333;

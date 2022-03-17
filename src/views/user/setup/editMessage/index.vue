@@ -13,6 +13,7 @@
   const router = useRouter();
   const onClickLeft = () => router.go(-1);
 
+  const nickName = ref('聚宝阁-00001');
   const result = ref('未设置');
   const showPicker = ref(false);
   const columns = ['男', '女'];
@@ -31,8 +32,8 @@
     left-arrow
     @click-left="onClickLeft"
   />
-  <VantCellGroup style="margin-top: 0.8rem; ">
-    <VantCell title="我的昵称" value="聚宝阁-00001" is-link/>
+  <VantCellGroup style="margin-top: 0.8rem;">
+    <Field label="我的昵称" clearable v-model="nickName" is-link/>
     <Field
         v-model="result"
         is-link
@@ -41,7 +42,7 @@
         label="性别"
         @click="showPicker = true"
     />
-    <VantCell title="简介" value="" is-link/>
+    <VantCell title="简介" value="" to="/editBrief" is-link/>
   </VantCellGroup>
 
   <Popup v-model:show="showPicker" position="bottom">
@@ -75,7 +76,8 @@
   font-size: .28rem;
   text-align: center;
   color: #fff;
-  background: linear-gradient(90deg,#ff7a64,#e61f1a);
+  // background: linear-gradient(90deg,#8be9e9,#01c2c3);
+  background-color:#01c2c3;
   border-radius: 23px;
   cursor: pointer;
   position: absolute;

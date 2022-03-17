@@ -6,6 +6,12 @@
     Cell as VantCell, 
     CellGroup as VantCellGroup
   } from 'vant';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+  const onPay = (path: string) => {
+      router.push(path)
+  }
 </script>
 
 <template>
@@ -23,7 +29,7 @@
             <VantIcon name="eye-o" size="20"/> 
             <!-- <van-icon name="closed-eye" /> -->
           </div>
-          <div class="panel-top-bill">账单</div>
+          <div class="panel-top-bill" @click="onPay('/fillmount')">账单</div>
         </div>
         <div class="payment-panel-bottom">
           <div>
