@@ -12,10 +12,16 @@
   const onPay = (path: string) => {
       router.push(path)
   }
+  const onClickLeft = () => router.go(-1);
 </script>
 
 <template>
-  <VantNavBar title="支付管理" />
+  <VantNavBar 
+      class="nav-bar"
+      title="支付管理" 
+      left-arrow
+      @click-left="onClickLeft"
+  />
 
   <div class="payment-box">
     <div class="payment-panel">
@@ -59,7 +65,7 @@
 
   <VantCellGroup class="payment-way">
     <!-- <VantCell title="第三方支付" is-link /> -->
-    <VantCell title="银行卡绑定" is-link />
+    <VantCell title="银行卡绑定" is-link  @click="onPay('/bankCard')"/>
   </VantCellGroup>
 
   <div style="margin: 16px;">
@@ -70,6 +76,15 @@
 </template>
 
 <style scoped lang="less">
+  .nav-bar {
+      width: 100%;
+      :deep(.van-icon) {
+        color: #000000;
+      }
+      :deep(.van-nav-bar__title) {
+        color: #000000;
+      }
+  }
   .payment-box {
     padding-top: 20px;
     .payment-panel {
