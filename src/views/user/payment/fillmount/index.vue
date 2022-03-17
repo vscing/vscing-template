@@ -9,7 +9,7 @@
   import { reactive } from 'vue';
 
   const router = useRouter();
-  const tabTitle = reactive(['余额变动', '收益', '体现', '宝户通体现']);
+  const tabTitle = reactive(['余额变动', '收益', '充值', '提现']);
   const onClickLeft = () => router.go(-1);
 
 </script>
