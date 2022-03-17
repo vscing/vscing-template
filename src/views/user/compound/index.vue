@@ -35,7 +35,7 @@ const onLoad = () => {};
       <VantTabs v-model:active="active" animated>
         <VantTab v-for="index in number" :title="'操作 ' + index">
           <template #title>
-            <VantIcon name="gift-o" size="20" />&nbsp;玩法{{ index }}
+            <VantIcon name="send-gift-o" size="20" />&nbsp;玩法{{ index }}
           </template>
           <div class="compound-background">
             <div class="compound-condition">
@@ -63,12 +63,10 @@ const onLoad = () => {};
                 />
                 <div class="product-item-info">
                   <h2>唐 门神</h2>
-                  <p>******</p>
+                  <p><span>需要*2</span></p>
                   <p class="product-item-price">
-                    <span>￥150</span>
                     <span class="product-item-like">
-                      <VantIcon name="like-o" />
-                      120000
+                      当前拥有*0
                     </span>
                   </p>
                 </div>
@@ -78,6 +76,29 @@ const onLoad = () => {};
         </VantTab>
       </VantTabs>
     </VantList>
+    <div>
+        <div>活动须知</div>
+        <div>
+            <p>活动须知： </p>
+            <p>
+              为更好服务唯一艺术平台的各位用户，唯一艺术特此公告数字藏
+              品的二次交易细则。鉴于不同属性的数字艺术的二次交易细则各
+              有不同，请各位用户务必审慎阅读并同意相关规则后进行相应操
+              作，以免造成不必要损失。
+            </p>
+            <p>
+                1、依据我国法律要求，特定条件下的数字藏品的二次交易不支持
+                任何形式的变相炒作，我们坚决反对数字藏品炒作、场外交易、
+                欺诈，或以任何其他非法、侵权方式使用的违法违规行为，请大
+                家注意甄别上述涉嫌网络欺诈的行为及其相关风险。
+            </p>
+            <p>
+                2、数字藏品为虚拟数字商品，购买以及寄售前请先完成实名认证。
+            </p>
+            <p>3、本商品一经合成不支持退换。</p>
+            <p>4、本次合成通道限时开启时间：3月12日（本周六）18:00至3月14日（下周一）18:00。</p>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -94,6 +115,20 @@ const onLoad = () => {};
     display: flex;
     align-items: center;
   }
+  :deep(.van-tab) {
+    display: flex;
+    align-items: center;
+    border: 1px solid hsla(0,0%,59.2%,.3);
+    background: #fff2d5;
+    border-radius: 5px;
+  }
+  :deep(.van-tabs) {
+    margin: 30px 20px;
+  }
+  :deep(.van-tab--active) {
+    border: none!important;
+    background-color: #fff!important;
+  }
   .compound-background{
       background: url(https://theoneart-common.oss-cn-qingdao.aliyuncs.com/author/97c874b….png) no-repeat center;
       background-size: cover;
@@ -101,7 +136,7 @@ const onLoad = () => {};
       .compound-condition {
           text-align: center;
           & > h3 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bolder;
           }
           & > div {
@@ -126,7 +161,6 @@ const onLoad = () => {};
   justify-content: flex-start;
   margin-top: var(--van-dropdown-menu-height);
   margin-bottom: 10px;
-  padding: 0 10px;
   .product-item {
     padding: 10px;
     margin-top: 10px;
