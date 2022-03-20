@@ -7,6 +7,7 @@ import {
   Icon as VantIcon,
   Tabs as VantTabs,
   Tab as VantTab,
+  Button
 } from "vant";
 import { useRouter } from "vue-router";
 
@@ -72,6 +73,11 @@ const onLoad = () => {};
                 </div>
               </li>
             </ul>
+            <!-- 合成后的产品 -->
+            <div>
+                <VantImage />
+                <Button>去合成</Button>
+            </div>
           </div>
         </VantTab>
       </VantTabs>

@@ -23,7 +23,8 @@
     "vant": "^3.4.5",
     "vue": "^3.2.25",
     "vue-router": "4",
-    "vue-types": "^4.1.1"
+    "vue-types": "^4.1.1",
+    "web3": "^1.7.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
