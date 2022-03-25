@@ -32,10 +32,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           find: /@\//,
           replacement: pathResolve('src') + '/',
         },
-        {
-          find: 'web3',
-          replacement: resolve(__dirname, './node_modules/web3/dist/web3.min.js')
-        }
+        // {
+        //   find: 'web3',
+        //   replacement: resolve(__dirname, './node_modules/web3/dist/web3.min.js')
+        // }
       ],
     },
     server: {
@@ -71,10 +71,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     define: {
       // setting vue-i18-next
       // Suppress warning
-      __INTLIFY_PROD_DEVTOOLS__: false,
-      process: {
-        env: {}
-      }
+      __INTLIFY_PROD_DEVTOOLS__: false
     },
 
     css: {

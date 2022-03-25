@@ -14,6 +14,7 @@ import { useRouter } from "vue-router";
 const loading = ref<boolean>(false);
 const finished = ref<boolean>(false);
 const number = ref(["一", "二", "三", "四"]);
+const active = ref(0);
 
 const router = useRouter();
 
@@ -34,7 +35,7 @@ const onLoad = () => {};
       @load="onLoad"
     >
       <VantTabs v-model:active="active" animated>
-        <VantTab v-for="index in number" :title="'操作 ' + index">
+        <VantTab v-for="index in number" :key="index" :title="'操作 ' + index">
           <template #title>
             <VantIcon name="send-gift-o" size="20" />&nbsp;玩法{{ index }}
           </template>
