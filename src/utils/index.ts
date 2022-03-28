@@ -89,3 +89,22 @@ export const withInstall = <T>(component: T, alias?: string) => {
   };
   return component as T & Plugin;
 };
+
+//async/await 异常封装
+export const goErr = (promise: Promise<any[]>) => {
+  return promise.then(data => {
+    return [null, data];
+  }).catch(err => [err, null]);
+}
+
+//获得页面向左、向上卷动的距离
+export const getScroll = () => {
+  return {
+    left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+    top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+  }
+}
+
+export const isWechat = () => {
+  return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
+}

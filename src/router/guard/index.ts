@@ -27,19 +27,10 @@ export function setupRouterGuard(router: Router) {
   createWechatLoginGuard(router);
 }
 
-export function createWechatLoginGuard(router: Router) {
-  const { getOpenNProgress } = useTransitionSetting();
-  router.beforeEach(async (to) => {
-    if (to.meta.loaded) {
-      return true;
-    }
-    unref(getOpenNProgress) && nProgress.start();
-    return true;
-  });
+// https://www.jianshu.com/p/9f6ff21e2f67
 
-  router.afterEach(async () => {
-    unref(getOpenNProgress) && nProgress.done();
-    return true;
+export function createWechatLoginGuard(router: Router) {
+  router.beforeEach(async (to) => {
   });
 }
 
