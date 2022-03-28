@@ -24,7 +24,25 @@ export function setupRouterGuard(router: Router) {
   // createPermissionGuard(router);
   // createParamMenuGuard(router); // must after createPermissionGuard (menu has been built.)
   // createStateGuard(router);
+  createWechatLoginGuard(router);
 }
+
+export function createWechatLoginGuard(router: Router) {
+  const { getOpenNProgress } = useTransitionSetting();
+  router.beforeEach(async (to) => {
+    if (to.meta.loaded) {
+      return true;
+    }
+    unref(getOpenNProgress) && nProgress.start();
+    return true;
+  });
+
+  router.afterEach(async () => {
+    unref(getOpenNProgress) && nProgress.done();
+    return true;
+  });
+}
+
 
 // /**
 //  * Hooks for handling page state
