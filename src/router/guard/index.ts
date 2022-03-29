@@ -1,6 +1,7 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
+import { useUserStoreWithOut } from '@/store/modules/user';
+import { isWechat } from '@/utils';
 // import { useAppStoreWithOut } from '/@/store/modules/app';
-// import { useUserStoreWithOut } from '/@/store/modules/user';
 // import { useTransitionSetting } from '/@/hooks/setting/useTransitionSetting';
 // import { AxiosCanceler } from '/@/utils/http/axios/axiosCancel';
 // import { Modal, notification } from 'ant-design-vue';
@@ -27,10 +28,32 @@ export function setupRouterGuard(router: Router) {
   createWechatLoginGuard(router);
 }
 
-// https://www.jianshu.com/p/9f6ff21e2f67
-
 export function createWechatLoginGuard(router: Router) {
-  router.beforeEach(async (to) => {
+  const userStore = useUserStoreWithOut();
+  router.beforeEach(async (to, _, next) => {
+    const token = userStore.getToken;
+    const wechat = isWechat();
+    if (!token) {
+      if(wechat) {
+        if (to.path === '/auth') { 
+          next()
+        } else {
+          window.localStorage.setItem('authUrl', to.fullPath) 
+          // userStore.setCurrentUrl(to.fullPath) //当前页url与参数放入缓存
+          next('/auth')
+        } 
+      } else {
+        if (to.path === '/login') { 
+          next()
+        } else {
+          next()
+          // next('/login')
+        }
+      }
+    } else { 
+      next()
+    }
+    return true;
   });
 }
 

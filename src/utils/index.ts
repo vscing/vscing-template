@@ -91,7 +91,7 @@ export const withInstall = <T>(component: T, alias?: string) => {
 };
 
 //async/await 异常封装
-export const goErr = (promise: Promise<any[]>) => {
+export const to = (promise: Promise<any[]>) => {
   return promise.then(data => {
     return [null, data];
   }).catch(err => [err, null]);
@@ -107,4 +107,27 @@ export const getScroll = () => {
 
 export const isWechat = () => {
   return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
+}
+
+export const getUrlParame = (parameName) => {
+  // 获取url中跟在问号后面的部分
+  var parames = window.location.search
+  // 检测参数是否存在
+  if (parames.indexOf(parameName) > -1) {
+    var parameValue = ''
+    parameValue = parames.substring(parames.indexOf(parameName), parames.length)
+    // 检测后面是否还有参数
+    if (parameValue.indexOf('&') > -1) {
+      // 去除后面多余的参数, 得到最终 parameName=parameValue 形式的值
+      parameValue = parameValue.substring(0, parameValue.indexOf('&'))
+      // 去掉参数名, 得到最终纯值字符串
+      parameValue = parameValue.replace(parameName + '=', '')
+      return parameValue
+    }
+    return ''
+  }
+}
+
+export const sliceStr = (str = '', start = 6, end = -6) => {
+  return str.slice(0, start)+'...'+str.slice(end)
 }

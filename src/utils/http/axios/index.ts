@@ -1,17 +1,15 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
 // The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
-
 import type { AxiosResponse } from 'axios';
+import { Toast } from 'vant';
 import { clone } from 'lodash-es';
-import type { RequestOptions, Result } from '@/axios';
+import type { RequestOptions, Result } from '@/types/axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { VAxios } from './Axios';
 import { checkStatus } from './checkStatus';
 import { useGlobSetting } from '@/hooks/setting';
-import { useMessage } from '@/hooks/web/useMessage';
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '@/enums/httpEnum';
 import { isString } from '@/utils/is';
-import { getToken } from '@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '@/utils';
 import { useErrorLogStoreWithOut } from '@/store/modules/errorLog';
 import { joinTimestamp, formatRequestDate } from './helper';
@@ -19,7 +17,6 @@ import { useUserStoreWithOut } from '@/store/modules/user';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
-const { createMessage, createErrorModal } = useMessage();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -44,7 +41,7 @@ const transform: AxiosTransform = {
     const { data } = res;
     if (!data) {
       // return '[HTTP] Request has no return value';
-      throw new Error(t('sys.api.apiRequestFailed'));
+      throw new Error('请求出错，请稍候重试');
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, result, message } = data;
@@ -60,7 +57,7 @@ const transform: AxiosTransform = {
     let timeoutMsg = '';
     switch (code) {
       case ResultEnum.TIMEOUT:
-        timeoutMsg = t('sys.api.timeoutMessage');
+        timeoutMsg = '登录超时,请重新登录!';
         const userStore = useUserStoreWithOut();
         userStore.setToken(undefined);
         userStore.logout(true);
@@ -74,12 +71,12 @@ const transform: AxiosTransform = {
     // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
     // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
     if (options.errorMessageMode === 'modal') {
-      createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
+      Toast.fail(timeoutMsg);
     } else if (options.errorMessageMode === 'message') {
-      createMessage.error(timeoutMsg);
+      Toast.fail(timeoutMsg);
     }
 
-    throw new Error(timeoutMsg || t('sys.api.apiRequestFailed'));
+    throw new Error(timeoutMsg || '请求出错，请稍候重试');
   },
 
   // 请求之前处理config
@@ -136,7 +133,8 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理config
-    const token = getToken();
+    const userStore = useUserStoreWithOut();
+    const token = userStore.getToken;
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
@@ -157,7 +155,6 @@ const transform: AxiosTransform = {
    * @description: 响应错误处理
    */
   responseInterceptorsCatch: (error: any) => {
-    const { t } = useI18n();
     const errorLogStore = useErrorLogStoreWithOut();
     errorLogStore.addAjaxErrorInfo(error);
     const { response, code, message, config } = error || {};
@@ -168,17 +165,17 @@ const transform: AxiosTransform = {
 
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-        errMessage = t('sys.api.apiTimeoutMessage');
+        errMessage = '接口请求超时,请刷新页面重试!';
       }
       if (err?.includes('Network Error')) {
-        errMessage = t('sys.api.networkExceptionMsg');
+        errMessage = '网络异常，请检查您的网络连接是否正常!';
       }
 
       if (errMessage) {
         if (errorMessageMode === 'modal') {
-          createErrorModal({ title: t('sys.api.errorTip'), content: errMessage });
+          Toast.fail(errMessage);
         } else if (errorMessageMode === 'message') {
-          createMessage.error(errMessage);
+          Toast.fail(errMessage);
         }
         return Promise.reject(error);
       }
@@ -197,8 +194,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
-        // authenticationScheme: 'Bearer',
-        authenticationScheme: '',
+        authenticationScheme: 'Bearer',
+        // authenticationScheme: '',
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,

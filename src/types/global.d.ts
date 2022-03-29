@@ -95,6 +95,10 @@ declare global {
 }
 
 declare module 'vue' {
+  import { ComponentOptions } from 'vue'
+  const componentOptions: ComponentOptions
+  export default componentOptions
+
   export type JSXComponent<Props = any> =
     | { new (): ComponentPublicInstance<Props> }
     | FunctionalComponent<Props>;

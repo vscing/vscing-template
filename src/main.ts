@@ -5,7 +5,7 @@ import 'virtual:windi-utilities.css';
 import 'virtual:svg-icons-register'
 import App from './App.vue';
 import { createApp } from 'vue';
-import { setupErrorHandle } from '@/services/errorHandle';
+// import { setupErrorHandle } from '@/services/errorHandle';
 import { router, setupRouter } from '@/router';
 import { setupRouterGuard } from '@/router/guard';
 import { setupStore } from '@/store';
@@ -34,7 +34,7 @@ async function bootstrap() {
   setupGlobDirectives(app);
 
   // Configure global error handling
-  setupErrorHandle(app);
+  // setupErrorHandle(app);
 
   // 懒加载
   app.use(Lazyload, {

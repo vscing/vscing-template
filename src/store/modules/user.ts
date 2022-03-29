@@ -1,32 +1,52 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { store } from '@/store';
 
-export const useStore = defineStore('user', {
-  state: () => ({
-    counter: 0,
+interface UserState {
+  userInfo: any;
+  token?: string;
+  currentUrl: string;
+}
+
+export const useUserStore: any = defineStore('user', {
+  state: (): UserState => ({
+    token: undefined,
+    currentUrl: '/',
+    userInfo: {}
   }),
   getters: {
-    // type is automatically inferred because we are not using `this`
-    doubleCount: (state) => state.counter * 2,
-    // here we need to add the type ourselves (using JSDoc in JS). We can also
-    // use this to document the getter
-    /**
-     * Returns the counter value times two plus one.
-     *
-     * @returns {number}
-     */
-    doubleCountPlusOne() {
-      // autocompletion ✨
-      return this.doubleCount + 1
-    },
+    getUserInfo: (state) => state.userInfo,
+
+    getToken: (state) => state.token,
+
+    getCurrentUrl: (state) => state.currentUrl
   },
   actions: {
-    increment() {
-      this.counter++
+    setUserInfo(userInfo: any) {
+      this.userInfo = userInfo
     },
-    randomizeCounter() {
-      this.counter = Math.round(100 * Math.random())
+    setToken(token: string) {
+      this.token = token
     },
-    async registerUser(login, password) {
+    setCurrentUrl(currentUrl: string) {
+      this.currentUrl = currentUrl
     },
+    // async logout(goLogin = false) {
+    //   if (this.getToken) {
+    //     try {
+    //       await doLogout();
+    //     } catch {
+    //       console.log('注销Token失败');
+    //     }
+    //   }
+    //   this.setToken(undefined);
+    //   this.setSessionTimeout(false);
+    //   this.setUserInfo(null);
+    //   goLogin && router.push(PageEnum.BASE_LOGIN);
+    // },
   }
 })
+
+// Need to be used outside the setup
+export function useUserStoreWithOut() {
+  return useUserStore(store);
+}

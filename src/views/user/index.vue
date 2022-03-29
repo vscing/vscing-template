@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
 import { Image as VantImage, Icon as VantIcon } from 'vant';
+import { SvgIcon } from '@/components/SvgIcon';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/modules/user';
+import { sliceStr } from '@/utils';
 
 const router = useRouter();
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
+
 const goTo = (path: string) => {
   router.push(path)
 }
+
 
 </script>
 
@@ -23,8 +30,17 @@ const goTo = (path: string) => {
         </div>
 
         <div class="user-info">
-          <VantImage round width="70" height="70" src="https://pic3.zhimg.com/v2-4b647d2db75f90ecc3dc8390659a9a6a_is.jpg?source=32738c0c" />
-          <span>聚宝阁-00001</span>
+          <VantImage round width="70" height="70" :src="userInfo?.avatar" />
+          <div class="user-name">
+            <div>
+              <span>{{userInfo?.nickname}}</span>
+              <span class="auth">未认证</span>
+            </div>
+            <div class="polygon-item">
+              <span>{{sliceStr(userInfo['polygon_address'])}}</span>
+              <SvgIcon name="whiteCopy"/>
+            </div>
+          </div>
         </div>
     </div>
     
@@ -145,17 +161,40 @@ const goTo = (path: string) => {
 }
 .user-info {
   margin-top: 40px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   padding: 10px;
   display: flex;
   align-items: center;
   span {
-    padding-left: 10px;
+    
     // color: #333;
     color: #ffffff;
     font-size: 16px;
     font-weight: 600;
   }
+}
+.user-name {
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .auth {
+    padding-left: 5px;
+    color: #01c2c3;
+  }
+  .polygon-item {
+    display: flex;
+    align-items: center;
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      padding-right: 5px;
+    }
+  }
+}
+.user-polygon {
+  padding: 0 10px;
+  color: #ffffff;
 }
 .dashboard {
   margin-bottom: 10px;

@@ -193,7 +193,23 @@ export const MainRoute: AppRouteRecordRaw[] = [
       meta: {
         title: '手机号',
       },
-  }
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('@/views/auth/index.vue'),
+    meta: {
+      title: '',
+    },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/user/login/index.vue'),
+    meta: {
+      title: '登录',
+    },
+  },
   
   // {
   //   path: '/myTearm',
