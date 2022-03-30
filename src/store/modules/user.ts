@@ -7,6 +7,16 @@ interface UserState {
   currentUrl: string;
 }
 
+
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { getAuthCache, setAuthCache } from '/@/utils/auth';
+getUserInfo(): UserInfo {
+  return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+},
+getToken(): string {
+  return this.token || getAuthCache<string>(TOKEN_KEY);
+},
+
 export const useUserStore: any = defineStore('user', {
   state: (): UserState => ({
     token: undefined,
