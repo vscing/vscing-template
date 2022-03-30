@@ -1,4 +1,5 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
+import storage from 'store';
 import { useUserStoreWithOut } from '@/store/modules/user';
 import { isWechat } from '@/utils';
 // import { useAppStoreWithOut } from '/@/store/modules/app';
@@ -38,7 +39,7 @@ export function createWechatLoginGuard(router: Router) {
         if (to.path === '/auth') { 
           next()
         } else {
-          window.localStorage.setItem('authUrl', to.fullPath) 
+          storage.set('authUrl', to.fullPath) 
           // userStore.setCurrentUrl(to.fullPath) //当前页url与参数放入缓存
           next('/auth')
         } 

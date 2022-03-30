@@ -3,6 +3,7 @@ import type { App, Plugin } from 'vue';
 
 import { unref } from 'vue';
 import { isObject } from '@/utils/is';
+import { constants } from 'buffer';
 
 export const noop = () => {};
 
@@ -126,6 +127,22 @@ export const getUrlParame = (parameName) => {
     }
     return ''
   }
+}
+
+export const getParams = (key: string) => {
+  const params = window.location.search || '';
+  //获取？后面第一个字符串的索引
+  let index = params.indexOf('?');
+  if(index !== -1) {
+    const arr = params.substring(index+1).split('&') || [];
+    const obj = {};
+    arr.forEach(item => {
+      let tmpArr = item.split('=');
+      obj[tmpArr[0]] = tmpArr[1];
+    })
+    return obj[key] ?? '';
+  }
+  return '';
 }
 
 export const sliceStr = (str = '', start = 6, end = -6) => {

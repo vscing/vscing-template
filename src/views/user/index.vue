@@ -1,19 +1,33 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
-import { Image as VantImage, Icon as VantIcon } from 'vant';
+import { Image as VantImage, Icon as VantIcon, Toast } from 'vant';
 import { SvgIcon } from '@/components/SvgIcon';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/modules/user';
 import { sliceStr } from '@/utils';
+import useClipboard from 'vue-clipboard3';
 
 const router = useRouter();
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
+console.log('%c [ userInfo ]-12', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
 
 const goTo = (path: string) => {
   router.push(path)
 }
 
+
+const { toClipboard } = useClipboard()
+
+const copy = async (value: string) => {
+  try {
+    await toClipboard(value)
+    Toast.success('复制成功')
+  } catch (e) {
+    console.error(e)
+    Toast.fail('复制失败')
+  }
+}
 
 </script>
 
@@ -38,7 +52,7 @@ const goTo = (path: string) => {
             </div>
             <div class="polygon-item">
               <span>{{sliceStr(userInfo['polygon_address'])}}</span>
-              <SvgIcon name="whiteCopy"/>
+              <SvgIcon name="whiteCopy" @click="copy(userInfo['polygon_address'])"/>
             </div>
           </div>
         </div>
