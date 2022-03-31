@@ -1,4 +1,4 @@
-import { defHttp } from '@/utils/http/axios';
+import { defHttp, resHttp } from '@/utils/http/axios';
 
 enum Api {
   getUserInfo = '/user/getUserInfo',
@@ -14,5 +14,5 @@ export const doLogout = (params?: any) =>
 
 // 实名认证
 export const addIdCard = (data?: any) =>
-  defHttp.post<any>({ url: Api.addIdCard, data });
+  resHttp.post<any>({ url: Api.addIdCard, data });
 

@@ -48,7 +48,7 @@ const copy = async (value: string) => {
           <div class="user-name">
             <div>
               <span>{{userInfo?.nickname}}</span>
-              <span class="auth">未认证</span>
+              <span class="auth">{{userInfo['is_name'] ? '已认证':'未认证'}}</span>
             </div>
             <div class="polygon-item">
               <span>{{sliceStr(userInfo['polygon_address'])}}</span>

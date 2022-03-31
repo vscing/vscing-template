@@ -237,6 +237,12 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 }
 export const defHttp = createAxios();
 
+export const resHttp = createAxios({
+  requestOptions: {
+    isTransformResponse: false
+  }
+});
+
 // other api url
 // export const otherHttp = createAxios({
 //   requestOptions: {
