@@ -47,8 +47,7 @@ export function createWechatLoginGuard(router: Router) {
         if (to.path === '/login') { 
           next()
         } else {
-          next()
-          // next('/login')
+          next('/login')
         }
       }
     } else { 

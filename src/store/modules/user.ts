@@ -5,12 +5,14 @@ import { doLogout } from '@/api/user';
 interface UserState {
   userInfo: any;
   token?: string;
+  whiteList: any[];
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     token: undefined,
-    userInfo: null
+    userInfo: null,
+    whiteList: ['/', '/']
   }),
   getters: {
     getUserInfo: (state) => {
