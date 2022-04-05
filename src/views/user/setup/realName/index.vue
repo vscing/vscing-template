@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { useUserStore } from '@/store/modules/user';
 import { addIdCard } from '@/api/user';
+import { Images } from '@/assets/images';
 import { to } from '@/utils';
 
 const userStore = useUserStore();
@@ -27,18 +28,19 @@ const onSubmit = async () => {
     'id_number': idcard.value,
     'real_name': username.value
   }));
-  if (res?.code == 0) {
-    Toast.fail(res.message);
+  if (res) {
+    Toast.success(res.message);
     userInfo['is_name'] = true;
     userStore.setUserInfo(userInfo);
   }
 }
+
 </script>
 <template>
   <div class="setup">
     <VantNavBar class="nav-bar" title="实名认证" left-arrow @click-left="onClickLeft" />
     <div class="modal-show">
-      <VantEmpty v-if="userInfo['is_name']" description="已认证" />
+      <VantEmpty v-if="userInfo['is_name']" :image="Images.auth" description="已实名认证" />
       <VantForm v-else @submit="onSubmit">
         <VantCellGroup>
           <VantField
@@ -58,6 +60,8 @@ const onSubmit = async () => {
             :rules="[{ required: true, message: '请填写您的身份证号' }]"
           />
         </VantCellGroup>
+        <div class="tips"> 应国家法律法规要求，购买前请完成实名认证。实名认证完成后，您的提现账户将与此实名信息进行绑定，请知晓！ </div>
+        <div class="tips" style="color: #ff0000;"> 实名认证一经审核通过，非平台认可的法定事由不得修改 </div>
         <div class="saveData">
           <VantButton round block native-type="submit">
             保存
@@ -79,6 +83,12 @@ const onSubmit = async () => {
       color: #000000;
     }
   }
+}
+.tips {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(0,0,0,.4);
+  padding: 20px 20px 0;
 }
 .saveData {
   padding: 0 20px;

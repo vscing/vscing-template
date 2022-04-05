@@ -31,10 +31,13 @@ export function setupRouterGuard(router: Router) {
 
 export function createWechatLoginGuard(router: Router) {
   const userStore = useUserStoreWithOut();
+  const whiteList = userStore.whiteList;
   router.beforeEach(async (to, _, next) => {
     const token = userStore.getToken;
-    const wechat = isWechat();
-    if (!token) {
+    // const wechat = isWechat();
+    const wechat = false;
+    const url = to.fullPath.split('?')[0];
+    if (!token && !whiteList.includes(url)) {
       if(wechat) {
         if (to.path === '/auth') { 
           next()
@@ -47,6 +50,7 @@ export function createWechatLoginGuard(router: Router) {
         if (to.path === '/login') { 
           next()
         } else {
+          storage.set('authUrl', to.fullPath)
           next('/login')
         }
       }

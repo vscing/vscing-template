@@ -1,8 +1,8 @@
 import { defHttp } from '@/utils/http/axios';
 
 enum Api {
-  getBanner = '/banner/list',
+  getHome = '/index/index',
 }
 
-export const getBanner = (params?: any) =>
-  defHttp.get<any>({ url: Api.getBanner, params });
+export const getHome = (params?: any) =>
+  defHttp.get<any>({ url: Api.getHome, params });

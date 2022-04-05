@@ -9,21 +9,42 @@
     Grid as VantGrid, 
     GridItem as VantGridItem,
     Button as VantButton,
-    Image as VantImage
+    Image as VantImage,
+    Empty as VantEmpty
   } from 'vant';
   import { TabList } from '@/components/TabList';
+  import { Images } from '@/assets/images';
+  import { getHome } from '@/api/index';
+  import { to } from '@/utils';
+  import { columnToDateTime } from '@/utils/dateUtil';
 
   const value = ref<string>('');
-  const images = reactive<string[]>([
-    'https://nft.ysxqfeicui.com/banner.png',
-    'https://nft.ysxqfeicui.com/banner.png'
-  ])
+  const homeData = reactive<any>({
+    banner: [],
+    currentGoods: null,
+    goodsList: []
+  });
 
   const router = useRouter();
 
-  const onDetail = () => {
-    router.push('/goods/detail')
+  const goto = (url: string) => {
+    router.push(url);
   }
+
+  const onDetail = (id: number) => {
+    router.push('/goods/detail?id='+id)
+  }
+
+  const init = async() => {
+    const [_, res] = await to(getHome());
+    if(res){
+      homeData.banner = res.banner;
+      homeData.currentGoods = res.currentGoods;
+      homeData.goodsList = res.goodsList;
+    }
+  }
+
+  init();
 
 </script>
 
@@ -34,24 +55,24 @@
   </div>
   
   <VantSwipe :autoplay="3000" lazy-render indicator-color="#000">
-    <VantSwipeItem v-for="image in images" :key="image">
-      <img class="swiper-img" :src="image" height="200"/>
+    <VantSwipeItem v-for="item in homeData.banner" :key="item.id">
+      <img class="swiper-img" :src="item.img" height="200"/>
     </VantSwipeItem>
   </VantSwipe>
 
   <VantGrid>
-    <VantGridItem icon="fire-o" text="最新活动" />
-    <VantGridItem icon="notes-o" text="合成策略" />
+    <VantGridItem icon="fire-o" text="最新活动" @click="goto('/news/list?type=1')" />
+    <VantGridItem icon="notes-o" text="合成策略" @click="goto('/news/list?type=3')" />
     <VantGridItem icon="like-o" text="我的收藏" />
-    <VantGridItem icon="service-o" text="客服帮助" />
+    <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
 
-  <div class="product">
-    <h2>本期发售</h2>
+  <div class="product" v-if="homeData.currentGoods">
+    <h2 class="title">本期发售</h2>
     <ul class="product-sell-box">
-      <li class="product-sell-item" @click="onDetail">
+      <li class="product-sell-item" @click="onDetail(homeData.currentGoods?.id)">
         <VantImage
-          :src="`https://source.theone.art/watermarkResize/eb92c60ef6173ee4abc507185d3fe9d7/92898b7dfd077feb141766351378657e-16443987121450.25.gif`"
+          :src="homeData.currentGoods?.img"
           fit="cover"
           lazy-load
           width="100%"
@@ -61,18 +82,18 @@
         />
         <div class="product-item-info">
           <div class="product-title-box">
-            <h2>火锅 牛肉</h2>
+            <h2>{{homeData.currentGoods?.title}}</h2>
             <p>
               <span>产品数量：</span>
-              <span class="product-item-value">3500份</span>
+              <span class="product-item-value">{{homeData.currentGoods?.total_stock}}份</span>
             </p>
           </div>
-          <p>发售价格：<span class="product-item-value">¥229</span></p>
-          <p>发售时间：<span class="product-item-value">2022-03-10 08:00:00</span></p>
+          <p>发售价格：<span class="product-item-value">¥{{homeData.currentGoods?.price}}</span></p>
+          <p>发售时间：<span class="product-item-value">{{columnToDateTime(homeData.currentGoods?.presell_time)}}</span></p>
           <p>抢购倒计时：<span class="product-item-value product-item-color">00:00:00:00</span></p>
           <p class="btn-list">
-            <VantButton color="#393742">优先抢购</VantButton>
-            <VantButton color="#01c2c3">限时抢购</VantButton>
+            <VantButton color="#393742" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton>
+            <VantButton color="#01c2c3" @click="onDetail(homeData.currentGoods?.id)">限时抢购</VantButton>
           </p>
         </div>
       </li>
@@ -80,11 +101,14 @@
   </div>
 
   <div class="product">
-    <h2>上期发售</h2>
-    <ul class="product-sell-box">
-      <li class="product-sell-item" @click="onDetail">
+    <div class="prev">
+      <h2 class="title">往期发售</h2>
+      <span @click="goto('/sell/list')">更多>></span>
+    </div>
+    <ul class="product-sell-box" v-if="homeData.goodsList.length < 0">
+      <li v-for="item in homeData.goodsList" class="product-sell-item" @click="onDetail(item.id)">
         <VantImage
-          :src="`https://source.theone.art/watermarkResize/eb92c60ef6173ee4abc507185d3fe9d7/92898b7dfd077feb141766351378657e-16443987121450.25.gif`"
+          :src="item.img"
           fit="cover"
           lazy-load
           width="100%"
@@ -94,52 +118,24 @@
         />
         <div class="product-item-info">
           <div class="product-title-box">
-            <h2>火锅 白菜</h2>
+            <h2>{{item.title}}</h2>
             <p>
               <span>产品数量：</span>
-              <span class="product-item-value">3500份</span>
+              <span class="product-item-value">{{item.total_stock}}份</span>
             </p>
           </div>
           <p>发售价格：<span class="product-item-value">已售</span></p>
-          <p>发售时间：<span class="product-item-value">2022-03-10 08:00:00</span></p>
-          <!-- <p class="product-item-desc">简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊简短的产品介绍介绍啊啊啊啊啊</p> -->
-          <!-- <p class="btn-list">
-            <VantButton color="#393742">优先抢购</VantButton>
-            <VantButton color="#01c2c3">限时抢购</VantButton>
-          </p> -->
+          <p>发售时间：<span class="product-item-value">{{columnToDateTime(item.presell_time)}}</span></p>
         </div>
       </li>
     </ul>
+    <VantEmpty
+      v-else
+      class="custom-image"
+      :image="Images.product"
+      description="暂无往期发售"
+    />
   </div>
-
-  <!-- <div class="product">
-    <h2>产品展示</h2>
-    <ul class="product-list">
-      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
-        <VantImage 
-          class="product-item-img"
-          :src="`https://nft.ysxqfeicui.com/banner.png?v=${item}`"
-          :show-loading="false"
-          :show-error="false"
-          fit="cover"
-          lazy-load
-          :radius="4"
-        />
-        <div class="product-item-info">
-          <h2>唐 门神</h2>
-          <p>******</p>
-          <p class="product-item-price">
-            <span>￥150</span>
-            <span class="product-item-like">
-              <VantIcon name="like-o" />
-              120000
-            </span>
-          </p>
-        </div>
-      </li>
-    </ul>
-  </div> -->
-
   <TabList />
 </template>
 
@@ -171,11 +167,19 @@
   }
   .product {
     padding: 10px;
-    & > h2 {
+    .title {
       font-size: 18px;
       font-weight: bold;
       color: #000000;
       margin-bottom: 10px;
+    }
+    .prev {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &>span{
+        margin-bottom: 10px;
+      }
     }
     .product-sell-box {
       .product-sell-item {

@@ -2,12 +2,20 @@
   import { 
     NavBar as VantNavBar,
     Cell as VantCell, 
-    CellGroup as VantCellGroup
+    CellGroup as VantCellGroup,
+    Toast
   } from 'vant';
   import { useRouter } from 'vue-router';
+  import { useUserStore } from '@/store/modules/user';
 
   const router = useRouter();
+  const userStore = useUserStore();
   const onClickLeft = () => router.go(-1);
+
+  const onLogout = async() => {
+    Toast.success('退出成功');
+    userStore.logout(true);
+  }
 </script>
 <template>
   <div class="setup">
@@ -24,10 +32,10 @@
       <VantCellGroup title="安全设置">
         <VantCell title="实名认证" value="认证" is-link  to="/realName"/>
         <VantCell title="设置支付密码" value="设置" is-link to="/setPayPassword"/>
-        <VantCell title="手机号" value="设置" is-link to="/phoneNumber"/>
+        <!-- <VantCell title="手机号" value="设置" is-link to="/phoneNumber"/> -->
       </VantCellGroup>
 
-      <div class="logout">
+      <div class="logout" @click="onLogout">
         退出登录
       </div>
   </div>

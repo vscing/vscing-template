@@ -4,7 +4,7 @@
   import { useRouter } from 'vue-router';
 
   const loading = ref<boolean>(false);
-  const finished = ref<boolean>(false);
+  const finished = ref<boolean>(true);
   const active = ref<number>(0);
 
   const router = useRouter();
@@ -35,7 +35,7 @@
     @load="onLoad"
   >
     <ul class="product-list">
-      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
+      <!-- <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
         <VantImage 
           class="product-item-img"
           :src="`https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=${item}`"
@@ -57,7 +57,7 @@
             </span>
           </p>
         </div>
-      </li>
+      </li> -->
     </ul>
   </VantList>
 </template>

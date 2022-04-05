@@ -1,11 +1,18 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { Tabs as VantTabs, Tab as VantTab, List as VantList, Image as VantImage, Icon as VantIcon } from 'vant';
+  import { 
+    List as VantList, 
+    Image as VantImage, 
+    Icon as VantIcon,
+    NavBar as VantNavBar
+  } from 'vant';
+  import { TabList } from '@/components/TabList';
   import { useRouter } from 'vue-router';
 
+  const timeVal = ref<number>(0);
+  const priceVal = ref<number>(0);
   const loading = ref<boolean>(false);
   const finished = ref<boolean>(true);
-  const active = ref<number>(0);
 
   const router = useRouter();
 
@@ -18,12 +25,7 @@
 </script>
 
 <template>
-  <VantTabs class="tabs-box" v-model:active="active">
-    <VantTab title="全部"></VantTab>
-    <VantTab title="待付款"></VantTab>
-    <VantTab title="已完成"></VantTab>
-    <VantTab title="已取消"></VantTab>
-  </VantTabs>
+  <VantNavBar class="nav-bar" title="往期发售"/>
 
   <VantList
     v-model:loading="loading"
@@ -31,8 +33,8 @@
     finished-text="没有更多了"
     @load="onLoad"
   >
-    <!-- <ul class="product-list">
-      <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
+    <ul class="product-list">
+      <!-- <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
         <VantImage 
           class="product-item-img"
           :src="`https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=${item}`"
@@ -44,26 +46,30 @@
           :radius="4"
         />
         <div class="product-item-info">
-          <h2>唐 门神</h2>
-          <p>******</p>
-          <p class="product-item-price">
-            <span>￥150</span>
+          <h2>火锅 白菜</h2>
+          <p class="product-item-price">￥150</p>
+          <p class="product-item-desc">
+            <span>艺术家 小明</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
-              120000
             </span>
           </p>
         </div>
-      </li>
-    </ul> -->
+      </li> -->
+    </ul>
   </VantList>
+
+  <TabList />
 </template>
 
 <style lang="less" scoped>
-  .tabs-box {
-    :deep(.van-tabs__line) {
-      background-color: #01c2c3;
-    }
+  .screen-box {
+    position: fixed;
+    top: env(safe-area-inset-top);
+    top: constant(safe-area-inset-top);
+    left: 0;
+    width: 100%;
+    z-index: 9999;
   }
   .product-list {
     width: 100%;
@@ -91,13 +97,17 @@
         font-size: 14px;
         font-weight: 300;
         .product-item-price {
+          font-size: 16px;
+          font-weight: 600;
+          color: #01c2c3;
+        }
+        .product-item-desc {
           font-weight: 500;
         }
         & > h2 {
           color: #000000;
           font-size: 16px;
           font-weight: 600;
-          margin-bottom: 10px;
         }
         & > p {
           display: flex;

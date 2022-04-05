@@ -1,7 +1,7 @@
 import { defHttp } from '@/utils/http/axios';
 
 enum Api {
-  getConfig = '/config/data'
+  getConfig = '/config/getConfig'
 }
 
 export const getConfig = (params?: any) =>

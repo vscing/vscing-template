@@ -10,12 +10,10 @@ import useClipboard from 'vue-clipboard3';
 const router = useRouter();
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
-console.log('%c [ userInfo ]-12', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
 
 const goTo = (path: string) => {
   router.push(path)
 }
-
 
 const { toClipboard } = useClipboard()
 
@@ -48,7 +46,7 @@ const copy = async (value: string) => {
           <div class="user-name">
             <div>
               <span>{{userInfo?.nickname}}</span>
-              <span class="auth">{{userInfo['is_name'] ? '已认证':'未认证'}}</span>
+              <span v-if="!userInfo['is_name']" class="auth" @click="goTo('/realName')">{{userInfo['is_name'] ? '已认证':'未认证'}}</span>
             </div>
             <div class="polygon-item">
               <span>{{sliceStr(userInfo['polygon_address'])}}</span>
@@ -59,9 +57,10 @@ const copy = async (value: string) => {
     </div>
     
     <div class="dashboard">
-      <div class="dashboard-item" @click="goTo('/job')">
+      <div class="dashboard-item">
         <VantIcon name="notes-o" size="20" />
-        <span>任务清单</span>
+        <span>条件清单</span> 
+        <!--  @click="goTo('/job')" -->
       </div>
       <div class="dashboard-item" @click="goTo('/payment')">
         <VantIcon name="balance-pay" size="20" />
@@ -77,7 +76,7 @@ const copy = async (value: string) => {
       </div>
     </div>
 
-    <div class="dashboard2">
+    <div class="dashboard2" v-show="false">
       <div class="dashboard2-item" @click="goTo('/collect')">
         <div class="dashboard2-item-left">
           <VantIcon name="star-o" size="20" color="#333" />
@@ -194,7 +193,7 @@ const copy = async (value: string) => {
   justify-content: center;
   .auth {
     padding-left: 5px;
-    color: #01c2c3;
+    color: #ff0000;
   }
   .polygon-item {
     display: flex;

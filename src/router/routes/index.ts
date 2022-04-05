@@ -11,8 +11,24 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/sell/list',
+    name: 'SellList',
+    component: () => import('@/views/sell/list/index.vue'),
+    meta: {
+      title: '往期发售',
+    },
+  },
+  {
+    path: '/sell/detail',
+    name: 'SellDetail',
+    component: () => import('@/views/sell/detail/index.vue'),
+    meta: {
+      title: '产品详情',
+    },
+  },
+  {
     path: '/goods',
-    name: 'goods',
+    name: 'Goods',
     component: () => import('@/views/goods/list/index.vue'),
     meta: {
       title: '市场',
@@ -20,7 +36,7 @@ export const MainRoute: AppRouteRecordRaw[] = [
   },
   {
     path: '/goods/detail',
-    name: 'detail',
+    name: 'GoodsList',
     component: () => import('@/views/goods/detail/index.vue'),
     meta: {
       title: '产品详情',
@@ -187,12 +203,12 @@ export const MainRoute: AppRouteRecordRaw[] = [
     }
   },
   {
-      path: '/phoneNumber',
-      name: 'PhoneNumber',
-      component: () => import('@/views/user/setup/phoneNumber/index.vue'),
-      meta: {
-        title: '手机号',
-      },
+    path: '/phoneNumber',
+    name: 'PhoneNumber',
+    component: () => import('@/views/user/setup/phoneNumber/index.vue'),
+    meta: {
+      title: '手机号',
+    },
   },
   {
     path: '/auth',
@@ -208,6 +224,30 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/user/login/index.vue'),
     meta: {
       title: '登录',
+    },
+  },
+  {
+    path: '/agree',
+    name: 'Agree',
+    component: () => import('@/views/user/agree/index.vue'),
+    meta: {
+      title: '协议',
+    },
+  },
+  {
+    path: '/news/list',
+    name: 'NewsList',
+    component: () => import('@/views/news/list/index.vue'),
+    meta: {
+      title: '食艺热点',
+    },
+  },
+  {
+    path: '/news/detail',
+    name: 'NewsDetail',
+    component: () => import('@/views/news/detail/index.vue'),
+    meta: {
+      title: '详情',
     },
   },
   
