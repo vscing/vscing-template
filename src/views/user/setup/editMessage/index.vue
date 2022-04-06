@@ -14,7 +14,6 @@
   const router = useRouter();
   const userStore = useUserStore();
   let userInfo = userStore.getUserInfo || {}
-  console.log('%c [ userInfo ]-17', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
   const onClickLeft = () => router.go(-1);
 
   const nickname = ref(userInfo.nickname);
@@ -26,8 +25,6 @@
       result.value = value;
       showPicker.value = false;
   };
-  
-
 </script>
 <template>
   <VantNavBar

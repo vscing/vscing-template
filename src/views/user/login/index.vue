@@ -78,7 +78,7 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
 <template>
   <div class="login">
     <div class="loginImage">
-      <img :src="Images.login"/>
+      <img :src="Images.logo"/>
     </div>
     
     <VantForm ref="formRef" @submit="onSubmit">
@@ -116,6 +116,8 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
 
 <style lang="less" scoped>
 .login {
+  height: 100vh;
+  background-color: #ffffff;
   .loginImage {
     display: flex;
     align-items: center;
@@ -127,26 +129,14 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
     }
   }
   :deep(.van-form) {
-    .van-cell-group {
-      background-color: #f6f6f6;
-      &:after {
-        border-color: rgba(0,0,0,.1);
-      }
-      .van-cell {
-        background-color: #f6f6f6;
-        &:after {
-          border-color: rgba(0,0,0,.1);
-        }
-      }
-      .smsCode {
-        color: #397fe7;
-      }
+    .smsCode {
+      color: #397fe7;
     }
     .saveData {
       margin-top: 100px;
       padding: 0 20px;
       & > button {
-        font-size: 0.28rem;
+        font-size: 12px;
         color: #fff;
         background-color: #01c2c3;
         border: 0;

@@ -9,7 +9,7 @@ import useClipboard from 'vue-clipboard3';
 
 const router = useRouter();
 const userStore = useUserStore();
-const userInfo = userStore.getUserInfo;
+const userInfo = userStore.getUserInfo || {};
 
 const goTo = (path: string) => {
   router.push(path)

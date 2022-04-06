@@ -11,6 +11,6 @@ export const Images = {
   search: new URL('search.png', import.meta.url).href,
   tending: new URL('tending.png', import.meta.url).href,
   cart: new URL('cart.png', import.meta.url).href,
-  login: new URL('login.png', import.meta.url).href,
+  logo: new URL('logo.png', import.meta.url).href,
   code: new URL('code.png', import.meta.url).href
 }
