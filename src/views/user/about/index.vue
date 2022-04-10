@@ -1,6 +1,19 @@
 <script lang="ts" setup>
 import { Image as VantImage, Icon as VantIcon } from 'vant';
-import { Images } from '@/assets/images';
+import { getHelp } from '@/api/config';
+import { ref } from 'vue';
+import { to } from '@/utils';
+
+const info = ref<any>({});
+
+const init = async() => {
+  const [_, res] = await to(getHelp());
+  if(res) {
+    info.value = res.help
+  }
+}
+init();
+
 </script>
 
 <template>
@@ -10,12 +23,11 @@ import { Images } from '@/assets/images';
       <VantIcon name="service-o" />
       <p>
         <span>联系电话：</span>
-        <a href="tel:13386532356">13386532356</a>
+        <a :href="`tel:${info.phone}`">{{info.phone}}</a>
       </p>  
     </div>
-    <VantImage :src="Images.code"/>
+    <VantImage :src="info.code"/>
   </div>
-  
 </template>
 
 <style lang="less" scoped>
@@ -37,6 +49,9 @@ import { Images } from '@/assets/images';
       font-weight: 600;
       display: flex;
       align-items: center;
+      a {
+        color: #397fe7;
+      }
     }
     :deep(.van-image) {
       width: 200px;

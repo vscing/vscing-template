@@ -115,6 +115,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/pay/fail',
+    name: 'PayFail',
+    component: () => import('@/views/user/payment/fail/index.vue'),
+    meta: {
+      title: '支付失败',
+    },
+  },
+  {
     path: '/distribut',
     name: 'Distribut',
     component: () => import('@/views/user/distribut/index.vue'),

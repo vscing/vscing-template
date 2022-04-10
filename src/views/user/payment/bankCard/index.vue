@@ -54,6 +54,7 @@ const onSubmit = async() => {
     Toast.success('绑定成功');
     userInfo['is_bank'] = true;
     userStore.setUserInfo(userInfo);
+    onClickLeft();
   }
 }
 </script>

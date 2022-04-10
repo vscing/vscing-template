@@ -37,13 +37,13 @@ const init = async () => {
 }
 init();
 
-
 const rechargeForm = reactive<any>({
   price: 1,
   model: 'alipay'
 })
 const onRecharge = async() => {
   const [_, res] = await to(setRecharge(rechargeForm))
+  recharge.value = false
   const div = document.createElement('div')
   /* 此处form就是后台返回接收到的数据 */
   div.innerHTML = res.form
@@ -61,6 +61,7 @@ const onWithdraw = async() => {
     Toast.success('提现申请成功');
   }
   withdraw.value = false
+  init();
 }
 </script>
 
@@ -114,7 +115,7 @@ const onWithdraw = async() => {
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>
-    <VantButton v-if="payInfo.useMoney" round block color="#01c2c3" @click="withdraw = true">可用金额提现</VantButton>
+    <VantButton v-if="payInfo.useMoney > 0" round block color="#01c2c3" @click="withdraw = true">可用金额提现</VantButton>
   </div>
 
   <VantOverlay :show="recharge" @click="recharge = false">
@@ -122,7 +123,7 @@ const onWithdraw = async() => {
       <VantForm @submit="onRecharge">
         <VantField name="stepper" label="充值金额">
           <template #input>
-            <VantStepper v-model="rechargeForm.price"  min="1" max="100000" />
+            <VantStepper v-model="rechargeForm.price"  min="0.1" max="50000" />
           </template>
         </VantField>
         <VantField name="radio" label="充值渠道">
@@ -149,7 +150,7 @@ const onWithdraw = async() => {
       <VantForm @submit="onWithdraw">
         <VantField name="stepper" label="提现金额">
           <template #input>
-            <VantStepper v-model="withdrawForm.price"  min="1" max="100000" />
+            <VantStepper v-model="withdrawForm.price"  min="0.1" max="10000" />
           </template>
         </VantField>
         <VantField name="radio" label="提现渠道">
@@ -170,7 +171,6 @@ const onWithdraw = async() => {
       </VantForm>
     </div>
   </VantOverlay>
-  
 </template>
 
 <style scoped lang="less">

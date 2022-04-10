@@ -106,7 +106,7 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
         </VantField>
       </VantCellGroup>
       <div class="saveData">
-        <VantButton round block native-type="submit" :disabled="!checked" :class="{'disableBtn': !checked}">保存</VantButton>
+        <VantButton round block native-type="submit" :disabled="!checked" :class="{'disableBtn': !checked}">登录</VantButton>
       </div>
     </VantForm>
     <div class="agreement">
