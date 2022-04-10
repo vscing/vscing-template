@@ -94,7 +94,7 @@ const onSubmit = async () => {
   padding: 0 20px;
   margin-top: 53px;
   & > button {
-    font-size: 0.28rem;
+    font-size: 14px;
     color: #fff;
     background-color: #01c2c3;
     border: 0;

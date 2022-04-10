@@ -27,6 +27,7 @@ const userStore = useUserStore();
 let timer: NodeJS.Timer;
 
 const url = storage.get('authUrl') || '/';
+console.log(url)
 
 const sendCode = async() => {
   try {
@@ -63,8 +64,9 @@ const onSubmit = async () => {
   if (res) {
     Toast.success('登录成功');
     userStore.setToken(res?.token);
-    userStore.setUserInfo(res?.userInfo);
-    router.replace(url);
+    // userStore.setUserInfo(res?.userInfo);
+    // router.replace(url);
+    router.replace('/user');
   }
 }
 

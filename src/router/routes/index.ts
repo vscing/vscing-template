@@ -91,8 +91,24 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/alipay',
+    name: 'Alipay',
+    component: () => import('@/views/user/payment/alipay/index.vue'),
+    meta: {
+      title: '第三方支付',
+    },
+  },
+  {
     path: '/bankCard',
     name: 'BankCard',
+    component: () => import('@/views/user/payment/bankCard/List.vue'),
+    meta: {
+      title: '银行卡列表',
+    },
+  },
+  {
+    path: '/bankCard/add',
+    name: 'AddBankCard',
     component: () => import('@/views/user/payment/bankCard/index.vue'),
     meta: {
       title: '银行卡绑定',

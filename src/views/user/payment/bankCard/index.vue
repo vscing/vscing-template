@@ -6,55 +6,86 @@ import {
   CellGroup as VantCellGroup,
   Button as VantButton,
   Popup as VantPopup,
-  Picker as VantPicker
+  Picker as VantPicker,
+  Toast
 } from 'vant';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import { to } from '@/utils';
+import { getBankList, addBank } from '@/api/bank';
+import { useUserStore } from '@/store/modules/user';
 
-const name = ref('');
-const bank = ref('');
-const openBank = ref('');
-const showPicker = ref(false);
-const bankNo = ref('');
-const phone = ref('');
+const userStore = useUserStore();
+let userInfo = userStore.getUserInfo || {}
 
-const columns = ['北京银行', '招商银行', '工商银行', '建设银行', '邮政银行', '农业银行', '中国银行', '交通银行'];
 const router = useRouter();
-const onClickLeft = () => router.go(-1);
+const formData = reactive({
+  bank_id: 0,
+  open_bank_name: '',
+  card_number: '',
+  phone: ''
+})
+const bankName = ref<string>('');
+const showPicker = ref(false);
+const columns = ref([]);
+
 const onConfirm = (value) => {
-  bank.value = value;
+  bankName.value = value.bank_name;
+  formData.bank_id = value.id;
   showPicker.value = false;
 };
+
+const init = async() => {
+  const [_, res] = await to(getBankList());
+  if(res){
+    columns.value = res.list
+  }
+}
+
+init();
+
+const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val);
+
+const onClickLeft = () => router.go(-1);
+
+const onSubmit = async() => {
+  const [_, res] = await to(addBank(formData));
+  if (res) {
+    Toast.success('绑定成功');
+    userInfo['is_bank'] = true;
+    userStore.setUserInfo(userInfo);
+  }
+}
 </script>
 <template>
   <div class="setup">
     <VantNavBar class="nav-bar" title="银行卡绑定" left-arrow @click-left="onClickLeft" />
     <div class="modal-show">
-      <VantForm>
+      <VantForm @submit="onSubmit">
         <VantCellGroup>
-          <VantField v-model="name" clearable name="持卡人姓名" label="持卡人姓名" placeholder="请输入持卡人姓名" />
           <VantField
-            v-model="bank"
+            v-model="bankName"
             is-link
             readonly
             name="银行"
             label="银行"
             placeholder="请选择银行"
             @click="showPicker = true"
+            :rules="[{ required: true, message: '请选择银行' }]"
           />
           <VantPopup v-model:show="showPicker" position="bottom">
-            <VantPicker :columns="columns" @confirm="onConfirm" @cancel="showPicker = false" />
+            <VantPicker :columns="columns" :columns-field-names="{text: 'bank_name'}" @confirm="onConfirm" @cancel="showPicker = false" />
           </VantPopup>
           <VantField
-            v-model="openBank"
+            v-model="formData.open_bank_name"
             clearable
             name="开户行"
             label="开户行"
-            placeholder="请选择开户行"
-            :rules="[{ required: true, message: '请选择开户行' }]"
+            placeholder="请输入开户行"
+            :rules="[{ required: true, message: '请输入开户行' }]"
           />
           <VantField
-            v-model="bankNo"
+            v-model="formData.card_number"
             clearable
             name="银行卡号"
             label="银行卡号"
@@ -62,13 +93,13 @@ const onConfirm = (value) => {
             :rules="[{ required: true, message: '请输入银行卡号' }]"
           />
           <VantField
-            v-model="phone"
+            v-model="formData.phone"
             clearable
             max-length
             name="银行卡预留手机号"
             label="银行卡预留手机号"
             placeholder="请输入银行卡预留手机号"
-            :rules="[{ required: true, message: '请输入银行卡预留手机号' }]"
+            :rules="[{ validator: validatePhone, message: '请输入正确银行卡预留手机号' }]"
           />
         </VantCellGroup>
         <div class="modal-show-button">
@@ -95,7 +126,7 @@ const onConfirm = (value) => {
       padding: 0 20px;
       margin-top: 53px;
       & > button {
-        font-size: 0.28rem;
+        font-size: 14px;
         color: #fff;
         background-color: #01c2c3;
         border: 0;

@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
-import { Image as VantImage, Icon as VantIcon, Toast } from 'vant';
+import { Image as VantImage, Icon as VantIcon, Toast, Skeleton as VantSkeleton } from 'vant';
 import { SvgIcon } from '@/components/SvgIcon';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/modules/user';
-import { sliceStr } from '@/utils';
+import { getUserInfo } from '@/api/user';
+import { sliceStr, to } from '@/utils';
 import useClipboard from 'vue-clipboard3';
+import { ref } from 'vue';
 
 const router = useRouter();
 const userStore = useUserStore();
-const userInfo = userStore.getUserInfo || {};
-
-const goTo = (path: string) => {
-  router.push(path)
-}
+const userInfo = ref<any>({});
 
 const { toClipboard } = useClipboard()
 
@@ -27,118 +25,142 @@ const copy = async (value: string) => {
   }
 }
 
+// 判断是否实名或绑定银行卡
+const goTo = (path: string) => {
+  if(userInfo.value.is_name && userInfo.value.is_bank) {
+    router.push(path)
+  }
+  if(!userInfo.value.is_name){
+    router.push('/realName')
+  }
+  if(!userInfo.value.is_bank){
+    router.push('/bankCard');
+  }
+}
+
+const init = async() => {
+  const [_, res] = await to(getUserInfo());
+  if(res) {
+    userStore.setUserInfo(res?.userInfo);
+    userInfo.value = res?.userInfo || {};
+  }
+}
+
+init();
 </script>
 
 <template>
-  <div class="user-box">
-    <div class="user-box-background" style="background-image: url('https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=1');">
-        <div class="header-box">
-          <div class="header-box-icon">
-            <VantIcon name="scan" size="25" color="#ffffff" />
-          </div>
-          <div class="header-box-icon" @click="goTo('/setup')">
-            <VantIcon name="setting-o" size="25" color="#ffffff" />
-          </div>
-        </div>
-
-        <div class="user-info">
-          <VantImage round width="70" height="70" :src="userInfo?.avatar" />
-          <div class="user-name">
-            <div>
-              <span>{{userInfo?.nickname}}</span>
-              <span v-if="!userInfo['is_name']" class="auth" @click="goTo('/realName')">{{userInfo['is_name'] ? '已认证':'未认证'}}</span>
+  <VantSkeleton title :row="100" :loading="!userInfo['polygon_address']">
+    <div class="user-box">
+      <div class="user-box-background" :style="{backgroundImage:`url(${userInfo['background']})`}">
+          <div class="header-box">
+            <div class="header-box-icon">
+              <VantIcon name="scan" size="25" color="#ffffff" />
             </div>
-            <div class="polygon-item">
-              <span>{{sliceStr(userInfo['polygon_address'])}}</span>
-              <SvgIcon name="whiteCopy" @click="copy(userInfo['polygon_address'])"/>
+            <div class="header-box-icon" @click="goTo('/setup')">
+              <VantIcon name="setting-o" size="25" color="#ffffff" />
             </div>
           </div>
-        </div>
-    </div>
-    
-    <div class="dashboard">
-      <div class="dashboard-item">
-        <VantIcon name="notes-o" size="20" />
-        <span>条件清单</span> 
-        <!--  @click="goTo('/job')" -->
-      </div>
-      <div class="dashboard-item" @click="goTo('/payment')">
-        <VantIcon name="balance-pay" size="20" />
-        <span>支付管理</span>
-      </div>
-      <div class="dashboard-item" @click="goTo('/distribut')">
-        <VantIcon name="cluster-o" size="20" />
-        <span>分销中心</span>
-      </div>
-      <div class="dashboard-item" @click="goTo('/about')">
-        <VantIcon name="friends-o" size="20" />
-        <span>需求合作</span>
-      </div>
-    </div>
 
-    <div class="dashboard2" v-show="false">
-      <div class="dashboard2-item" @click="goTo('/collect')">
-        <div class="dashboard2-item-left">
-          <VantIcon name="star-o" size="20" color="#333" />
-          <span>收藏</span>
+          <div class="user-info">
+            <VantImage round width="70" height="70" :src="userInfo?.avatar" />
+            <div class="user-name">
+              <div>
+                <span>{{userInfo?.nickname}}</span>
+                <span v-if="!userInfo['is_name']" class="auth" @click="goTo('/realName')">{{userInfo['is_name'] ? '已认证':'未认证'}}</span>
+              </div>
+              <div class="polygon-item">
+                <span>{{sliceStr(userInfo['polygon_address'])}}</span>
+                <SvgIcon name="whiteCopy" @click="copy(userInfo['polygon_address'])"/>
+              </div>
+            </div>
+          </div>
+      </div>
+      
+      <div class="dashboard">
+        <div class="dashboard-item">
+          <VantIcon name="notes-o" size="20" />
+          <span @click="() => Toast.success('敬请期待')">条件清单</span> 
+          <!--  @click="goTo('/job')" -->
         </div>
-        <div class="dashboard2-item-right">
-          <span>0</span>
-          <VantIcon name="arrow" size="16" color="#00000059" />
+        <div class="dashboard-item" @click="goTo('/payment')">
+          <VantIcon name="balance-pay" size="20" />
+          <span>支付管理</span>
+        </div>
+        <div class="dashboard-item" @click="goTo('/distribut')">
+          <VantIcon name="cluster-o" size="20" />
+          <span>分销中心</span>
+        </div>
+        <div class="dashboard-item" @click="goTo('/about')">
+          <VantIcon name="friends-o" size="20" />
+          <span>需求合作</span>
         </div>
       </div>
-      <div class="dashboard2-item" @click="goTo('/locked')">
-        <div class="dashboard2-item-left">
-          <VantIcon name="goods-collect-o" size="20" color="#333" />
-          <span>锁藏品</span>
-        </div>
-        <div class="dashboard2-item-right">
-          <span>0</span>
-          <VantIcon name="arrow" size="16" color="#00000059" />
-        </div>
-      </div>
-      <div class="dashboard2-item" @click="goTo('/compound')">
-        <div class="dashboard2-item-left">
-          <VantIcon name="after-sale" size="20" color="#333" />
-          <span>产品合成</span>
-        </div>
-        <div class="dashboard2-item-right">
-          <span>0</span>
-          <VantIcon name="arrow" size="16" color="#00000059" />
-        </div>
-      </div>
-      <div class="dashboard2-item" @click="goTo('/grant')">
-        <div class="dashboard2-item-left">
-          <VantIcon name="share-o" size="20" color="#333" />
-          <span>赠予管理</span>
-        </div>
-        <div class="dashboard2-item-right">
-          <span>0</span>
-          <VantIcon name="arrow" size="16" color="#00000059" />
-        </div>
-      </div>
-    </div>
 
-    <div class="views-order">
-      <div class="views-order-amount">
-        我的订单
+      <div class="dashboard2" v-show="false">
+        <div class="dashboard2-item" @click="goTo('/collect')">
+          <div class="dashboard2-item-left">
+            <VantIcon name="star-o" size="20" color="#333" />
+            <span>收藏</span>
+          </div>
+          <div class="dashboard2-item-right">
+            <span>0</span>
+            <VantIcon name="arrow" size="16" color="#00000059" />
+          </div>
+        </div>
+        <div class="dashboard2-item" @click="goTo('/locked')">
+          <div class="dashboard2-item-left">
+            <VantIcon name="goods-collect-o" size="20" color="#333" />
+            <span>锁藏品</span>
+          </div>
+          <div class="dashboard2-item-right">
+            <span>0</span>
+            <VantIcon name="arrow" size="16" color="#00000059" />
+          </div>
+        </div>
+        <div class="dashboard2-item" @click="goTo('/compound')">
+          <div class="dashboard2-item-left">
+            <VantIcon name="after-sale" size="20" color="#333" />
+            <span>产品合成</span>
+          </div>
+          <div class="dashboard2-item-right">
+            <span>0</span>
+            <VantIcon name="arrow" size="16" color="#00000059" />
+          </div>
+        </div>
+        <div class="dashboard2-item" @click="goTo('/grant')">
+          <div class="dashboard2-item-left">
+            <VantIcon name="share-o" size="20" color="#333" />
+            <span>赠予管理</span>
+          </div>
+          <div class="dashboard2-item-right">
+            <span>0</span>
+            <VantIcon name="arrow" size="16" color="#00000059" />
+          </div>
+        </div>
+      </div>
+
+      <div class="views-order">
+        <div class="views-order-amount">
+          我的订单
+        </div>
+      </div>
+      <div class="order-status">
+        <div class="order-desc" @click="goTo('/order/buy')">
+          <VantIcon name="cart-o" size="20" />
+          <span>我买到的</span>
+        </div>
+        <div class="order-desc" @click="goTo('/order/publish')">
+          <VantIcon name="guide-o" size="20" />
+          <span>我发布的</span>
+        </div>
+        <div class="order-desc" @click="goTo('/order/sale')">
+          <VantIcon name="cash-back-record" size="20" />
+          <span>我卖出的</span>
+        </div>
       </div>
     </div>
-    <div class="order-status">
-      <div class="order-desc" @click="goTo('/order/buy')">
-        <VantIcon name="cart-o" size="20" />
-        <span>我买到的</span>
-      </div>
-      <div class="order-desc" @click="goTo('/order/publish')">
-        <VantIcon name="guide-o" size="20" />
-        <span>我发布的</span>
-      </div>
-      <div class="order-desc" @click="goTo('/order/sale')">
-        <VantIcon name="cash-back-record" size="20" />
-        <span>我卖出的</span>
-      </div>
-    </div>
-  </div>
+  </VantSkeleton>
   <TabList />
 </template>
 

@@ -72,7 +72,7 @@
   width: 342px;
   line-height: 36px;
   height: 36px;
-  font-size: .28rem;
+  font-size: 14px;
   text-align: center;
   color: #fff;
   background-color:#01c2c3;

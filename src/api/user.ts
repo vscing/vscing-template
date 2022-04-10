@@ -6,10 +6,13 @@ enum Api {
   addIdCard = '/user/idCard',
   getCode = '/user/getCode',
   login = '/user/login',
+  aliPay = '/user/aliPay',
+  editUserInfo = '/user/editUserInfo',
+  setPaasWord = '/user/setPaasWord'
 }
 
 export const getUserInfo = (data?: any) =>
-  defHttp.post<any>({ url: Api.getUserInfo, data });
+  defHttp.get<any>({ url: Api.getUserInfo, data });
 
 export const doLogout = (params?: any) =>
   defHttp.get<any>({ url: Api.logout, params });
@@ -23,3 +26,11 @@ export const getCode = (params?: any) => defHttp.get<any>({ url: Api.getCode, pa
 // 登录
 export const login = (data?: any) => defHttp.post<any>({ url: Api.login, data}); 
 
+// 绑定支付宝
+export const aliPay = (data?: any) => defHttp.post<any>({ url: Api.aliPay, data});
+
+// 编辑信息
+export const editUserInfo = (data?: any) => defHttp.post<any>({ url: Api.editUserInfo, data});
+
+// 绑定支付密码
+export const setPaasWord = (data?: any) => defHttp.post<any>({ url: Api.setPaasWord, data});

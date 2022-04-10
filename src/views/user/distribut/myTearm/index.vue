@@ -84,7 +84,7 @@
                 & > span {
                     display: flex;
                     justify-content: center;
-                    margin-top: 1rem;
+                    margin-top: 10px;
                     color: #fff;
                     font-size: 20px;
                 }
