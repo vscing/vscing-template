@@ -1,0 +1,74 @@
+{
+  // https://www.typescriptlang.org/zh/tsconfig
+  "compileOnSave": true, // 用于 IDE 保存时是否生成编译后的文件
+  // 设置编译的选项
+  "compilerOptions": {
+    // "target": "esnext",                        // 目标语言的版本
+    // "module": "esnext",                        // 生成代码的模块标准
+    // "moduleResolution": "node",                // 模块解析策略
+    // "strict": true,                            // 开启所有严格的类型检查
+    // "forceConsistentCasingInFileNames": true,  // 强制文件名保持一致
+    // "allowSyntheticDefaultImports": true,      // 允许合成默认导入
+    // "strictFunctionTypes": true,               // 严格函数类型
+    // "lib": [
+    //   "dom",
+    //   "esnext"
+    // ],                                         // TS 需要引用的库，即声明文件
+    // "jsx": "preserve",                         // jsx
+    // "baseUrl": ".",                            // 基准目录
+    // "allowJs": true,                           // 允许编译：IS 文件（js、jsx)
+    // "sourceMap": true,
+    // "resolveJsonModule": true,                 // json文件操作
+    // "esModuleInterop": true,                   // ES 模块互操作性
+    // "noUnusedLocals": true,                    // 报告未使用的局部变量的错误
+    // "noUnusedParameters": true,                // 报告函数中未使用参数的错误
+    // "experimentalDecorators": true,            // 对decorator的实验支持
+    // "noFallthroughCasesInSwitch": true,        // 报告Switch失败案例
+    // "types": [
+    //   "vite/client"
+    // ],                  // , "jest"
+    // "noImplicitAny": false,                    // 类型推断错误
+    // "skipLibCheck": true,                      // 声明文件的类型检查
+      "target": "esnext",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "strict": true,
+      "noLib": false,
+      "forceConsistentCasingInFileNames": true,
+      "allowSyntheticDefaultImports": true,
+      "strictFunctionTypes": false,
+      "jsx": "preserve",
+      "baseUrl": ".",
+      "allowJs": true,
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "experimentalDecorators": true,
+      "lib": ["dom", "esnext"],
+      "noImplicitAny": false,
+      "skipLibCheck": true,
+      "types": ["vite/client"],
+      "removeComments": true,
+      "paths": {                                 // 路径设置
+        "@/*": ["src/*"]
+      }                                       
+  },
+  // 用于表示 ts 排除的文件
+  "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"],
+  // 用于表示 ts 管理的文件
+  "include": [
+    "tests/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "mock/**/*.ts",
+    "vite.config.ts"
+  ],
+  // "references": [{ "path": "./tsconfig.node.json" }]
+}
+
