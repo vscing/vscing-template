@@ -37,7 +37,7 @@ const tabTitle = reactive(['最新活动', '合成策略', '客服帮助']);
 
     if(res) {
       list.value = res.list || []
-      total.value = res.total || 0
+      total.value = Math.ceil(res.total/10) || 0
     }
   }
   onLoad();
