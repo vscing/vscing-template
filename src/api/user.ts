@@ -11,8 +11,8 @@ enum Api {
   setPaasWord = '/user/setPaasWord'
 }
 
-export const getUserInfo = (data?: any) =>
-  defHttp.get<any>({ url: Api.getUserInfo, data });
+export const getUserInfo = (params?: any) =>
+  defHttp.get<any>({ url: Api.getUserInfo, params });
 
 export const doLogout = (params?: any) =>
   defHttp.get<any>({ url: Api.logout, params });

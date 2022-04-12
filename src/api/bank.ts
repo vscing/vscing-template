@@ -9,8 +9,8 @@ enum Api {
 export const addBank = (data?: any) =>
   defHttp.post<any>({ url: Api.addBank, data });
 
-export const getBankList = (data?: any) =>
-  defHttp.get<any>({ url: Api.getBankList, data });
+export const getBankList = (params?: any) =>
+  defHttp.get<any>({ url: Api.getBankList, params });
 
-export const getBankCard = (data?: any) =>
-  defHttp.get<any>({ url: Api.getBankCard, data });
+export const getBankCard = (params?: any) =>
+  defHttp.get<any>({ url: Api.getBankCard, params });
