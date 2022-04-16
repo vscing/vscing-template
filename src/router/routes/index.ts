@@ -27,6 +27,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/sell/agree',
+    name: 'SellAgree',
+    component: () => import('@/views/sell/agree/index.vue'),
+    meta: {
+      title: '购买协议',
+    },
+  },
+  {
+    path: '/sell/order',
+    name: 'SellOrder',
+    component: () => import('@/views/sell/order/index.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
     path: '/goods',
     name: 'Goods',
     component: () => import('@/views/goods/list/index.vue'),
@@ -40,6 +56,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/goods/detail/index.vue'),
     meta: {
       title: '产品详情',
+    },
+  },
+  {
+    path: '/goods/agree',
+    name: 'GoodsAgree',
+    component: () => import('@/views/goods/agree/index.vue'),
+    meta: {
+      title: '购买协议',
+    },
+  },
+  {
+    path: '/goods/order',
+    name: 'GoodsOrder',
+    component: () => import('@/views/goods/order/index.vue'),
+    meta: {
+      title: '订单详情',
     },
   },
   {
@@ -120,6 +152,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/user/payment/fail/index.vue'),
     meta: {
       title: '支付失败',
+    },
+  },
+  {
+    path: '/pay/success',
+    name: 'PaySuccess',
+    component: () => import('@/views/user/payment/success/index.vue'),
+    meta: {
+      title: '支付成功',
     },
   },
   {

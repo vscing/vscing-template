@@ -32,7 +32,7 @@
   }
 
   const onDetail = (id: number) => {
-    router.push('/goods/detail?id='+id)
+    router.push('/sell/detail?id='+id)
   }
 
   const init = async() => {
@@ -61,8 +61,8 @@
   </VantSwipe>
 
   <VantGrid>
-    <VantGridItem icon="fire-o" text="最新活动" @click="goto('/news/list?type=1')" />
-    <VantGridItem icon="notes-o" text="合成策略" @click="goto('/news/list?type=3')" />
+    <VantGridItem icon="fire-o" text="最新活动" @click="goto('/news/list?type=0')" />
+    <VantGridItem icon="notes-o" text="合成策略" @click="goto('/news/list?type=1')" />
     <VantGridItem icon="like-o" text="我的收藏" />
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
@@ -105,7 +105,7 @@
       <h2 class="title">往期发售</h2>
       <span @click="goto('/sell/list')">更多>></span>
     </div>
-    <ul class="product-sell-box" v-if="homeData.goodsList.length < 0">
+    <ul class="product-sell-box" v-if="homeData.goodsList.length > 0">
       <li v-for="item in homeData.goodsList" class="product-sell-item" @click="onDetail(item.id)">
         <VantImage
           :src="item.img"

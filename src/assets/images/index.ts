@@ -12,5 +12,7 @@ export const Images = {
   tending: new URL('tending.png', import.meta.url).href,
   cart: new URL('cart.png', import.meta.url).href,
   logo: new URL('logo.png', import.meta.url).href,
-  code: new URL('code.png', import.meta.url).href
+  code: new URL('code.png', import.meta.url).href,
+  paySuccess: new URL('paySuccess.png', import.meta.url).href,
+  payError: new URL('payError.png', import.meta.url).href,
 }

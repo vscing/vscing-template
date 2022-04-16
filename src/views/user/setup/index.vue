@@ -14,7 +14,7 @@
 
   const onLogout = async() => {
     Toast.success('退出成功');
-    userStore.logout(true);
+    userStore.logout();
   }
 </script>
 <template>
