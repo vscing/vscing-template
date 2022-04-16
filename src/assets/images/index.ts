@@ -15,4 +15,5 @@ export const Images = {
   code: new URL('code.png', import.meta.url).href,
   paySuccess: new URL('paySuccess.png', import.meta.url).href,
   payError: new URL('payError.png', import.meta.url).href,
+  poster: new URL('poster.jpg', import.meta.url).href,
 }

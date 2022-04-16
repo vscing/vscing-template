@@ -163,9 +163,9 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
-    path: '/distribut',
-    name: 'Distribut',
-    component: () => import('@/views/user/distribut/index.vue'),
+    path: '/distribute',
+    name: 'Distribute',
+    component: () => import('@/views/user/distribute/index.vue'),
     meta: {
       title: '分销中心',
     },
@@ -314,39 +314,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '详情',
     },
   },
-  
-  // {
-  //   path: '/myTearm',
-  //   name: 'MyTearm',
-  //   component: () => import('@/views/user/distribut/myTearm/index.vue'),
-  //   meta: {
-  //     title: '我的团队',
-  //   },
-  // },
-  // {
-  //   path: '/order',
-  //   name: 'Order',
-  //   component: () => import('@/views/user/distribut/order/index.vue'),
-  //   meta: {
-  //     title: '分销订单',
-  //   },
-  // },
-  // {
-  //   path: '/wechat',
-  //   name: 'Wechat',
-  //   component: () => import('@/views/user/distribut/wechat/index.vue'),
-  //   meta: {
-  //     title: '邀请码',
-  //   },
-  // },
-  // {
-  //   path: '/statics',
-  //   name: 'statics',
-  //   component: () => import('@/views/user/distribut/statics/index.vue'),
-  //   meta: {
-  //     title: '业绩统计',
-  //   },
-  // }
+  {
+    path: '/distribute/order',
+    name: 'DistributeOrder',
+    component: () => import('@/views/user/distribute/order/index.vue'),
+    meta: {
+      title: '分销订单',
+    },
+  },
+  {
+    path: '/distribute/wechat',
+    name: 'DistributeWechat',
+    component: () => import('@/views/user/distribute/wechat/index.vue'),
+    meta: {
+      title: '邀请码',
+    },
+  },
 ]
 
 export const LoginRoute: AppRouteRecordRaw = {

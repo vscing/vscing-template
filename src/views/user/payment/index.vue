@@ -150,7 +150,7 @@ const onWithdraw = async() => {
       <VantForm @submit="onWithdraw">
         <VantField name="stepper" label="提现金额">
           <template #input>
-            <VantStepper v-model="withdrawForm.price"  min="0.1" max="10000" />
+            <VantStepper v-model="withdrawForm.price"  min="100" max="10000" />
           </template>
         </VantField>
         <VantField name="radio" label="提现渠道">
@@ -160,6 +160,7 @@ const onWithdraw = async() => {
             </VantRadioGroup>
           </template>
         </VantField>
+        <p class="setup">提现金额需要100起步</p>
         <div class="btnList">
           <VantButton class="cancel" round block @click="withdraw = false">
             取消
@@ -262,6 +263,10 @@ const onWithdraw = async() => {
       }
     }
   }
+}
+.setup {
+  padding: 15px 15px 0;
+  color: #ff0000;
 }
 .btn-list {
   margin-top: 20px;

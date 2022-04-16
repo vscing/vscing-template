@@ -14,7 +14,7 @@ import { Images } from '@/assets/images';
 
 const page = ref<number>(1);
 const total = ref<number>(0);
-const list = ref<any[]>([{id:1}]);
+const list = ref<any[]>([]);
 const active = ref<number>(0);
 
 const onLoad = async () => {
@@ -73,6 +73,10 @@ const getStatusText = (status: number) => {
           <p>
             <span>订单金额：</span>
             <span>￥{{item.order_price}}</span>
+          </p>
+          <p>
+            <span>支付方式：</span>
+            <span>{{item.payment_type == 2 ? '支付宝':'余额'}}</span>
           </p>
           <p>
             <span>下单日期：</span>

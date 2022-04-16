@@ -124,7 +124,7 @@
               <span class="product-item-value">{{item.total_stock}}份</span>
             </p>
           </div>
-          <p>发售价格：<span class="product-item-value">已售</span></p>
+          <p>发售价格：<span class="product-item-value">已售罄</span></p>
           <p>发售时间：<span class="product-item-value">{{columnToDateTime(item.presell_time)}}</span></p>
         </div>
       </li>
