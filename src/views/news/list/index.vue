@@ -1,17 +1,4 @@
 <script setup lang="ts">
-<<<<<<< HEAD
-  import { reactive, ref, watch } from 'vue';
-  import { 
-    Tabs as VantTabs, 
-    Tab as VantTab, 
-    Pagination as VantPagination, 
-    Image as VantImage,
-    Collapse as VantCollapse,
-    CollapseItem as VantCollapseItem 
-  } from 'vant';
-  import { useRouter } from 'vue-router';
-  import { getArticleList } from '@/api/article';
-=======
 import { reactive, ref, watch } from 'vue';
 import {
   Tabs as VantTabs,
@@ -22,7 +9,6 @@ import {
 } from 'vant';
 import { useRouter, useRoute } from 'vue-router';
 import { getArticleList } from '@/api/article';
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
 import { to } from '@/utils';
 import { Images } from '@/assets/images';
 import { columnToDateTime } from '@/utils/dateUtil';
@@ -31,19 +17,10 @@ const route = useRoute();
 const type = Number(route.query.type) || 0
 
 const tabTitle = reactive(['最新活动', '合成策略', '客服帮助']);
-<<<<<<< HEAD
-  const page = ref<number>(1);
-  const total = ref<number>(0);
-  const active = ref<number>(0);
-  const actives = ref<number>(0);
-  const list = ref<any[]>([]);
-  const activeNames = ref(['1']);
-=======
 const page = ref<number>(1);
 const total = ref<number>(0);
 const active = ref<number>(type);
 const list = ref<any[]>([]);
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
 
 const router = useRouter();
 
@@ -591,44 +568,5 @@ onLoad();
               }
         }
   }
-<<<<<<< HEAD
-  .product-list {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    padding: 0 10px;
-    .product-data{
-      width: 50%;
-      display: flex;
-      flex-flow: column wrap;
-      .product-img{
-          display: flex;
-          justify-content: center;
-          .swiper-img{
-             border-radius: 4px;
-          }
-      }
-      .product-desc{
-          width: 150px;
-          padding-top: 25px;
-          margin: 0 auto;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-      }
-      .product-time{
-          display: flex;
-          justify-content: center;
-          padding: 20px 0;
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(0,0,0,.4);
-      }
-    }
-  }
-=======
 }
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
 </style>

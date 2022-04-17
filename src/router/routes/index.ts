@@ -11,6 +11,14 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/lottery',
+    name: 'Lottery',
+    component: () => import('@/views/lottery/index.vue'),
+    meta: {
+      title: '抽奖',
+    },
+  },
+  {
     path: '/sell/list',
     name: 'SellList',
     component: () => import('@/views/sell/list/index.vue'),
@@ -59,11 +67,6 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
-<<<<<<< HEAD
-    path: '/order',
-    name: 'Order',
-    component: () => import('@/views/order/index.vue'),
-=======
     path: '/goods/agree',
     name: 'GoodsAgree',
     component: () => import('@/views/goods/agree/index.vue'),
@@ -75,7 +78,6 @@ export const MainRoute: AppRouteRecordRaw[] = [
     path: '/goods/order',
     name: 'GoodsOrder',
     component: () => import('@/views/goods/order/index.vue'),
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
     meta: {
       title: '订单详情',
     },

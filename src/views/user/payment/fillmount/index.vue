@@ -10,11 +10,7 @@ import { reactive, ref, watch } from 'vue';
 import { getPayList } from '@/api/pay';
 import { List } from '@/components/List';
 import { Images } from '@/assets/images';
-<<<<<<< HEAD
-import { formatToDateTime } from '@/utils/dateUtil';
-=======
 import { columnToDateTime } from '@/utils/dateUtil';
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
 
 const router = useRouter();
 const tabTitle = reactive(['余额变动', '充值', '提现', '收益']);
@@ -128,30 +124,6 @@ const getStatus = (status: number, type: number) => {
           <template #default="defaultProps">
             <div v-for="item in defaultProps.list" class="item" :key="item.id">
               <div class="bill">
-<<<<<<< HEAD
-                  <div class="bill_payment">
-                      <div class="bill_name">{{payment(item.bill_type)}}</div>
-                      <div class="bill_value">已完成</div>
-                  </div>
-                  <div class="bill_type">
-                      <div class="bill_name">账单类型</div>
-                      <div class="bill_value">{{item.bill_name}}</div>
-                  </div>
-                  <div class="bill_amount">
-                      <div class="bill_name">支付金额</div>
-                      <div class="bill_value">￥{{item.bill_money}}</div>
-                  </div>
-                  <div class="bill_desc">
-                      <div class="bill_name">支付订单</div>
-                      <div class="bill_value">{{item.order_number}}</div>
-                  </div>
-                  <div class="bill_time">
-                      <div class="bill_name">支付时间</div>
-                      <div class="bill_value">{{formatToDateTime(item.created_at)}}</div>
-                  </div>
-              </div>
-              <!-- {{JSON.stringify(item)}} -->
-=======
                 <div class="bill_payment">
                     <div class="bill_name">{{item.bill_name}}</div>
                     <div class="bill_value">{{getStatus(item.status, item.bill_type)}}</div>
@@ -173,7 +145,6 @@ const getStatus = (status: number, type: number) => {
                     <div class="bill_value">{{columnToDateTime(item.created_at)}}</div>
                 </div>
               </div>
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
             </div>
           </template>
           <template #empty>
@@ -228,11 +199,7 @@ const getStatus = (status: number, type: number) => {
       .bill_value{
           color: #01c2c3;
           font-weight: 700;
-<<<<<<< HEAD
-          font-size: 14px;
-=======
           font-size: 16px;
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
       }
   }
   .bill_type{
@@ -262,11 +229,7 @@ const getStatus = (status: number, type: number) => {
         .bill_value{
             font-weight: 700;
             color: #f4a33a;
-<<<<<<< HEAD
-            font-size: 14px;
-=======
             font-size: 16px;
->>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
         }
   }
   .bill_desc{
