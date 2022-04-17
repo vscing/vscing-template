@@ -27,6 +27,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/sell/agree',
+    name: 'SellAgree',
+    component: () => import('@/views/sell/agree/index.vue'),
+    meta: {
+      title: '购买协议',
+    },
+  },
+  {
+    path: '/sell/order',
+    name: 'SellOrder',
+    component: () => import('@/views/sell/order/index.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
     path: '/goods',
     name: 'Goods',
     component: () => import('@/views/goods/list/index.vue'),
@@ -43,9 +59,23 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+<<<<<<< HEAD
     path: '/order',
     name: 'Order',
     component: () => import('@/views/order/index.vue'),
+=======
+    path: '/goods/agree',
+    name: 'GoodsAgree',
+    component: () => import('@/views/goods/agree/index.vue'),
+    meta: {
+      title: '购买协议',
+    },
+  },
+  {
+    path: '/goods/order',
+    name: 'GoodsOrder',
+    component: () => import('@/views/goods/order/index.vue'),
+>>>>>>> 1fa1f3e7f1460fd8f854207383c7ba9042b2e2aa
     meta: {
       title: '订单详情',
     },
@@ -131,9 +161,17 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
-    path: '/distribut',
-    name: 'Distribut',
-    component: () => import('@/views/user/distribut/index.vue'),
+    path: '/pay/success',
+    name: 'PaySuccess',
+    component: () => import('@/views/user/payment/success/index.vue'),
+    meta: {
+      title: '支付成功',
+    },
+  },
+  {
+    path: '/distribute',
+    name: 'Distribute',
+    component: () => import('@/views/user/distribute/index.vue'),
     meta: {
       title: '分销中心',
     },
@@ -282,39 +320,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '详情',
     },
   },
-  
-  // {
-  //   path: '/myTearm',
-  //   name: 'MyTearm',
-  //   component: () => import('@/views/user/distribut/myTearm/index.vue'),
-  //   meta: {
-  //     title: '我的团队',
-  //   },
-  // },
-  // {
-  //   path: '/order',
-  //   name: 'Order',
-  //   component: () => import('@/views/user/distribut/order/index.vue'),
-  //   meta: {
-  //     title: '分销订单',
-  //   },
-  // },
-  // {
-  //   path: '/wechat',
-  //   name: 'Wechat',
-  //   component: () => import('@/views/user/distribut/wechat/index.vue'),
-  //   meta: {
-  //     title: '邀请码',
-  //   },
-  // },
-  // {
-  //   path: '/statics',
-  //   name: 'statics',
-  //   component: () => import('@/views/user/distribut/statics/index.vue'),
-  //   meta: {
-  //     title: '业绩统计',
-  //   },
-  // }
+  {
+    path: '/distribute/order',
+    name: 'DistributeOrder',
+    component: () => import('@/views/user/distribute/order/index.vue'),
+    meta: {
+      title: '分销订单',
+    },
+  },
+  {
+    path: '/distribute/wechat',
+    name: 'DistributeWechat',
+    component: () => import('@/views/user/distribute/wechat/index.vue'),
+    meta: {
+      title: '邀请码',
+    },
+  },
 ]
 
 export const LoginRoute: AppRouteRecordRaw = {

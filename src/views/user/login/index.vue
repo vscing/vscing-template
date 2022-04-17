@@ -7,7 +7,7 @@ import {
   Checkbox as VantCheckbox,
   Toast
 } from 'vant';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
@@ -22,6 +22,7 @@ const sendSms = ref(true);
 const times = ref(120);
 const checked = ref(false);
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 
 let timer: NodeJS.Timer;
@@ -55,11 +56,14 @@ const sendCode = async() => {
   }
 }
 
+const user_id = route.query?.user_id || 0;
+console.log('%c [ user_id ]-60', 'font-size:13px; background:pink; color:#bf2c9f;', user_id)
 
 const onSubmit = async () => {
   const [_, res] = await to(login({
     phone: phone.value,
-    code: code.value
+    code: code.value,
+    user_id: user_id
   }));
   if (res) {
     Toast.success('登录成功');

@@ -1,116 +1,159 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { Tabs as VantTabs, Tab as VantTab, List as VantList, Image as VantImage, Icon as VantIcon } from 'vant';
-  import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import {
+  Tabs as VantTabs,
+  Tab as VantTab,
+  Image as VantImage,
+  Pagination as VantPagination,
+  Empty as VantEmpty
+} from 'vant';
+import { getOrderSkuList } from '@/api/order';
+import { to } from '@/utils';
+import { columnToDateTime } from '@/utils/dateUtil';
+import { Images } from '@/assets/images';
 
-  const loading = ref<boolean>(false);
-  const finished = ref<boolean>(true);
-  const active = ref<number>(0);
+const page = ref<number>(1);
+const total = ref<number>(0);
+const list = ref<any[]>([]);
+const active = ref<number>(0);
 
-  const router = useRouter();
-
-  const onDetail = () => {
-    router.push('/goods/detail')
+const onLoad = async () => {
+  const [_, res] = await to(getOrderSkuList({
+    page: page.value,
+    type: active.value
+  }));
+  if (res) {
+    list.value = res.list || []
+    total.value = Math.ceil(res.total / 10) || 0
   }
+}
 
-  const onLoad = () => {}
+onLoad()
 
+const getStatusText = (status: number) => {
+  if(status == 10) {
+    return '未付款';
+  } else if(status == 20) {
+    return '已付款';
+  } else if(status == 30) {
+    return '已取消';
+  }
+}
 </script>
 
 <template>
-  <VantTabs class="tabs-box" v-model:active="active">
+  <VantTabs class="tabs-box" v-model:active="active" @change="onLoad">
     <VantTab title="全部"></VantTab>
-    <VantTab title="待支付"></VantTab>
+    <VantTab title="待付款"></VantTab>
     <VantTab title="已完成"></VantTab>
+    <VantTab title="已取消"></VantTab>
   </VantTabs>
-
-  <VantList
-    v-model:loading="loading"
-    :finished="finished"
-    finished-text="没有更多了"
-    @load="onLoad"
-  >
+  <div v-if="list.length > 0">
     <ul class="product-list">
-      <!-- <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
+      <li class="product-item" v-for="item in list" :key="item.id">
         <VantImage 
           class="product-item-img"
-          :src="`https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=${item}`"
+          :src="item.img"
           :show-loading="false"
           :show-error="false"
-          width="100%"
-          fit="cover"
-          lazy-load
-          :radius="4"
+          width="100%" 
+          fit="cover" 
+          lazy-load 
+          :radius="4" 
         />
         <div class="product-item-info">
-          <h2>唐 门神</h2>
-          <p>******</p>
-          <p class="product-item-price">
-            <span>￥150</span>
-            <span class="product-item-like">
-              <VantIcon name="like-o" />
-              120000
-            </span>
+          <p>
+            <h2>{{item.title}}</h2>
+            <span>{{getStatusText(item.payment_status)}}</span>
+          </p>
+          <p>
+            <span>订单号：</span>
+            <span>{{item.order_number}}</span>
+          </p>
+          <p>
+            <span>订单金额：</span>
+            <span>￥{{item.order_price}}</span>
+          </p>
+          <p>
+            <span>支付方式：</span>
+            <span>{{item.payment_type == 2 ? '支付宝':'余额'}}</span>
+          </p>
+          <p>
+            <span>下单日期：</span>
+            <span>{{columnToDateTime(item.created_at)}}</span>
           </p>
         </div>
-      </li> -->
+      </li>
     </ul>
-  </VantList>
+    <VantPagination v-model="page" :page-count="total" mode="simple" @change="onLoad" />
+  </div>
+  <VantEmpty v-else class="empty" :image="Images.order" :description="`暂无订单`" />
 </template>
 
 <style lang="less" scoped>
-  .tabs-box {
-    :deep(.van-tabs__line) {
-      background-color: #01c2c3;
-    }
+.tabs-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  :deep(.van-tabs__line) {
+    background-color: #01c2c3;
   }
-  .product-list {
+}
+
+.product-list {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  padding-top: 50px;
+
+  .product-item {
+    padding: 10px;
+    margin-top: 10px;
     width: 100%;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    margin-top: var(--van-dropdown-menu-height);
-    margin-bottom: 10px;
-    padding: 0 10px;
-    .product-item {
-      padding: 10px;
-      margin-top: 10px;
-      width: calc(50% - 5px);
-      border-radius: 4px;
-      background-color: #ffffff;
-      box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
-      &:nth-child(2n) {
-        margin-left: 10px;
+    justify-content: space-between;
+
+    .product-item-img {
+      margin-bottom: 10px;
+      width: 100px !important;
+      :deep(.van-image__img) {
+        height: auto;
       }
-      .product-item-img {
+    }
+
+    .product-item-info {
+      display: flex;
+      flex-direction: column;
+      color: #5a5f6d;
+      font-size: 14px;
+      font-weight: 300;
+      & > p {
         margin-bottom: 10px;
-      }
-      .product-item-info {
-        color: #5a5f6d;
-        font-size: 14px;
-        font-weight: 300;
-        .product-item-price {
-          font-weight: 500;
-        }
-        & > h2 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &>h2 {
           color: #000000;
           font-size: 16px;
           font-weight: 600;
-          margin-bottom: 10px;
         }
-        & > p {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .product-item-like {
-            display: flex;
-            align-items: center;
-            & > i {
-              margin-right: 5px;
-            }
-          }
+        &>span:nth-child(2){
+          color: #000000;
+          font-weight: 600;
         }
       }
     }
   }
+}
+.empty {
+  padding-top: 20vh;
+}
 </style>

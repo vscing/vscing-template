@@ -1,127 +1,122 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { 
-    List as VantList, 
-    Image as VantImage, 
-    Icon as VantIcon,
-    NavBar as VantNavBar
-  } from 'vant';
-  import { TabList } from '@/components/TabList';
-  import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import {
+  Image as VantImage,
+  Pagination as VantPagination,
+  Empty as VantEmpty,
+  NavBar as VantNavBar
+} from 'vant';
+import { TabList } from '@/components/TabList';
+import { useRouter } from 'vue-router';
+import { getSellList } from '@/api/goods';
+import { to } from '@/utils';
+import { columnToDateTime } from '@/utils/dateUtil';
+import { Images } from '@/assets/images';
 
-  const timeVal = ref<number>(0);
-  const priceVal = ref<number>(0);
-  const loading = ref<boolean>(false);
-  const finished = ref<boolean>(true);
+const page = ref<number>(1);
+const total = ref<number>(0);
+const list = ref<any[]>([]);
 
-  const router = useRouter();
+const router = useRouter();
 
-  const onDetail = () => {
-    router.push('/goods/detail')
+const onDetail = (id: number) => {
+  router.push(`/sell/detail?id=${id}`)
+}
+
+const onLoad = async () => {
+  const [_, res] = await to(getSellList({
+    page: page.value
+  }))
+  if (res) {
+    list.value = res.list || []
+    total.value = Math.ceil(res.total / 10) || 0
   }
-
-  const onLoad = () => {}
+}
+onLoad();
 
 </script>
 
 <template>
-  <VantNavBar class="nav-bar" title="往期发售"/>
-
-  <VantList
-    v-model:loading="loading"
-    :finished="finished"
-    finished-text="没有更多了"
-    @load="onLoad"
-  >
-    <ul class="product-list">
-      <!-- <li class="product-item" v-for="item in [1,2,3,4,5,6,7,8,9,0]" :key="item" @click="onDetail">
-        <VantImage 
-          class="product-item-img"
-          :src="`https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg?v=${item}`"
-          :show-loading="false"
-          :show-error="false"
-          width="100%"
-          fit="cover"
-          lazy-load
-          :radius="4"
-        />
+  <VantNavBar fixed safe-area-inset-top class="nav-bar" title="往期发售" />
+  <div v-if="list.length > 0">
+    <ul class="product-sell-box" v-if="list.length > 0">
+      <li v-for="item in list" class="product-sell-item" @click="onDetail(item.id)">
+        <VantImage :src="item.img" fit="cover" lazy-load width="100%" :radius="4" :show-loading="false"
+          :show-error="false" />
         <div class="product-item-info">
-          <h2>火锅 白菜</h2>
-          <p class="product-item-price">￥150</p>
-          <p class="product-item-desc">
-            <span>艺术家 小明</span>
-            <span class="product-item-like">
-              <VantIcon name="like-o" />
-            </span>
-          </p>
+          <div class="product-title-box">
+            <h2>{{ item.title }}</h2>
+            <p>
+              <span>产品数量：</span>
+              <span class="product-item-value">{{ item.total_stock }}份</span>
+            </p>
+          </div>
+          <p>发售价格：<span class="product-item-value">已售罄</span></p>
+          <p>发售时间：<span class="product-item-value">{{ columnToDateTime(item.presell_time) }}</span></p>
         </div>
-      </li> -->
+      </li>
     </ul>
-  </VantList>
-
+    <VantPagination v-model="page" :page-count="total" mode="simple" @change="onLoad" />
+  </div>
+  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无往期发售`" />
   <TabList />
 </template>
 
 <style lang="less" scoped>
-  .screen-box {
-    position: fixed;
-    top: env(safe-area-inset-top);
-    top: constant(safe-area-inset-top);
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-  }
-  .product-list {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    margin-top: var(--van-dropdown-menu-height);
-    margin-bottom: 10px;
-    padding: 0 10px;
-    .product-item {
-      padding: 10px;
+.product-sell-box {
+  padding-top: 55px;
+  .product-sell-item {
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 10px;
+    box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
+    margin-bottom: 20px;
+
+    .product-item-info {
       margin-top: 10px;
-      width: calc(50% - 5px);
-      border-radius: 4px;
-      background-color: #ffffff;
-      box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
-      &:nth-child(2n) {
-        margin-left: 10px;
-      }
-      .product-item-img {
-        margin-bottom: 10px;
-      }
-      .product-item-info {
-        color: #5a5f6d;
-        font-size: 14px;
-        font-weight: 300;
-        .product-item-price {
-          font-size: 16px;
-          font-weight: 600;
-          color: #01c2c3;
-        }
-        .product-item-desc {
-          font-weight: 500;
-        }
-        & > h2 {
+      color: #5a5f6d;
+      font-size: 14px;
+      font-weight: 300;
+
+      .product-title-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &>h2 {
           color: #000000;
           font-size: 16px;
           font-weight: 600;
         }
-        & > p {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .product-item-like {
-            display: flex;
-            align-items: center;
-            & > i {
-              margin-right: 5px;
-            }
-          }
-        }
+      }
+
+      &>p {
+        margin-top: 10px;
+      }
+
+      .product-item-value {
+        color: #000000;
+        font-weight: 600;
+      }
+
+      .product-item-color {
+        color: #01c2c3;
+      }
+
+      .product-item-desc {
+        .ellipsis(2);
+      }
+
+      .btn-list {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
     }
   }
+
+}
+.empty {
+  padding-top: 20vh;
+}
 </style>

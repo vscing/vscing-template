@@ -31,7 +31,7 @@ export const useUserStore = defineStore('user', {
       this.token = token
     },
     async logout(goLogin = false) {
-      if (this.getToken) {
+      if (this.getToken && goLogin) {
         try {
           await doLogout();
         } catch {
@@ -40,7 +40,7 @@ export const useUserStore = defineStore('user', {
       }
       this.setToken(undefined);
       this.setUserInfo(null);
-      goLogin && window.location.reload();
+      window.location.reload();
     },
   }
 })

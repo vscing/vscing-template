@@ -8,13 +8,13 @@ import { Images } from '@/assets/images';
 const router = useRouter();
 
 const onBack = () => {
-  router.replace('/');
+  router.replace('/user');
 }
 </script>
 
 <template>
-  <VantEmpty class="payImage" description="支付失败" :image="Images.payError">
-    <VantButton type="primary" round block @click="onBack()">返回首页</VantButton>
+  <VantEmpty class="payImage" description="支付成功" :image="Images.paySuccess">
+    <VantButton type="primary" round block @click="onBack()">去往个人中心查看我的订单</VantButton>
   </VantEmpty>
 </template>
 
@@ -25,7 +25,7 @@ const onBack = () => {
     height: auto;
   }
   :deep(.van-empty__description) {
-    color: #FF0000;
+    color: #39c522;
     font-size: 16px;
     font-weight: 600;
   }

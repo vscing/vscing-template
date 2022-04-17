@@ -1,40 +1,68 @@
 <script setup lang="ts">
-  import { useRouter } from 'vue-router';
-  import { 
-    NavBar as VantNavBar,
-    Image as VantImage,
-    Icon as VantIcon,
-    Button as VantButton 
-  } from 'vant';
-  import { SvgIcon } from '@/components/SvgIcon';
+import { useRoute, useRouter } from 'vue-router';
+import {
+  NavBar as VantNavBar,
+  Image as VantImage,
+  Icon as VantIcon,
+  Button as VantButton,
+  Toast
+} from 'vant';
+import { SvgIcon } from '@/components/SvgIcon';
+import { to, sliceStr } from '@/utils';
+import { getSellInfo } from '@/api/goods';
+import { useUserStore } from '@/store/modules/user';
+import { ref } from 'vue';
 
-  const router = useRouter();
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
+const router = useRouter();
+const data = ref<any>({});
 
-  const onClickLeft = () => {
-    router.go(-1);
-  }; 
+const onClickLeft = () => {
+  router.go(-1);
+};
+
+const route = useRoute();
+const { id=0 } = route.query || {}
+
+const init = async () => {
+  const [_, res] = await to(getSellInfo({id}));
+  if (res) {
+    data.value = res.data || {}
+  }
+}
+
+init();
+
+const goOrder = () => {
+  if(data.value.status != 30) {
+    return false;
+  }
+  if(userInfo){
+    router.push(`/sell/agree?id=${id}`)
+  } else {
+    Toast.fail('请登录')
+  }
+}
+
 </script>
 
 <template>
-  <VantNavBar
-    class="nav-bar"
-    title="商品详情"
-    left-arrow
-    @click-left="onClickLeft"
-    safe-area-inset-top
-  />
+  <VantNavBar class="nav-bar" title="商品详情" left-arrow @click-left="onClickLeft" safe-area-inset-top />
 
   <div class="image-box">
-    <VantImage width="100%" height="auto" src="https://source.theone.art/watermarkResize/37a3adf0c780332f729e80cb16afe7e2/ccb7c9c4c5052c8299734c957c176ac6-16466350452770.25.jpg" />
+    <VantImage width="100%" height="auto" :src="data.img" />
   </div>
-  
+
   <div class="config-box">
-    <h2>火锅 白菜</h2>
-    <p>产品编号 #662 / 1000</p>
+    <div class="goods-head">
+      <h2>{{data.title}}</h2>
+      <span class="goods-num"># {{data.sales}} / {{data.total_stock}}</span>
+    </div>
     <div class="price-box">
-      <span>￥150</span>
+      <span class="goods-price">￥{{data.price}}</span>
       <div class="price-like-box">
-        <VantIcon name="like-o" />
+        <VantIcon name="like-o" :size="20" />
       </div>
     </div>
   </div>
@@ -45,24 +73,24 @@
       <li class="config-item">
         <span>合约地址</span>
         <p>
-          <span>0x9AB8...1b5D19</span>
-          <SvgIcon name="copy"/>
+          <span>{{sliceStr(data.contract_address)}}</span>
+          <SvgIcon name="copy" />
         </p>
       </li>
       <li class="config-item">
         <span>认证标识</span>
         <p>
-          <span>244443...126376</span>
-          <SvgIcon name="copy"/>
+          <span>{{sliceStr(data.token_id)}}</span>
+          <SvgIcon name="copy" />
         </p>
       </li>
       <li class="config-item">
         <span>认证标准</span>
-        <span>erc721</span>
+        <span>{{data.token_standard}}</span>
       </li>
       <li class="config-item">
         <span>认证网络</span>
-        <span>Polygon</span>
+        <span>{{data.blockchain}}</span>
       </li>
     </ul>
   </div>
@@ -86,109 +114,141 @@
 
   <div class="info-box">
     <h2>商品描述</h2>
-    <div>
-      商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商
-      品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述品描述商品描述商品描述商品描述商品描
-      述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述
-    </div>
+    <div v-html="data.content"></div>
   </div>
-  
+
   <div class="btn-list">
-    <VantButton type="primary" round block color="#01c2c3">产品购买</VantButton>
+    <VantButton type="primary" round block color="#01c2c3" :disabled="data.status != 30" @click="goOrder">
+      {{data.status != 30 ? '产品已售罄':'产品购买'}}
+    </VantButton>
   </div>
 </template>
 
 <style lang="less" scoped>
-  .nav-bar {
-    position: fixed;
-    top: env(safe-area-inset-top);
-    top: constant(safe-area-inset-top);
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    :deep(.van-icon) {
-      color: #000000;
-    }
-    :deep(.van-nav-bar__title) {
-      color: #000000;
-    }
+.nav-bar {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  top: constant(safe-area-inset-top);
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+
+  :deep(.van-icon) {
+    color: #000000;
   }
-  .image-box {
-    margin-top: var(--van-nav-bar-height);
+
+  :deep(.van-nav-bar__title) {
+    color: #000000;
   }
-  .config-box {
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #ffffff;
-    box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
-    margin: 0 10px 10px;
-    color: #5a5f6d;
-    font-size: 14px;
-    font-weight: 300;
-    & > h2 {
-      font-size: 16px;
+}
+
+.image-box {
+  margin-top: var(--van-nav-bar-height);
+}
+
+.config-box {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
+  margin: 0 10px 10px;
+  color: #5a5f6d;
+  font-size: 14px;
+  font-weight: 300;
+
+  .goods-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &>h2 {
+      font-size: 20px;
       color: #000000;
       font-weight: 600;
       margin-bottom: 5px;
     }
-    .price-box {
+
+    .goods-num {
+      background: linear-gradient(154deg, #282828, #484848);
+      color: #e7aa71;
+      padding: 0 10px;
+      border-radius: 10px;
+    }
+  }
+
+  .price-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    .goods-price {
+      color: #e7aa71;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .price-like-box {
+      display: flex;
+      align-items: center;
+
+      span {
+        padding-left: 5px;
+      }
+    }
+  }
+
+  .config-list {
+    .config-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 5px;
-      .price-like-box {
+
+      &>p {
         display: flex;
         align-items: center;
-        span {
-          padding-left: 5px;
-        }
-      }
-    }
-    .config-list {
-      .config-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 5px;
-        &>p {
-          display: flex;
-          align-items: center;
-          &>span {
-            padding-right: 5px;
-          }
+
+        &>span {
+          padding-right: 5px;
         }
       }
     }
   }
-  .info-box {
-    background-color: #ffffff;
-    padding: 10px 20px;
-    margin-bottom: 60px;
-    color: #5a5f6d;
-    font-size: 14px;
-    font-weight: 300;
-    & > h2 {
-      font-size: 16px;
-      color: #000000;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
+}
+
+.info-box {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  margin-bottom: 60px;
+  color: #5a5f6d;
+  font-size: 14px;
+  font-weight: 300;
+
+  &>h2 {
+    font-size: 16px;
+    color: #000000;
+    font-weight: 600;
+    margin-bottom: 5px;
   }
-  .btn-list {
-    position: fixed;
-    height: 50px;
-    bottom: env(safe-area-inset-bottom);
-    bottom: constant(safe-area-inset-bottom);
-    left: 0;
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff;
-    box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
-    // :deep(.van-button) {
-    //   width: 48%;
-    // }
-  }
+}
+
+.btn-list {
+  position: fixed;
+  height: 50px;
+  bottom: env(safe-area-inset-bottom);
+  bottom: constant(safe-area-inset-bottom);
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
+  // :deep(.van-button) {
+  //   width: 48%;
+  // }
+}
 </style>

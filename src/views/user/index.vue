@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
-import { Image as VantImage, Icon as VantIcon, Toast, Skeleton as VantSkeleton } from 'vant';
+import { Image as VantImage, Icon as VantIcon, Toast, Skeleton as VantSkeleton, Dialog } from 'vant';
 import { SvgIcon } from '@/components/SvgIcon';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/modules/user';
@@ -31,10 +31,28 @@ const goTo = (path: string) => {
     router.push(path)
   }
   if(!userInfo.value.is_name){
-    router.push('/realName')
+    Dialog.confirm({
+      title: '提示',
+      message:'请先实名认证、并绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/realName')
+      })
+      .catch(() => {
+        // on cancel
+      });
   }
   if(!userInfo.value.is_bank){
-    router.push('/bankCard');
+    Dialog.confirm({
+      title: '提示',
+      message:'请先实名认证、并绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/bankCard')
+      })
+      .catch(() => {
+        // on cancel
+      });
   }
 }
 
@@ -80,14 +98,14 @@ init();
       <div class="dashboard">
         <div class="dashboard-item">
           <VantIcon name="notes-o" size="20" />
-          <span @click="() => Toast.success('敬请期待')">条件清单</span> 
+          <span @click="() => Toast('敬请期待')">条件清单</span> 
           <!--  @click="goTo('/job')" -->
         </div>
         <div class="dashboard-item" @click="goTo('/payment')">
           <VantIcon name="balance-pay" size="20" />
           <span>支付管理</span>
         </div>
-        <div class="dashboard-item" @click="goTo('/distribut')">
+        <div class="dashboard-item" @click="goTo('/distribute')">
           <VantIcon name="cluster-o" size="20" />
           <span>分销中心</span>
         </div>
@@ -97,8 +115,9 @@ init();
         </div>
       </div>
 
-      <div class="dashboard2" v-show="false">
-        <div class="dashboard2-item" @click="goTo('/collect')">
+      <div class="dashboard2" v-show="true">
+        <!-- @click="goTo('/collect')" -->
+        <div class="dashboard2-item" @click="() => Toast('敬请期待')">
           <div class="dashboard2-item-left">
             <VantIcon name="star-o" size="20" color="#333" />
             <span>收藏</span>
@@ -111,7 +130,7 @@ init();
         <div class="dashboard2-item" @click="goTo('/locked')">
           <div class="dashboard2-item-left">
             <VantIcon name="goods-collect-o" size="20" color="#333" />
-            <span>锁藏品</span>
+            <span>藏品管理</span>
           </div>
           <div class="dashboard2-item-right">
             <span>0</span>
@@ -128,7 +147,8 @@ init();
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
-        <div class="dashboard2-item" @click="goTo('/grant')">
+        <!--  @click="goTo('/grant')" -->
+        <div class="dashboard2-item" @click="() => Toast('敬请期待')">
           <div class="dashboard2-item-left">
             <VantIcon name="share-o" size="20" color="#333" />
             <span>赠予管理</span>
