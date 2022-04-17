@@ -41,6 +41,7 @@ const goTo = (path: string) => {
       .catch(() => {
         // on cancel
       });
+    return false;
   }
   if(!userInfo.value.is_bank){
     Dialog.confirm({
@@ -53,6 +54,7 @@ const goTo = (path: string) => {
       .catch(() => {
         // on cancel
       });
+    return false;
   }
 }
 
@@ -73,7 +75,7 @@ init();
       <div class="user-box-background" :style="{backgroundImage:`url(${userInfo['background']})`}">
           <div class="header-box">
             <div class="header-box-icon">
-              <VantIcon name="scan" size="25" color="#ffffff" />
+              <!-- <VantIcon name="scan" size="25" color="#ffffff" /> -->
             </div>
             <div class="header-box-icon" @click="goTo('/setup')">
               <VantIcon name="setting-o" size="25" color="#ffffff" />
@@ -96,9 +98,9 @@ init();
       </div>
       
       <div class="dashboard">
-        <div class="dashboard-item">
+        <div class="dashboard-item"  @click="() => Toast('敬请期待')">
           <VantIcon name="notes-o" size="20" />
-          <span @click="() => Toast('敬请期待')">条件清单</span> 
+          <span>条件清单</span> 
           <!--  @click="goTo('/job')" -->
         </div>
         <div class="dashboard-item" @click="goTo('/payment')">
@@ -113,6 +115,14 @@ init();
           <VantIcon name="friends-o" size="20" />
           <span>需求合作</span>
         </div>
+        <div class="dashboard-item" @click="goTo('/realName')">
+          <VantIcon name="manager-o" size="20" />
+          <span>实名认证</span>
+        </div>
+        <div class="dashboard-item"  @click="() => Toast('敬请期待')">
+          <VantIcon name="scan" size="20" />
+          <span>扫一扫</span>
+        </div>
       </div>
 
       <div class="dashboard2" v-show="true">
@@ -123,7 +133,7 @@ init();
             <span>收藏</span>
           </div>
           <div class="dashboard2-item-right">
-            <span>0</span>
+            <!-- <span>0</span> -->
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
@@ -133,7 +143,7 @@ init();
             <span>藏品管理</span>
           </div>
           <div class="dashboard2-item-right">
-            <span>0</span>
+            <!-- <span>0</span> -->
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
@@ -143,7 +153,7 @@ init();
             <span>产品合成</span>
           </div>
           <div class="dashboard2-item-right">
-            <span>0</span>
+            <!-- <span>0</span> -->
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
@@ -154,7 +164,7 @@ init();
             <span>赠予管理</span>
           </div>
           <div class="dashboard2-item-right">
-            <span>0</span>
+            <!-- <span>0</span> -->
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
@@ -254,15 +264,17 @@ init();
 .dashboard {
   margin-bottom: 10px;
   display: flex;
+  flex-flow: row wrap;
   align-items: center;
-  justify-content: space-between;
   background-color: #fff;
-  padding: 10px;
+  padding: 15px 15px 0;
   .dashboard-item {
     display: flex;
+    width: 25%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
     & > span {
       margin-top: 5px;
     }

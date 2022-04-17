@@ -8,24 +8,14 @@ import html2canvas from 'html2canvas';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 import { ref } from 'vue';
-import { getNum } from '@/api/distribute';
-import { to } from '@/utils';
 
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo
+const { id = 0 } = userInfo || {}
 console.log('%c [ userInfo ]-12', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
 
 const url = ref<string>('');
-const num = ref(0);
 
-const init = async() => {
-  const [_, res] = await to(getNum());
-  if(res){
-    num.value = res.data
-  }
-}
-
-init();
 
 const generateQR = async text => {
   try {
@@ -35,9 +25,28 @@ const generateQR = async text => {
   }
 }
 
-generateQR(`https://food.ysxqbjz.com/login?user_id=${userInfo['id']}`)
+generateQR(`https://food.ysxqbjz.com/login?user_id=${id}`)
+
+const download = () => {
+  let element = document.getElementById('poster');
+  html2canvas(element as HTMLElement, {
+    allowTaint: false,
+    useCORS: true,
+  }).then(function (canvas) {
+    // toImage
+    const dataImg = new Image()
+    dataImg.src = canvas.toDataURL('image/png')
+    const alink = document.createElement("a");
+    alink.href = dataImg.src;
+    alink.download = "code.jpg";
+    alink.click();
+  });
+}
+
 
 const setCanvas = () => {
+  
+
   const canvas = document.createElement('canvas');
   // 获取要生成图片的 DOM 元素
   let canvasDom: any = document.getElementById('poster');
@@ -88,17 +97,12 @@ const saveFile = (data, filename) => {
 
 </script>
 <template>
-  <div class="distribute-moneny">
-    <p>拉新数量</p>
-    <h1>{{num}} 人</h1>
-  </div>
-
   <div class="poster" id="poster">
     <img :src="Images.poster" />
     <img class="code" :src="url" />
   </div>
 
-  <div class="btn" @click="setCanvas">
+  <div class="btn" @click="download">
     <VantButton round block color="#01c2c3">
       保存海报到相册
     </VantButton>
@@ -134,8 +138,7 @@ const saveFile = (data, filename) => {
     height: 100px;
     position: absolute;
     bottom: 40px;
-    right: 50%;
-    transform: translateX(50%);
+    right: calc(50vw - 50px);
   }
 }
 .btn {
