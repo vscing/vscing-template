@@ -11,6 +11,14 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/lottery',
+    name: 'Lottery',
+    component: () => import('@/views/lottery/index.vue'),
+    meta: {
+      title: '抽奖',
+    },
+  },
+  {
     path: '/sell/list',
     name: 'SellList',
     component: () => import('@/views/sell/list/index.vue'),

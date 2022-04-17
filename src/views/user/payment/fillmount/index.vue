@@ -14,13 +14,64 @@ import { columnToDateTime } from '@/utils/dateUtil';
 
 const router = useRouter();
 const tabTitle = reactive(['余额变动', '充值', '提现', '收益']);
-const active = ref(0);
+const active = ref<any>(0);
 
 const onClickLeft = () => router.go(-1);
 
 const params = reactive({
   type: 0
 });
+
+// const billType = (bill = 1) => {
+//     let bill_type = '';
+//       switch (bill) {
+//               case 1:
+//                 bill_type = '充值'
+//                 break;
+
+//               case 2:
+//                 bill_type = '体现'
+//                 break;
+
+//               case 3:
+//                 bill_type = '收益'
+//                 break;
+
+//               case 4:
+//                 bill_type = '佣金'
+//                 break;
+
+//               default:
+//                 break;
+//       }
+//       return bill_type;
+// }
+
+//支付方式
+const payment = (type) => {
+      let pay = '';
+      switch (type) {
+        case 1:
+          pay = '银行卡'
+          break;
+
+        case 2:
+          pay = '支付宝'
+          break;
+
+        case 3:
+          pay = '微信'
+          break;
+
+        case 4:
+          pay = '余额'
+          break;
+
+        default:
+          break;
+      }
+      return pay;
+}
 
 watch(active, (val: any, old: any) => {
   if(val !== old) {

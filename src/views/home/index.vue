@@ -35,6 +35,11 @@
     router.push('/sell/detail?id='+id)
   }
 
+  //抽奖跳转
+  const lucky = (url: string) => {
+      router.push(url);
+  }
+
   const init = async() => {
     const [_, res] = await to(getHome());
     if(res){
@@ -66,6 +71,10 @@
     <VantGridItem icon="like-o" text="我的收藏" />
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
+
+  <div class="luckey">
+      <img src="../../assets/images/lucky.png" @click="lucky('/lottery')" />
+  </div>
 
   <div class="product" v-if="homeData.currentGoods">
     <h2 class="title">本期发售</h2>
@@ -105,8 +114,8 @@
       <h2 class="title">往期发售</h2>
       <span @click="goto('/sell/list')">更多>></span>
     </div>
-    <ul class="product-sell-box" v-if="homeData.goodsList.length > 0">
-      <li v-for="item in homeData.goodsList" class="product-sell-item" @click="onDetail(item.id)">
+    <ul class="product-sell-box product-old" v-if="homeData.goodsList.length > 0">
+      <li v-for="item in homeData.goodsList" class="product-sell-item product-sell-old" @click="onDetail(item.id)">
         <VantImage
           :src="item.img"
           fit="cover"
@@ -119,11 +128,11 @@
         <div class="product-item-info">
           <div class="product-title-box">
             <h2>{{item.title}}</h2>
-            <p>
-              <span>产品数量：</span>
-              <span class="product-item-value">{{item.total_stock}}份</span>
-            </p>
           </div>
+          <p>
+            <span>产品数量：</span>
+            <span class="product-item-value">{{item.total_stock}}份</span>
+          </p>
           <p>发售价格：<span class="product-item-value">已售罄</span></p>
           <p>发售时间：<span class="product-item-value">{{columnToDateTime(item.presell_time)}}</span></p>
         </div>
@@ -223,7 +232,18 @@
           }
         }
       }
-      
+    }
+    .product-old{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        .product-sell-old{
+          width: 48%;
+        }
+        .product-sell-old:nth-child(odd){
+          margin-right: 14px;
+        }
     }
     .product-list {
       width: 100%;

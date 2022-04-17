@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# 项目模板
+=======
 # Vue 3 + Typescript + Vite
 
 This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
@@ -26,3 +29,4 @@ less、less黑白颜色、postcss、<https://windicss.org/、https://antfu.me/po
 
 <http://web.nuofangti.com/?code=091J5TFa1xipHC0cETHa1QDY2w3J5TF1&state=undefined#/detail/0x9AB8bB89B4cDc3a282855c4E6BaA0130fa1b5D19:24444355946084194400957518823002605268956388235532480743927876978286767636680:5027#>
 <https://theone.art/>
+>>>>>>> f4cd9b61cc1fe01ba9dbd9612833cb1423aa793a
