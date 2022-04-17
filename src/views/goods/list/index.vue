@@ -6,13 +6,15 @@ import {
   Image as VantImage,
   Pagination as VantPagination,
   Empty as VantEmpty,
-  Icon as VantIcon
+  Icon as VantIcon,
+  Dialog
 } from 'vant';
 import { TabList } from '@/components/TabList';
 import { useRouter } from 'vue-router';
 import { getGoodsList } from '@/api/goods';
 import { to } from '@/utils';
 import { Images } from '@/assets/images';
+import { useUserStore } from '@/store/modules/user';
 
 const timeVal = ref<number>(0);
 const priceVal = ref<number>(0);
@@ -32,10 +34,41 @@ const option2 = [
 ];
 
 const router = useRouter();
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo
 
 const onDetail = (id: number) => {
   router.push(`/goods/detail?id=${id}`)
 }
+
+const init = () => {
+  if(!userInfo?.is_name){
+    Dialog.confirm({
+      title: '提示',
+      message:'请先实名认证、并绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/realName')
+      })
+      .catch(() => {
+        router.push('/user')
+      });
+  }
+  if(!userInfo?.is_bank){
+    Dialog.confirm({
+      title: '提示',
+      message:'请先实名认证、并绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/bankCard')
+      })
+      .catch(() => {
+        router.push('/user')
+      });
+  }
+}
+
+init()
 
 const onLoad = async () => {
   const [_, res] = await to(getGoodsList({

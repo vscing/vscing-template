@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TabList } from '@/components/TabList';
-import { Image as VantImage, Icon as VantIcon, Toast, Skeleton as VantSkeleton } from 'vant';
+import { Image as VantImage, Icon as VantIcon, Toast, Skeleton as VantSkeleton, Dialog } from 'vant';
 import { SvgIcon } from '@/components/SvgIcon';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/modules/user';
@@ -31,10 +31,28 @@ const goTo = (path: string) => {
     router.push(path)
   }
   if(!userInfo.value.is_name){
-    router.push('/realName')
+    Dialog.confirm({
+      title: '提示',
+      message:'请先实名认证、并绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/realName')
+      })
+      .catch(() => {
+        // on cancel
+      });
   }
   if(!userInfo.value.is_bank){
-    router.push('/bankCard');
+    Dialog.confirm({
+      title: '提示',
+      message:'请先实名认证、并绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/bankCard')
+      })
+      .catch(() => {
+        // on cancel
+      });
   }
 }
 
