@@ -43,6 +43,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/order',
+    name: 'Order',
+    component: () => import('@/views/order/index.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
     path: '/user',
     name: 'User',
     component: () => import('@/views/user/index.vue'),

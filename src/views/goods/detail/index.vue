@@ -13,6 +13,10 @@
   const onClickLeft = () => {
     router.go(-1);
   }; 
+
+  const payment = () => {
+    router.push('/order')
+  }
 </script>
 
 <template>
@@ -94,7 +98,7 @@
   </div>
   
   <div class="btn-list">
-    <VantButton type="primary" round block color="#01c2c3">产品购买</VantButton>
+    <VantButton type="primary" round block color="#01c2c3" @click="payment">产品购买</VantButton>
   </div>
 </template>
 
