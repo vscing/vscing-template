@@ -8,7 +8,7 @@ enum Api {
   login = '/user/login',
   aliPay = '/user/aliPay',
   editUserInfo = '/user/editUserInfo',
-  setPaasWord = '/user/setPaasWord'
+  setPaasWord = '/user/setPaasWord',
 }
 
 export const getUserInfo = (params?: any) =>

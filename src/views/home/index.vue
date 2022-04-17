@@ -10,7 +10,8 @@
     GridItem as VantGridItem,
     Button as VantButton,
     Image as VantImage,
-    Empty as VantEmpty
+    Empty as VantEmpty,
+    Toast
   } from 'vant';
   import { TabList } from '@/components/TabList';
   import { Images } from '@/assets/images';
@@ -73,7 +74,8 @@
   </VantGrid>
 
   <div class="luckey">
-      <img src="../../assets/images/lucky.png" @click="lucky('/lottery')" />
+      <img src="../../assets/images/lucky.png" @click="() => Toast('敬请期待')"/>
+      <!-- @click="lucky('/lottery')" -->
   </div>
 
   <div class="product" v-if="homeData.currentGoods">
@@ -129,12 +131,12 @@
           <div class="product-title-box">
             <h2>{{item.title}}</h2>
           </div>
-          <p>
+          <!-- <p>
             <span>产品数量：</span>
             <span class="product-item-value">{{item.total_stock}}份</span>
-          </p>
+          </p> -->
           <p>发售价格：<span class="product-item-value">已售罄</span></p>
-          <p>发售时间：<span class="product-item-value">{{columnToDateTime(item.presell_time)}}</span></p>
+          <!-- <p>发售时间：<span class="product-item-value">{{columnToDateTime(item.presell_time)}}</span></p> -->
         </div>
       </li>
     </ul>

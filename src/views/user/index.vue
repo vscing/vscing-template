@@ -98,7 +98,7 @@ init();
       </div>
       
       <div class="dashboard">
-        <div class="dashboard-item"  @click="() => Toast('敬请期待')">
+        <div class="dashboard-item" @click="() => Toast('敬请期待')">
           <VantIcon name="notes-o" size="20" />
           <span>条件清单</span> 
           <!--  @click="goTo('/job')" -->
@@ -119,7 +119,7 @@ init();
           <VantIcon name="manager-o" size="20" />
           <span>实名认证</span>
         </div>
-        <div class="dashboard-item"  @click="() => Toast('敬请期待')">
+        <div class="dashboard-item" @click="() => Toast('敬请期待')">
           <VantIcon name="scan" size="20" />
           <span>扫一扫</span>
         </div>
@@ -147,7 +147,8 @@ init();
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
-        <div class="dashboard2-item" @click="goTo('/compound')">
+        <!--  @click="goTo('/compound')" -->
+        <div class="dashboard2-item" @click="() => Toast('敬请期待')">
           <div class="dashboard2-item-left">
             <VantIcon name="after-sale" size="20" color="#333" />
             <span>产品合成</span>

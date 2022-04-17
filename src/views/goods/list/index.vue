@@ -126,9 +126,8 @@ onLoad();
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  margin-top: var(--van-dropdown-menu-height);
   margin-bottom: 10px;
-  padding: 0 10px;
+  padding: 50px 10px 0;
 
   .product-item {
     padding: 10px;

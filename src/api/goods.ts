@@ -10,6 +10,8 @@ enum Api {
   getGoodsInfo = '/goods/getInfo',
   getGoodsOrderInfo = '/goods/getOrderInfo',
   buyGoods = '/goods/buy',
+
+  getUserGoods = '/goods/getUserGoods',
 }
 
 export const getSellList = (params?: any) =>
@@ -34,4 +36,7 @@ export const getGoodsOrderInfo = (params?: any) =>
   defHttp.get<any>({ url: Api.getGoodsOrderInfo, params });
 
 export const buyGoods = (data?: any) =>
-  defHttp.post<any>({ url: Api.buyGoods, data });  
+  defHttp.post<any>({ url: Api.buyGoods, data }); 
+
+export const getUserGoods = (params?: any) =>
+  defHttp.get<any>({ url: Api.getUserGoods, params });

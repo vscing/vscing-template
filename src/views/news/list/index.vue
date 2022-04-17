@@ -49,7 +49,7 @@ onLoad();
 </script>
 
 <template>
-  <VantTabs class="tabs-box" v-model:active="active">
+  <!-- <VantTabs class="tabs-box" v-model:active="active">
     <VantTab title="最新活动">
         <VantList
           v-model:loading="loading"
@@ -298,8 +298,10 @@ onLoad();
               </VantCollapseItem>
           </VantCollapse>
     </VantTab>
+  </VantTabs> -->
+  <VantTabs class="tabs-box" v-model:active="active">
+    <VantTab v-for="item in tabTitle" :title="item"></VantTab>
   </VantTabs>
-  <VantTab v-for="item in tabTitle" :title="item"></VantTab>
   <div v-if="list.length > 0">
     <div class="product-list">
       <div v-for="item in list" class="product-data" :key="item.id" @click="onDetail(item.id)">
