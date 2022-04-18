@@ -5,7 +5,6 @@ import {
 } from 'vant';
 import QRCode from 'qrcode';
 import html2canvas from 'html2canvas';
-import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 import { ref } from 'vue';
 
@@ -98,7 +97,7 @@ const saveFile = (data, filename) => {
 </script>
 <template>
   <div class="poster" id="poster">
-    <img :src="Images.poster" />
+    <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/poster.png" />
     <img class="code" :src="url" />
   </div>
 
