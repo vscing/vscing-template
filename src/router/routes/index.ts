@@ -99,6 +99,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/group',
+    name: 'Group',
+    component: () => import('@/views/user/group/index.vue'),
+    meta: {
+      title: '加入社群',
+    },
+  },
+  {
     path: '/job',
     name: 'Job',
     component: () => import('@/views/user/job/index.vue'),

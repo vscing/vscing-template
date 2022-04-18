@@ -74,8 +74,7 @@
   </VantGrid>
 
   <div class="luckey">
-      <img src="../../assets/images/lucky.png" @click="() => Toast('敬请期待')"/>
-      <!-- @click="lucky('/lottery')" -->
+      <img :src="Images.lucky" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
   </div>
 
   <div class="product" v-if="homeData.currentGoods">
@@ -103,7 +102,8 @@
           <p>发售时间：<span class="product-item-value">{{columnToDateTime(homeData.currentGoods?.presell_time)}}</span></p>
           <p>抢购倒计时：<span class="product-item-value product-item-color">00:00:00:00</span></p>
           <p class="btn-list">
-            <VantButton color="#393742" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton>
+            <span></span>
+            <!-- <VantButton color="#393742" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton> -->
             <VantButton color="#01c2c3" @click="onDetail(homeData.currentGoods?.id)">限时抢购</VantButton>
           </p>
         </div>

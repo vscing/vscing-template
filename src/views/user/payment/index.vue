@@ -93,7 +93,7 @@ const onWithdraw = async() => {
           </div>
         </div>
       </div>
-      <div class="payment-info">
+      <!-- <div class="payment-info">
         <div class="info-list">
           <div>
             <p>累计佣金（元）</p>
@@ -104,7 +104,7 @@ const onWithdraw = async() => {
             <h1>{{ show ? `¥ ${payInfo.withdrawalTotalMoney}` : ' *** ' }}</h1>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -113,10 +113,14 @@ const onWithdraw = async() => {
     <VantCell title="银行卡绑定" is-link @click="onPay('/bankCard')" />
   </VantCellGroup>
 
+  <p class="setup">提现金额最小为10元</p>
+
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>
-    <VantButton v-if="payInfo.useMoney > 0" round block color="#01c2c3" @click="withdraw = true">可用金额提现</VantButton>
+    <VantButton round block color="#01c2c3" @click="withdraw = true">可用金额提现</VantButton>
   </div>
+
+  
 
   <VantOverlay :show="recharge" @click="recharge = false">
     <div class="wrapper" @click.stop>
@@ -150,7 +154,7 @@ const onWithdraw = async() => {
       <VantForm @submit="onWithdraw">
         <VantField name="stepper" label="提现金额">
           <template #input>
-            <VantStepper v-model="withdrawForm.price"  min="100" max="10000" />
+            <VantStepper v-model="withdrawForm.price"  min="10" max="10000" />
           </template>
         </VantField>
         <VantField name="radio" label="提现渠道">
@@ -160,7 +164,7 @@ const onWithdraw = async() => {
             </VantRadioGroup>
           </template>
         </VantField>
-        <p class="setup">提现金额需要100起步</p>
+        <p class="setup">提现金额最小为10元</p>
         <div class="btnList">
           <VantButton class="cancel" round block @click="withdraw = false">
             取消

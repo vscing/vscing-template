@@ -109,7 +109,7 @@ init();
         </div>
         <div class="dashboard-item" @click="goTo('/distribute')">
           <VantIcon name="cluster-o" size="20" />
-          <span>分销中心</span>
+          <span>邀请新人</span>
         </div>
         <div class="dashboard-item" @click="goTo('/about')">
           <VantIcon name="friends-o" size="20" />
@@ -148,7 +148,7 @@ init();
           </div>
         </div>
         <!--  @click="goTo('/compound')" -->
-        <div class="dashboard2-item" @click="() => Toast('敬请期待')">
+        <div class="dashboard2-item" @click="goTo('/compound')">
           <div class="dashboard2-item-left">
             <VantIcon name="after-sale" size="20" color="#333" />
             <span>产品合成</span>
@@ -158,17 +158,26 @@ init();
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
         </div>
+        <div class="dashboard2-item" @click="goTo('/group')">
+          <div class="dashboard2-item-left">
+            <VantIcon name="share-o" size="20" color="#333" />
+            <span>加入社群</span>
+          </div>
+          <div class="dashboard2-item-right">
+            <VantIcon name="arrow" size="16" color="#00000059" />
+          </div>
+        </div>
         <!--  @click="goTo('/grant')" -->
-        <div class="dashboard2-item" @click="() => Toast('敬请期待')">
+        <!-- <div class="dashboard2-item" @click="() => Toast('敬请期待')">
           <div class="dashboard2-item-left">
             <VantIcon name="share-o" size="20" color="#333" />
             <span>赠予管理</span>
           </div>
           <div class="dashboard2-item-right">
-            <!-- <span>0</span> -->
+            <span>0</span>
             <VantIcon name="arrow" size="16" color="#00000059" />
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="views-order">
@@ -288,7 +297,7 @@ init();
   margin-bottom: 10px;
   width: 100%;
   .dashboard2-item {
-    padding: 15px 10px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
