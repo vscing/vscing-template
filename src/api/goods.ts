@@ -9,9 +9,12 @@ enum Api {
   getGoodsList = '/goods/getList',
   getGoodsInfo = '/goods/getInfo',
   getGoodsOrderInfo = '/goods/getOrderInfo',
+  setSend = '/goods/setSend',
+  setNotSend = '/goods/setNotSend',
   buyGoods = '/goods/buy',
 
   getUserGoods = '/goods/getUserGoods',
+  getSendGoods = '/goods/getSendGoods',
 }
 
 export const getSellList = (params?: any) =>
@@ -40,3 +43,12 @@ export const buyGoods = (data?: any) =>
 
 export const getUserGoods = (params?: any) =>
   defHttp.get<any>({ url: Api.getUserGoods, params });
+
+export const getSendGoods = (params?: any) =>
+  defHttp.get<any>({ url: Api.getSendGoods, params });
+
+export const setSend = (data?: any) =>
+  defHttp.post<any>({ url: Api.setSend, data }); 
+
+export const setNotSend = (data?: any) =>
+  defHttp.post<any>({ url: Api.setNotSend, data }); 

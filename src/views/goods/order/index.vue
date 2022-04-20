@@ -93,7 +93,7 @@ const getProductBuy = async() => {
       <div class="content-product-image">
         <div class="content-title-list">
           <div class="content-title-number">
-            <span class="content-title">{{ data.title }}</span>
+            <span class="content-title">#{{data.goods_number}}{{ data.title }}</span>
           </div>
           <div class="undefined-line">
           </div>

@@ -3,6 +3,7 @@ import { defHttp } from '@/utils/http/axios';
 enum Api {
   getOrderList = '/order/getList',
   getOrderSkuList = '/orderSku/getList',
+  getSellList = '/orderSku/getSellList'
 }
 
 export const getOrderList = (params?: any) =>
@@ -10,6 +11,9 @@ export const getOrderList = (params?: any) =>
 
 export const getOrderSkuList = (params?: any) =>
   defHttp.get<any>({ url: Api.getOrderSkuList, params });
+
+export const getSellList = (params?: any) =>
+  defHttp.get<any>({ url: Api.getSellList, params });
 
 // export const buyGoods = (data?: any) =>
 //   defHttp.post<any>({ url: Api.buyGoods, data });  

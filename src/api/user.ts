@@ -8,6 +8,7 @@ enum Api {
   login = '/user/login',
   aliPay = '/user/aliPay',
   editUserInfo = '/user/editUserInfo',
+  getPaasWord = '/user/getPaasWord',
   setPaasWord = '/user/setPaasWord',
 }
 
@@ -31,6 +32,9 @@ export const aliPay = (data?: any) => defHttp.post<any>({ url: Api.aliPay, data}
 
 // 编辑信息
 export const editUserInfo = (data?: any) => defHttp.post<any>({ url: Api.editUserInfo, data});
+
+// 判断支付密码是否设置
+export const getPaasWord = (data?: any) => defHttp.post<any>({ url: Api.getPaasWord, data});
 
 // 绑定支付密码
 export const setPaasWord = (data?: any) => defHttp.post<any>({ url: Api.setPaasWord, data});

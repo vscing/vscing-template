@@ -97,7 +97,7 @@ const saveFile = (data, filename) => {
 </script>
 <template>
   <div class="poster" id="poster">
-    <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/poster.png" />
+    <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/poster.jpg" />
     <img class="code" :src="url" />
   </div>
 

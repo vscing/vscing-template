@@ -13,12 +13,14 @@ import { to } from '@/utils';
 import { Images } from '@/assets/images';
 
 const router = useRouter();
-console.log('%c [ router ]-14', 'font-size:13px; background:pink; color:#bf2c9f;', router)
 
 const page = ref<number>(1);
 const total = ref<number>(0);
 const list = ref<any[]>([]);
 
+const goDetail = (id: number) => {
+  router.push('/locked/detail?id='+id)  
+}
 
 const onLoad = async () => {
   const [_, res] = await to(getUserGoods({
@@ -31,18 +33,22 @@ const onLoad = async () => {
 }
 
 onLoad();
+
+const onClickLeft = () => {
+  router.go(-1);
+};
 </script>
 
 <template>
-  <VantNavBar safe-area-inset-top fixed title="藏品管理" />
+  <VantNavBar class="nav-bar" safe-area-inset-top fixed left-arrow @click-left="onClickLeft" title="藏品管理" />
   <div v-if="list.length > 0">
     <ul class="product-list">
-      <li class="product-item" v-for="item in list" :key="item.id">
+      <li class="product-item" v-for="item in list" :key="item.id" @click="goDetail(item.id)">
         <VantImage class="product-item-img"
           :src="item.img"
           :show-loading="false" :show-error="false" width="100%" fit="cover" lazy-load :radius="4" />
         <div class="product-item-info">
-          <h2>{{ item.title }}</h2>
+          <h2>#{{item.goods_number}} {{ item.title }}</h2>
           <p class="product-item-price">￥{{ item.goods_price }}</p>
           <p class="product-item-desc">
             <span>艺术家 {{ item.user_name }}</span>
@@ -59,6 +65,22 @@ onLoad();
 </template>
 
 <style lang="less" scoped>
+.nav-bar {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  top: constant(safe-area-inset-top);
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+
+  :deep(.van-icon) {
+    color: #000000;
+  }
+
+  :deep(.van-nav-bar__title) {
+    color: #000000;
+  }
+}
 .product-list {
   width: 100%;
   display: flex;

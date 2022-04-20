@@ -19,13 +19,6 @@ init();
 <template>
   <div class="abouts-box">
     <h2>加入我们</h2>
-    <div class="abouts-box-tel">
-      <VantIcon name="service-o" />
-      <p>
-        <span>联系电话：</span>
-        <a :href="`tel:${info.phone}`">{{info.phone}}</a>
-      </p>  
-    </div>
     <VantImage :src="info.code1"/>
   </div>
 </template>
@@ -41,6 +34,7 @@ init();
     & > h2 {
       font-size: 18px;
       font-weight: 600;
+      margin-bottom: 50px;
     }
     .abouts-box-tel {
       cursor: pointer;

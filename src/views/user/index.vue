@@ -190,6 +190,10 @@ init();
           <VantIcon name="cart-o" size="20" />
           <span>我买到的</span>
         </div>
+        <div class="order-desc" @click="goTo('/order/market')">
+          <VantIcon name="goods-collect-o" size="20" />
+          <span>市场交易</span>
+        </div>
         <div class="order-desc" @click="goTo('/order/publish')">
           <VantIcon name="guide-o" size="20" />
           <span>我发布的</span>

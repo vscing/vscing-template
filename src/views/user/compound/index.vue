@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import {
   NavBar as VantNavBar,
   Image as VantImage,
@@ -17,7 +17,8 @@ const playList = ref<any[]>([]);
 const goodsList = ref<any>({});
 const disabled = ref<boolean>(true);
 
-const active = ref(0);
+const active = ref<number>(0);
+console.log('%c [ active ]-21', 'font-size:13px; background:pink; color:#bf2c9f;', active)
 
 const goCompound = async (id: number) => {
   const [_, res] = await to(setCompound({id}));
@@ -27,19 +28,27 @@ const goCompound = async (id: number) => {
   }
 }
 
+watch(active, (val, old)=> {
+  if(val !== old) {
+    onBol()
+  }
+})
+
 const init = async () => {
   const [_, res] = await to(getList());
   if(res){
     playList.value = res.playList || []
     goodsList.value = res.goodsList || {}
-
-    let isBol = res.playList.every((item) => {
-      return item.count === (res.goodsList[item.goods_id] ?? 0)
-    })
-    disabled.value = !isBol;
+    onBol()
   }
-  console.log('%c [ res ]-28', 'font-size:13px; background:pink; color:#bf2c9f;', res)
 };
+
+const onBol = () => {
+  let isBol = playList.value[active.value]['children'].every((item) => {
+    return item.count <= (goodsList.value[item.goods_id] ?? 0)
+  })
+  disabled.value = !isBol;
+}
 
 init()
 </script>

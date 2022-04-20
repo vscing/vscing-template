@@ -7,7 +7,7 @@ import {
   Pagination as VantPagination,
   Empty as VantEmpty
 } from 'vant';
-import { getSellList } from '@/api/order';
+import { getOrderSkuList } from '@/api/order';
 import { to } from '@/utils';
 import { columnToDateTime } from '@/utils/dateUtil';
 import { Images } from '@/assets/images';
@@ -18,7 +18,7 @@ const list = ref<any[]>([]);
 const active = ref<number>(0);
 
 const onLoad = async () => {
-  const [_, res] = await to(getSellList({
+  const [_, res] = await to(getOrderSkuList({
     page: page.value,
     type: active.value
   }));

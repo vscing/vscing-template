@@ -5,13 +5,14 @@ import {
   Image as VantImage,
   Icon as VantIcon,
   Button as VantButton,
-  Toast
+  Toast,
+  Dialog
 } from 'vant';
 import { SvgIcon } from '@/components/SvgIcon';
 import { to, sliceStr } from '@/utils';
 import { useUserStore } from '@/store/modules/user';
 import { ref } from 'vue';
-import { getGoodsInfo } from '@/api/goods';
+import { getGoodsInfo, setSend, setNotSend } from '@/api/goods';
 
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
@@ -25,7 +26,7 @@ const onClickLeft = () => {
 const route = useRoute();
 const { id = 0 } = route.query || {}
 
-const init = async () => {
+const init = async() => {
   const [_, res] = await to(getGoodsInfo({ id }));
   if (res) {
     data.value = res.data || {}
@@ -34,14 +35,15 @@ const init = async () => {
 
 init();
 
-const goOrder = () => {
-  if (data.value.status != 20) {
-    return false;
-  }
-  if (userInfo) {
-    router.push(`/goods/agree?id=${id}`)
+const goOrder = async() => {
+  if(data.value.status == 10) {
+    router.push('/locked/agree?id='+id)
   } else {
-    Toast.fail('请登录')
+    const [_, res] = await to(setNotSend({id}));
+    if(res) {
+      Toast.success('产品下架成功')
+      onClickLeft()
+    }
   }
 }
 </script>
@@ -116,9 +118,14 @@ const goOrder = () => {
     <div v-html="data.content"></div>
   </div>
 
+  <div class="info-box" v-show="data.status == 10">
+    <h2>出售协议</h2>
+    <div v-html="data.agree"></div>
+  </div>
+
   <div class="btn-list">
-    <VantButton type="primary" round block :color="data.status != 20 ? '#999999':'#01c2c3'" :disabled="data.status != 20" @click="goOrder">
-      {{data.status != 20 ? '产品未寄售':'产品购买'}}
+    <VantButton type="primary" round block color="#01c2c3" @click="goOrder">
+      {{data.status != 10 ? '产品下架':'产品发布'}}
     </VantButton>
   </div>
 </template>
@@ -232,6 +239,7 @@ const goOrder = () => {
     margin-bottom: 5px;
   }
 }
+
 
 .btn-list {
   position: fixed;

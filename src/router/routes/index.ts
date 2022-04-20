@@ -199,7 +199,31 @@ export const MainRoute: AppRouteRecordRaw[] = [
     name: 'Locked',
     component: () => import('@/views/user/locked/index.vue'),
     meta: {
-      title: '锁藏品',
+      title: '我的藏品',
+    },
+  },
+  {
+    path: '/locked/detail',
+    name: 'LockedDetail',
+    component: () => import('@/views/user/locked/detail.vue'),
+    meta: {
+      title: '藏品详情',
+    },
+  },
+  {
+    path: '/locked/agree',
+    name: 'LockedAgree',
+    component: () => import('@/views/user/locked/agree.vue'),
+    meta: {
+      title: '藏品发布协议',
+    },
+  },
+  {
+    path: '/locked/sendSku',
+    name: 'LockedSendSku',
+    component: () => import('@/views/user/locked/sendSku.vue'),
+    meta: {
+      title: '藏品发布',
     },
   },
   {
@@ -224,6 +248,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/user/order/buy/index.vue'),
     meta: {
       title: '我买到的',
+    },
+  },
+  {
+    path: '/order/market',
+    name: 'Market',
+    component: () => import('@/views/user/order/market/index.vue'),
+    meta: {
+      title: '市场交易',
     },
   },
   {
