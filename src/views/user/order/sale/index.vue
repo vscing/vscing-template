@@ -63,8 +63,8 @@ const getStatusText = (status: number) => {
         />
         <div class="product-item-info">
           <p>
-            <h2>{{item.title}}</h2>
-            <span>{{getStatusText(item.payment_status)}}</span>
+            <h2>#{{item.goods_number}} {{item.title}}</h2>
+            <span class="status">{{getStatusText(item.payment_status)}}</span>
           </p>
           <p>
             <span>订单号：</span>
@@ -72,7 +72,7 @@ const getStatusText = (status: number) => {
           </p>
           <p>
             <span>订单金额：</span>
-            <span>￥{{item.order_price}}</span>
+            <span class="price">￥{{item.order_price}}</span>
           </p>
           <p>
             <span>支付方式：</span>
@@ -149,6 +149,16 @@ const getStatusText = (status: number) => {
           color: #000000;
           font-weight: 600;
         }
+      }
+      .status {
+        color: #01c2c3 !important;
+        font-weight: 700 !important;
+        font-size: 16px;
+      }
+      .price {
+        color: #f4a33a !important;
+        font-weight: 700 !important;
+        font-size: 16px;
       }
     }
   }

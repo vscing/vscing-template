@@ -119,7 +119,7 @@ const goOrder = () => {
 
   <div class="btn-list">
     <VantButton type="primary" round block color="#01c2c3" :disabled="data.status != 30" @click="goOrder">
-      {{data.status != 30 ? '产品已售罄':'产品购买'}}
+      {{data.status != 30 ? (data.status != 20 ?'产品已售罄':'产品预售中'):'产品购买'}}
     </VantButton>
   </div>
 </template>

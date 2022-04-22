@@ -5,6 +5,7 @@ import {
   Field as VantField,
   Button as VantButton,
   Checkbox as VantCheckbox,
+  Overlay as VantOverlay,
   Toast
 } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
@@ -13,12 +14,17 @@ import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 import { getCode, login } from '@/api/user';
 import { to } from '@/utils';
+import Captcha from '@/components/captcha';
 import storage from 'store';
+import '@/components/captcha/src/style'
 
 const formRef = ref<any>(null);
 const phone = ref('');
 const code = ref('');
 const sendSms = ref(true);
+const captcha = ref(null);
+const show = ref(false);
+const verifyParams = ref({});
 const times = ref(120);
 const checked = ref(false);
 const router = useRouter();
@@ -79,6 +85,16 @@ const onAgree = (type = 0) => {
 }
 
 const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
+
+const onCaptchaInit = (val) => {
+  verifyParams.value = val
+}
+
+const onCaptchaSuccess = (val) => {
+  captcha.value?.reset();
+  show.value = false;
+  sendCode();
+}
 </script>
 
 <template>
@@ -86,7 +102,21 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
     <div class="loginImage">
       <img :src="Images.logo"/>
     </div>
+    <VantOverlay :show="show" @click="show = false">
+      <div class="captcha" @click.stop>
+        <Captcha
+          ref="captcha"
+          init-action="https://api.ysxqbjz.com/api/user/captchaInit"
+          check-action="https://api.ysxqbjz.com/api/user/captchaCheck" 
+          verify-action="https://api.ysxqbjz.com/api/user/captchaVerify"
+          :verifyParams="verifyParams"
+          @init="onCaptchaInit"
+          @success="onCaptchaSuccess"
+        />
+      </div>
+    </VantOverlay>
     
+
     <VantForm ref="formRef" @submit="onSubmit">
       <VantCellGroup>
         <VantField
@@ -104,7 +134,8 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
           :rules="[{ required: true, message: '请输入验证码' }]"
         >
           <template #button>
-            <span v-show="sendSms" class="smsCode" @click="sendCode">发送验证码</span>
+            <!-- <span v-show="sendSms" class="smsCode" @click="sendCode">发送验证码</span> -->
+            <span v-show="sendSms" class="smsCode" @click="show = true">发送验证码</span>
             <span v-show="!sendSms" class="smsCode" disabled>{{times}}s后重新发送</span>
           </template>
         </VantField>
@@ -167,5 +198,14 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
       color: #397fe7;
     }
   }
+}
+.captcha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 48vh;
+}
+:deep(.mi-captcha-content) {
+  width: 100% !important;
 }
 </style>

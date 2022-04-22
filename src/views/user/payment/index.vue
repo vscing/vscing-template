@@ -44,11 +44,19 @@ const rechargeForm = reactive<any>({
 const onRecharge = async() => {
   const [_, res] = await to(setRecharge(rechargeForm))
   recharge.value = false
-  const div = document.createElement('div')
-  /* 此处form就是后台返回接收到的数据 */
-  div.innerHTML = res.form
+  // const div = document.createElement('div')
+  // /* 此处form就是后台返回接收到的数据 */
+  // div.innerHTML = res.form
+  // document.body.appendChild(div)
+  // document.forms['alipay_submit'].submit()
+  let divForm = document.getElementsByTagName('divform')
+  if (divForm.length) {
+    document.body.removeChild(divForm[0])
+  }
+  const div: any = document.createElement('divform')
+  div.innerHTML = res.form // res.data就是sb支付宝返回给你的form
   document.body.appendChild(div)
-  document.forms['alipay_submit'].submit()
+  document.getElementById('alipay_submit')?.submit();
 }
 
 const withdrawForm = reactive<any>({

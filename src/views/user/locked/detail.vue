@@ -118,11 +118,6 @@ const goOrder = async() => {
     <div v-html="data.content"></div>
   </div>
 
-  <div class="info-box" v-show="data.status == 10">
-    <h2>出售协议</h2>
-    <div v-html="data.agree"></div>
-  </div>
-
   <div class="btn-list">
     <VantButton type="primary" round block color="#01c2c3" @click="goOrder">
       {{data.status != 10 ? '产品下架':'产品发布'}}

@@ -74,7 +74,7 @@
   </VantGrid>
 
   <div class="luckey">
-      <img :src="Images.lucky" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
+      <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/lucky.png" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
   </div>
 
   <div class="product" v-if="homeData.currentGoods">

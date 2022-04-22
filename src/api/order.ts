@@ -2,8 +2,8 @@ import { defHttp } from '@/utils/http/axios';
 
 enum Api {
   getOrderList = '/order/getList',
-  getOrderSkuList = '/orderSku/getList',
-  getSellList = '/orderSku/getSellList'
+  getOrderSkuList = '/order/getMarketList',
+  getSellList = '/order/getSellList',
 }
 
 export const getOrderList = (params?: any) =>

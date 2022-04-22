@@ -20,7 +20,8 @@ const active = ref<number>(0);
 const onLoad = async () => {
   const [_, res] = await to(getOrderList({
     page: page.value,
-    type: active.value
+    type: 2,
+    // type: active.value
   }));
   if (res) {
     list.value = res.list || []
@@ -42,12 +43,12 @@ const getStatusText = (status: number) => {
 </script>
 
 <template>
-  <VantTabs class="tabs-box" v-model:active="active" @change="onLoad">
+  <!-- <VantTabs class="tabs-box" v-model:active="active" @change="onLoad">
     <VantTab title="全部"></VantTab>
     <VantTab title="待付款"></VantTab>
     <VantTab title="已完成"></VantTab>
     <VantTab title="已取消"></VantTab>
-  </VantTabs>
+  </VantTabs> -->
   <div v-if="list.length > 0">
     <ul class="product-list">
       <li class="product-item" v-for="item in list" :key="item.id">
@@ -63,8 +64,8 @@ const getStatusText = (status: number) => {
         />
         <div class="product-item-info">
           <p>
-            <h2>{{item.title}}</h2>
-            <span>{{getStatusText(item.payment_status)}}</span>
+            <h2>#{{item.goods_number}} {{item.title}}</h2>
+            <span class="status">{{getStatusText(item.payment_status)}}</span>
           </p>
           <p>
             <span>订单号：</span>
@@ -72,7 +73,7 @@ const getStatusText = (status: number) => {
           </p>
           <p>
             <span>订单金额：</span>
-            <span>￥{{item.order_price}}</span>
+            <span class="price">￥{{item.order_price}}</span>
           </p>
           <p>
             <span>支付方式：</span>
@@ -109,7 +110,7 @@ const getStatusText = (status: number) => {
   justify-content: flex-start;
   margin-bottom: 10px;
   padding: 0 10px;
-  padding-top: 50px;
+  // padding-top: 50px;
 
   .product-item {
     padding: 10px;
@@ -149,6 +150,16 @@ const getStatusText = (status: number) => {
           color: #000000;
           font-weight: 600;
         }
+      }
+      .status {
+        color: #01c2c3 !important;
+        font-weight: 700 !important;
+        font-size: 16px;
+      }
+      .price {
+        color: #f4a33a !important;
+        font-weight: 700 !important;
+        font-size: 16px;
       }
     }
   }

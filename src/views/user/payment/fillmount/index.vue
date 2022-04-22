@@ -13,7 +13,7 @@ import { Images } from '@/assets/images';
 import { columnToDateTime } from '@/utils/dateUtil';
 
 const router = useRouter();
-const tabTitle = reactive(['余额变动', '充值', '提现', '收益']);
+const tabTitle = reactive(['余额变动', '充值', '提现', '卖出']);
 const active = ref<any>(0);
 
 const onClickLeft = () => router.go(-1);
@@ -143,6 +143,10 @@ const getStatus = (status: number, type: number) => {
                 <div class="bill_time">
                     <div class="bill_name">支付时间</div>
                     <div class="bill_value">{{columnToDateTime(item.created_at)}}</div>
+                </div>
+                <div class="bill_amount">
+                    <div class="bill_name">变更后可用金额</div>
+                    <div class="bill_value">￥{{item.use_money}}</div>
                 </div>
               </div>
             </div>

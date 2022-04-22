@@ -136,7 +136,7 @@ const saveFile = (data, filename) => {
     width: 100px;
     height: 100px;
     position: absolute;
-    bottom: 40px;
+    bottom: 0;
     right: calc(50vw - 50px);
   }
 }
