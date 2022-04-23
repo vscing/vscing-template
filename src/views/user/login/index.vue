@@ -12,7 +12,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
-import { getCode, login } from '@/api/user';
+import { getCode, login, getCodeImage, checkCodeImage } from '@/api/user';
 import { to } from '@/utils';
 import Captcha from '@/components/captcha';
 import storage from 'store';
@@ -24,7 +24,14 @@ const code = ref('');
 const sendSms = ref(true);
 const captcha = ref(null);
 const show = ref(false);
-const verifyParams = ref({});
+const verifyParams = ref({
+  key: '',
+  id: ''
+});
+
+const img = ref('');
+const key = ref('');
+const captchaCode = ref(0);
 const times = ref(120);
 const checked = ref(false);
 const router = useRouter();
@@ -45,10 +52,14 @@ const sendCode = async() => {
 
   if(sendSms.value && times.value === 120) {
     const [_, res] = await to(getCode({
-      phone: phone.value
+      phone: phone.value,
+      captchaCode: captchaCode.value,
+      key: key.value
+      // key: verifyParams.value?.key || ''
     }));
     if(res) {
       Toast.success('发送成功');
+      show.value = false
       sendSms.value = false;
       timer = setInterval(()=>{
         times.value--;
@@ -86,15 +97,34 @@ const onAgree = (type = 0) => {
 
 const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
 
-const onCaptchaInit = (val) => {
-  verifyParams.value = val
+const init = async(val = false) => {
+  const [_, res] = await to(getCodeImage());
+  if(res){
+    console.log('%c [ res ]-96', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+    img.value = res.data.img
+    key.value = res.data.key
+  }
+  show.value = val
+}
+init()
+
+const onCheck = () => {
+  if(!key.value || !captchaCode.value) {
+    Toast.fail('请输入校验值');
+    return 
+  }
+  sendCode()
 }
 
-const onCaptchaSuccess = (val) => {
-  captcha.value?.reset();
-  show.value = false;
-  sendCode();
-}
+// const onCaptchaInit = (val) => {
+//   verifyParams.value = val
+// }
+
+// const onCaptchaSuccess = (val) => {
+//   captcha.value?.reset();
+//   show.value = false;
+//   sendCode();
+// }
 </script>
 
 <template>
@@ -102,7 +132,7 @@ const onCaptchaSuccess = (val) => {
     <div class="loginImage">
       <img :src="Images.logo"/>
     </div>
-    <VantOverlay :show="show" @click="show = false">
+    <!-- <VantOverlay :show="show" @click="show = false">
       <div class="captcha" @click.stop>
         <Captcha
           ref="captcha"
@@ -114,7 +144,20 @@ const onCaptchaSuccess = (val) => {
           @success="onCaptchaSuccess"
         />
       </div>
+    </VantOverlay> -->
+    <VantOverlay :show="show" @click="show = false">
+      <div class="captcha-box" @click.stop>
+        <VantField v-model="captchaCode" type="number">
+          <template #button>
+            <img :src="img" style="height: auto; width: 100px;" @click="init(true)"/>
+          </template>
+        </VantField>
+        <VantButton type="primary" style="margin-top: 60px;" @click="onCheck">发送短信</VantButton>
+      </div>
+      
     </VantOverlay>
+
+    
     
 
     <VantForm ref="formRef" @submit="onSubmit">
@@ -135,7 +178,7 @@ const onCaptchaSuccess = (val) => {
         >
           <template #button>
             <!-- <span v-show="sendSms" class="smsCode" @click="sendCode">发送验证码</span> -->
-            <span v-show="sendSms" class="smsCode" @click="show = true">发送验证码</span>
+            <span v-show="sendSms" class="smsCode" @click="init(true)">发送验证码</span>
             <span v-show="!sendSms" class="smsCode" disabled>{{times}}s后重新发送</span>
           </template>
         </VantField>
@@ -207,5 +250,12 @@ const onCaptchaSuccess = (val) => {
 }
 :deep(.mi-captcha-content) {
   width: 100% !important;
+}
+.captcha-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 35vh;
 }
 </style>

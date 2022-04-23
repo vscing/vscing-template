@@ -7,7 +7,9 @@ import {
   Pagination as VantPagination,
   Empty as VantEmpty,
   Icon as VantIcon,
-  Dialog
+  Search as VantSearch,
+  Dialog,
+  Toast
 } from 'vant';
 import { TabList } from '@/components/TabList';
 import { useRouter } from 'vue-router';
@@ -16,6 +18,7 @@ import { to } from '@/utils';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 
+const title = ref<string>('');
 const timeVal = ref<number>(0);
 const priceVal = ref<number>(0);
 const page = ref<number>(1);
@@ -47,12 +50,13 @@ const init = () => {
       title: '提示',
       message:'请先实名认证、并绑定银行卡后操作。',
     })
-      .then(() => {
-        router.push('/realName')
-      })
-      .catch(() => {
-        router.push('/user')
-      });
+    .then(() => {
+      router.push('/realName')
+    })
+    .catch(() => {
+      router.push('/user')
+    });
+    return
   }
   if(!userInfo?.is_bank){
     Dialog.confirm({
@@ -65,6 +69,7 @@ const init = () => {
       .catch(() => {
         router.push('/user')
       });
+      return
   }
 }
 
@@ -72,7 +77,10 @@ init()
 
 const onLoad = async () => {
   const [_, res] = await to(getGoodsList({
-    page: page.value
+    page: page.value,
+    timeSort: timeVal.value,
+    priceSort: priceVal.value,
+    title: title.value
   }))
   if (res) {
     list.value = res.list || []
@@ -81,12 +89,38 @@ const onLoad = async () => {
 }
 
 onLoad();
+
+const onChange = () => {
+  page.value = 1;
+  list.value = [];
+  total.value = 0;
+  onLoad();
+}
+
+const onClickButton = () => {
+  page.value = 1;
+  list.value = [];
+  total.value = 0;
+  onLoad();
+}
+
 </script>
 
 <template>
+  <VantSearch
+    class="search-box"
+    v-model="title"
+    show-action
+    label="商品"
+    placeholder="请输入商品名称关键词"
+  >
+    <template #action>
+      <div @click="onClickButton">搜索</div>
+    </template>
+  </VantSearch>
   <DropdownMenu class="screen-box" :z-index="9999" active-color="#01c2c3">
-    <DropdownItem v-model="timeVal" :options="option1" />
-    <DropdownItem v-model="priceVal" :options="option2" />
+    <DropdownItem v-model="timeVal" :options="option1" @change="onChange" />
+    <DropdownItem v-model="priceVal" :options="option2" @change="onChange" />
   </DropdownMenu>
   <div v-if="list.length > 0">
     <ul class="product-list">
@@ -112,10 +146,18 @@ onLoad();
 </template>
 
 <style lang="less" scoped>
-.screen-box {
+.search-box {
   position: fixed;
   top: env(safe-area-inset-top);
   top: constant(safe-area-inset-top);
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+.screen-box {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 50px);
+  top: calc(constant(safe-area-inset-top) + 50px);
   left: 0;
   width: 100%;
   z-index: 9999;
@@ -127,7 +169,7 @@ onLoad();
   flex-flow: row wrap;
   justify-content: flex-start;
   margin-bottom: 10px;
-  padding: 50px 10px 0;
+  padding: 100px 10px 0;
 
   .product-item {
     padding: 10px;

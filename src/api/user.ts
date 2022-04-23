@@ -10,6 +10,8 @@ enum Api {
   editUserInfo = '/user/editUserInfo',
   getPaasWord = '/user/getPaasWord',
   setPaasWord = '/user/setPaasWord',
+  getCodeImage = '/user/getCodeImage',
+  checkCodeImage = '/user/checkCodeImage',
 }
 
 export const getUserInfo = (params?: any) =>
@@ -38,3 +40,8 @@ export const getPaasWord = (data?: any) => defHttp.post<any>({ url: Api.getPaasW
 
 // 绑定支付密码
 export const setPaasWord = (data?: any) => defHttp.post<any>({ url: Api.setPaasWord, data});
+
+export const getCodeImage = (params?: any) =>
+  defHttp.get<any>({ url: Api.getCodeImage, params });
+
+export const checkCodeImage = (data?: any) => defHttp.post<any>({ url: Api.checkCodeImage, data});

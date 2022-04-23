@@ -27,35 +27,36 @@ const copy = async (value: string) => {
 
 // 判断是否实名或绑定银行卡
 const goTo = (path: string) => {
-  if(userInfo.value.is_name && userInfo.value.is_bank) {
-    router.push(path)
-  }
-  if(!userInfo.value.is_name){
-    Dialog.confirm({
-      title: '提示',
-      message:'请先实名认证、并绑定银行卡后操作。',
-    })
-      .then(() => {
-        router.push('/realName')
-      })
-      .catch(() => {
-        // on cancel
-      });
-    return false;
-  }
-  if(!userInfo.value.is_bank){
-    Dialog.confirm({
-      title: '提示',
-      message:'请先实名认证、并绑定银行卡后操作。',
-    })
-      .then(() => {
-        router.push('/bankCard')
-      })
-      .catch(() => {
-        // on cancel
-      });
-    return false;
-  }
+  router.push(path)
+  // if(userInfo.value.is_name && userInfo.value.is_bank) {
+  //   router.push(path)
+  // }
+  // if(!userInfo.value.is_name){
+  //   Dialog.confirm({
+  //     title: '提示',
+  //     message:'请先实名认证、并绑定银行卡后操作。',
+  //   })
+  //     .then(() => {
+  //       router.push('/realName')
+  //     })
+  //     .catch(() => {
+  //       // on cancel
+  //     });
+  //   return false;
+  // }
+  // if(!userInfo.value.is_bank){
+  //   Dialog.confirm({
+  //     title: '提示',
+  //     message:'请先实名认证、并绑定银行卡后操作。',
+  //   })
+  //     .then(() => {
+  //       router.push('/bankCard')
+  //     })
+  //     .catch(() => {
+  //       // on cancel
+  //     });
+  //   return false;
+  // }
 }
 
 const init = async() => {

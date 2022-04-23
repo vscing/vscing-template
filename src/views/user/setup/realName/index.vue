@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { useUserStore } from '@/store/modules/user';
 import { addIdCard } from '@/api/user';
+import { setAuth, checkAuth } from '@/api/pay';
 import { Images } from '@/assets/images';
 import { to } from '@/utils';
 
@@ -33,6 +34,38 @@ const onSubmit = async () => {
     userInfo['is_name'] = true;
     userStore.setUserInfo(userInfo);
   }
+}
+
+const init = async () => {
+  const [_, res] = await to(setAuth({
+    type: 1
+  }))
+  // const div = document.createElement('div')
+  // /* 此处form就是后台返回接收到的数据 */
+  // div.innerHTML = res.form
+  // document.body.appendChild(div)
+  // document.forms['alipay_submit'].submit()
+  let divForm = document.getElementsByTagName('divform')
+  if (divForm.length) {
+    document.body.removeChild(divForm[0])
+  }
+  const div: any = document.createElement('divform')
+  div.innerHTML = res.form
+  document.body.appendChild(div)
+  document.getElementById('alipay_submit')?.submit();
+}
+
+const initCheckAuth = async() => {
+  const [_, res] = await to(checkAuth({
+    type: 1
+  }));
+  if(res) {
+    init()
+  }
+}
+
+if(!userInfo['is_name']) {
+  initCheckAuth();
 }
 
 </script>

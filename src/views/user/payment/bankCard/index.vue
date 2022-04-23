@@ -14,6 +14,7 @@ import { reactive, ref } from 'vue';
 import { to } from '@/utils';
 import { getBankList, addBank } from '@/api/bank';
 import { useUserStore } from '@/store/modules/user';
+import { setAuth, checkAuth } from '@/api/pay';
 
 const userStore = useUserStore();
 let userInfo = userStore.getUserInfo || {}
@@ -40,6 +41,29 @@ const init = async() => {
   if(res){
     columns.value = res.list
   }
+
+  const [err1, res1] = await to(checkAuth({
+    type: 2
+  }));
+  if(res1) {
+    const [err2, res2] = await to(setAuth({
+      type: 2
+    }))
+    // const div = document.createElement('div')
+    // /* 此处form就是后台返回接收到的数据 */
+    // div.innerHTML = res.form
+    // document.body.appendChild(div)
+    // document.forms['alipay_submit'].submit()
+    let divForm = document.getElementsByTagName('divform')
+    if (divForm.length) {
+      document.body.removeChild(divForm[0])
+    }
+    const div: any = document.createElement('divform')
+    div.innerHTML = res2.form
+    document.body.appendChild(div)
+    document.getElementById('alipay_submit')?.submit();
+  }
+  
 }
 
 init();

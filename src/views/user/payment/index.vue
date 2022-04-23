@@ -121,7 +121,7 @@ const onWithdraw = async() => {
     <VantCell title="银行卡绑定" is-link @click="onPay('/bankCard')" />
   </VantCellGroup>
 
-  <p class="setup">提现金额最小为10元</p>
+  <p class="setup">提现金额最小为10元，小于100元有2元提现手续费</p>
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>
@@ -172,7 +172,7 @@ const onWithdraw = async() => {
             </VantRadioGroup>
           </template>
         </VantField>
-        <p class="setup">提现金额最小为10元</p>
+        <p class="setup">提现金额最小为10元，小于100元有2元提现手续费</p>
         <div class="btnList">
           <VantButton class="cancel" round block @click="withdraw = false">
             取消

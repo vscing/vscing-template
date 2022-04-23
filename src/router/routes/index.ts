@@ -183,7 +183,7 @@ export const MainRoute: AppRouteRecordRaw[] = [
     name: 'Distribute',
     component: () => import('@/views/user/distribute/index.vue'),
     meta: {
-      title: '分销中心',
+      title: '邀请新人',
     },
   },
   {

