@@ -56,7 +56,7 @@ const goOrder = () => {
   <div class="config-box">
     <div class="goods-head">
       <h2>{{data.title}}</h2>
-      <span class="goods-num"># {{data.goods_number}} / {{data.total_stock}}</span>
+      <span class="goods-num"># {{data.total_stock}} / {{data.total_stock}}</span>
     </div>
     <div class="price-box">
       <span class="goods-price">￥{{data.goods_price}}</span>
