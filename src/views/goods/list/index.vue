@@ -48,7 +48,7 @@ const init = () => {
   if(!userInfo?.is_name){
     Dialog.confirm({
       title: '提示',
-      message:'请先实名认证、并绑定银行卡后操作。',
+      message:'请先实名认证后操作。',
     })
     .then(() => {
       router.push('/realName')
@@ -57,19 +57,6 @@ const init = () => {
       router.push('/user')
     });
     return
-  }
-  if(!userInfo?.is_bank){
-    Dialog.confirm({
-      title: '提示',
-      message:'请先实名认证、并绑定银行卡后操作。',
-    })
-      .then(() => {
-        router.push('/bankCard')
-      })
-      .catch(() => {
-        router.push('/user')
-      });
-      return
   }
 }
 
@@ -131,7 +118,8 @@ const onClickButton = () => {
           <h2>#{{item.goods_number}} {{ item.title }}</h2>
           <p class="product-item-price">￥{{ item.goods_price }}</p>
           <p class="product-item-desc">
-            <span>艺术家 {{ item.user_name }}</span>
+            <!-- {{ item.user_name }} -->
+            <span>艺术家 食艺术</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
             </span>

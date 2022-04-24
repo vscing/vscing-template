@@ -12,11 +12,16 @@ import {
   RadioGroup as VantRadioGroup,
   Stepper as VantStepper,
   Toast,
+  Dialog,
 } from 'vant';
 import { useRouter } from 'vue-router';
 import { getPayInfo, setRecharge, setWithdraw } from '@/api/pay';
 import { to } from '@/utils';
 import { ref, reactive } from 'vue';
+import { useUserStore } from '@/store/modules/user';
+
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo
 
 const router = useRouter();
 const onPay = (path: string) => {
@@ -64,6 +69,19 @@ const withdrawForm = reactive<any>({
   model: '2'
 })
 const onWithdraw = async() => {
+  if(!userInfo?.is_bank){
+    Dialog.confirm({
+      title: '提示',
+      message:'请绑定银行卡后操作。',
+    })
+      .then(() => {
+        router.push('/bankCard')
+      })
+      .catch(() => {
+        router.push('/user')
+      });
+      return
+  }
   const [_, res] = await to(setWithdraw(withdrawForm))
   if(res) {
     Toast.success('提现申请成功');

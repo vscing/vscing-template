@@ -14,7 +14,7 @@ const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
 const info = ref<string>('');
 const disabled = ref<boolean>(true);
-const num = ref<number>(5);
+const num = ref<number>(2);
 
 const router = useRouter();
 const route = useRoute();
@@ -45,7 +45,7 @@ const timer = setInterval(()=> {
 setTimeout(()=>{
   disabled.value = false;
   clearInterval(timer);
-}, 5000)
+}, 2000)
 
 const init = async () => {
   const [_, res] = await to(getConfig({type: 2}));
