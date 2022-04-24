@@ -13,12 +13,14 @@ interface Props {
   pageSize?: number;
   params?: any;
   isPull?: boolean;
+  offset?: number;
 }
 const props = withDefaults(defineProps<Props>(), {
   page: 1,
   pageSize: 10,
   params: {},
-  isPull: false
+  isPull: false,
+  offset: 100
 })
 
 watch(
@@ -95,7 +97,7 @@ onLoad();
 <template>
   <VantPullRefresh v-if="list.length > 0" v-model="refreshing" @refresh="onRefresh" success-text="刷新成功" :disabled="props.isPull">
     <VantList v-model:loading="loading" :finished="finished" finished-text="没有更多了" v-model:error="error"
-      error-text="请求失败，点击重新加载" @load="onLoad">
+      error-text="请求失败，点击重新加载" :offset="offset" @load="onLoad">
       <slot :list="list"></slot>
     </VantList>
   </VantPullRefresh>

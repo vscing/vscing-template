@@ -1,29 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import {
   DropdownMenu,
   DropdownItem,
   Image as VantImage,
-  Pagination as VantPagination,
+  // Pagination as VantPagination,
   Empty as VantEmpty,
   Icon as VantIcon,
   Search as VantSearch,
   Dialog,
-  Toast
+  // Toast
 } from 'vant';
 import { TabList } from '@/components/TabList';
 import { useRouter } from 'vue-router';
 import { getGoodsList } from '@/api/goods';
-import { to } from '@/utils';
+// import { to } from '@/utils';
+import { List } from '@/components/List';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 
 const title = ref<string>('');
-const timeVal = ref<number>(0);
-const priceVal = ref<number>(0);
-const page = ref<number>(1);
-const total = ref<number>(0);
-const list = ref<any[]>([]);
+// const timeVal = ref<number>(0);
+// const priceVal = ref<number>(0);
+// const page = ref<number>(1);
+// const total = ref<number>(0);
+// const list = ref<any[]>([]);
 
 const option1 = [
   { text: '全部商品', value: 0 },
@@ -40,6 +41,16 @@ const router = useRouter();
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo
 
+const params = reactive<{
+  timeSort: number
+  priceSort: number
+  title: string
+}>({
+  timeSort: 0,
+  priceSort: 0,
+  title: ''
+});
+
 const onDetail = (id: number) => {
   router.push(`/goods/detail?id=${id}`)
 }
@@ -48,7 +59,7 @@ const init = () => {
   if(!userInfo?.is_name){
     Dialog.confirm({
       title: '提示',
-      message:'请先实名认证后操作。',
+      message:'市场功能需要进行实名认证，是否前往实名认证？',
     })
     .then(() => {
       router.push('/realName')
@@ -62,33 +73,30 @@ const init = () => {
 
 init()
 
-const onLoad = async () => {
-  const [_, res] = await to(getGoodsList({
-    page: page.value,
-    timeSort: timeVal.value,
-    priceSort: priceVal.value,
-    title: title.value
-  }))
-  if (res) {
-    list.value = res.list || []
-    total.value = Math.ceil(res.total / 10) || 0
-  }
-}
+// const onLoad = async () => {
+//   const [_, res] = await to(getGoodsList({
+//     page: page.value,
+//     timeSort: timeVal.value,
+//     priceSort: priceVal.value,
+//     title: title.value
+//   }))
+//   if (res) {
+//     list.value = res.list || []
+//     total.value = Math.ceil(res.total / 10) || 0
+//   }
+// }
 
-onLoad();
+// onLoad();
 
-const onChange = () => {
-  page.value = 1;
-  list.value = [];
-  total.value = 0;
-  onLoad();
-}
+// const onChange = () => {
+//   page.value = 1;
+//   list.value = [];
+//   total.value = 0;
+//   onLoad();
+// }
 
 const onClickButton = () => {
-  page.value = 1;
-  list.value = [];
-  total.value = 0;
-  onLoad();
+  params.title = title.value;
 }
 
 </script>
@@ -106,10 +114,43 @@ const onClickButton = () => {
     </template>
   </VantSearch>
   <DropdownMenu class="screen-box" :z-index="9999" active-color="#01c2c3">
-    <DropdownItem v-model="timeVal" :options="option1" @change="onChange" />
-    <DropdownItem v-model="priceVal" :options="option2" @change="onChange" />
+    <DropdownItem v-model="params.timeSort" :options="option1" />
+    <DropdownItem v-model="params.priceSort" :options="option2" />
   </DropdownMenu>
-  <div v-if="list.length > 0">
+  <List
+    :apiFunc="getGoodsList"
+    :params="params"
+    :offset="30"
+  >
+    <template #default="defaultProps">
+      <ul class="product-list">
+        <li class="product-item" v-for="item in defaultProps.list" :key="item.id" @click="onDetail(item.id)">
+          <VantImage class="product-item-img" :src="item.img" :show-loading="false" :show-error="false" width="100%"
+            fit="cover" lazy-load :radius="4" />
+          <div class="product-item-info">
+            <h2>#{{item.goods_number}} {{ item.title }}</h2>
+            <p class="product-item-price">￥{{ item.goods_price }}</p>
+            <p class="product-item-desc">
+              <!-- {{ item.user_name }} -->
+              <span>艺术家 食艺术</span>
+              <span class="product-item-like">
+                <VantIcon name="like-o" />
+              </span>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </template>
+    <template #empty>
+      <VantEmpty
+        class="empty"
+        :image="Images.empty"
+        :description="`尽请期待`"
+      />
+    </template>
+  </List>
+
+  <!-- <div v-if="list.length > 0">
     <ul class="product-list">
       <li class="product-item" v-for="item in list" :key="item.id" @click="onDetail(item.id)">
         <VantImage class="product-item-img" :src="item.img" :show-loading="false" :show-error="false" width="100%"
@@ -118,7 +159,7 @@ const onClickButton = () => {
           <h2>#{{item.goods_number}} {{ item.title }}</h2>
           <p class="product-item-price">￥{{ item.goods_price }}</p>
           <p class="product-item-desc">
-            <!-- {{ item.user_name }} -->
+            {{ item.user_name }}
             <span>艺术家 食艺术</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
@@ -129,7 +170,7 @@ const onClickButton = () => {
     </ul>
     <VantPagination v-model="page" :page-count="total" mode="simple" @change="onLoad" />
   </div>
-  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无商品`" />
+  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无商品`" /> -->
   <TabList />
 </template>
 

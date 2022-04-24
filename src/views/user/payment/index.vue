@@ -34,6 +34,7 @@ const recharge = ref(false);
 const withdraw = ref(false);
 const payInfo = ref<any>({});
 
+// 初始化
 const init = async () => {
   const [_, res] = await to(getPayInfo())
   if (res) {
@@ -42,6 +43,7 @@ const init = async () => {
 }
 init();
 
+// 充值
 const rechargeForm = reactive<any>({
   price: 1,
   model: 'alipay'
@@ -49,21 +51,17 @@ const rechargeForm = reactive<any>({
 const onRecharge = async() => {
   const [_, res] = await to(setRecharge(rechargeForm))
   recharge.value = false
-  // const div = document.createElement('div')
-  // /* 此处form就是后台返回接收到的数据 */
-  // div.innerHTML = res.form
-  // document.body.appendChild(div)
-  // document.forms['alipay_submit'].submit()
   let divForm = document.getElementsByTagName('divform')
   if (divForm.length) {
     document.body.removeChild(divForm[0])
   }
   const div: any = document.createElement('divform')
-  div.innerHTML = res.form // res.data就是sb支付宝返回给你的form
+  div.innerHTML = res.form
   document.body.appendChild(div)
   document.getElementById('alipay_submit')?.submit();
 }
 
+// 提现
 const withdrawForm = reactive<any>({
   price: 1,
   model: '2'
@@ -72,13 +70,12 @@ const onWithdraw = async() => {
   if(!userInfo?.is_bank){
     Dialog.confirm({
       title: '提示',
-      message:'请绑定银行卡后操作。',
+      message:'提现需要绑定银行卡，是否前往绑定？',
     })
       .then(() => {
         router.push('/bankCard')
       })
       .catch(() => {
-        router.push('/user')
       });
       return
   }

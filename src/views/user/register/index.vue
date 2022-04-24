@@ -5,41 +5,80 @@ import {
   Field as VantField,
   Button as VantButton,
   Checkbox as VantCheckbox,
+  Overlay as VantOverlay,
   Toast
 } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { Images } from '@/assets/images';
-import { useUserStore } from '@/store/modules/user';
-import { login1, getCodeImage } from '@/api/user';
+import { getRegisterCode, register, getCodeImage } from '@/api/user';
 import { to } from '@/utils';
-import '@/components/captcha/src/style'
 
 const formRef = ref<any>(null);
 const phone = ref('');
 const code = ref('');
+const newPassword = ref('');
 const password = ref('');
+const sendSms = ref(true);
+
 const show = ref(false);
+
 const img = ref('');
 const key = ref('');
+const captchaCode = ref(0);
+const times = ref(120);
 const checked = ref(false);
 const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
+
+let timer: NodeJS.Timer;
+
+const sendCode = async() => {
+  try {
+    await formRef.value?.validate('phone');
+  } catch(e) {
+    return false;
+  }
+
+  if(sendSms.value && times.value === 120) {
+    const [_, res] = await to(getRegisterCode({
+      phone: phone.value,
+      captchaCode: captchaCode.value,
+      key: key.value
+      // key: verifyParams.value?.key || ''
+    }));
+    if(res) {
+      Toast.success('发送成功');
+      show.value = false
+      sendSms.value = false;
+      timer = setInterval(()=>{
+        times.value--;
+        if(times.value === 0){
+          sendSms.value = true;
+          times.value = 120;
+          clearInterval(timer);
+        }
+      },1000)
+    }
+  }
+}
 
 const user_id = route.query?.user_id || 0;
 
 const onSubmit = async () => {
-  const [_, res] = await to(login1({
+  if(newPassword.value != password.value) {
+    Toast.fail('两次密码不一致');
+    return 
+  }
+  const [_, res] = await to(register({
     phone: phone.value,
-    img_code: code.value,
-    key: key.value,
-    password: password.value
+    code: code.value,
+    password: code.value,
+    user_id: user_id
   }));
   if (res) {
-    Toast.success('登录成功');
-    userStore.setToken(res?.token);
-    router.replace('/user');
+    Toast.success('注册成功');
+    goBack();
   }
 }
 
@@ -59,16 +98,37 @@ const init = async(val = false) => {
 }
 init()
 
-const goTo = (url: string) => {
-  router.push(`${url}?user_id=${user_id}`);
+const onCheck = () => {
+  if(!key.value || !captchaCode.value) {
+    Toast.fail('请输入校验值');
+    return 
+  }
+  sendCode()
+}
+
+const goBack = () => {
+  router.go(-1)
 }
 </script>
 
 <template>
   <div class="login">
+    
     <div class="loginImage">
+      <h2>用户注册</h2>
       <img :src="Images.logo"/>
     </div>
+
+    <VantOverlay :show="show" @click="show = false">
+      <div class="captcha-box" @click.stop>
+        <VantField v-model="captchaCode" type="number">
+          <template #button>
+            <img :src="img" style="height: auto; width: 100px;" @click="init(true)"/>
+          </template>
+        </VantField>
+        <VantButton type="primary" style="margin-top: 60px;" @click="onCheck">发送短信</VantButton>
+      </div>
+    </VantOverlay>
 
     <VantForm ref="formRef" @submit="onSubmit">
       <VantCellGroup>
@@ -84,8 +144,16 @@ const goTo = (url: string) => {
           name="password"
           v-model="password"
           clearable
-          placeholder="请输入登录密码"
-          :rules="[{ required: true, message: '请输入登录密码' }]"
+          placeholder="请输入密码"
+          :rules="[{ required: true, message: '请输入密码' }]"
+        />
+        <VantField
+          type="password"
+          name="newPassword"
+          v-model="newPassword"
+          clearable
+          placeholder="请再次输入密码"
+          :rules="[{ required: true, message: '请再次输入密码' }]"
         />
         <VantField
           name="code"
@@ -95,7 +163,9 @@ const goTo = (url: string) => {
           :rules="[{ required: true, message: '请输入验证码' }]"
         >
           <template #button>
-            <img :src="img" style="height: auto; width: 100px;" @click="init(true)"/>
+            <!-- <span v-show="sendSms" class="smsCode" @click="sendCode">发送验证码</span> -->
+            <span v-show="sendSms" class="smsCode" @click="init(true)">发送验证码</span>
+            <span v-show="!sendSms" class="smsCode" disabled>{{times}}s后重新发送</span>
           </template>
         </VantField>
       </VantCellGroup>
@@ -108,8 +178,7 @@ const goTo = (url: string) => {
       <div>我已阅读并同意 <span class="blue" @click="onAgree(0)">《用户协议》</span> 和 <span class="blue" @click="onAgree(1)">《隐私政策》</span></div>
     </div>
     <div class="other">
-      <VantButton color="#01c2c3" type="primary" @click="goTo('/register')">新用户注册</VantButton>
-      <VantButton color="#01c2c3" type="primary" @click="goTo('/forgot')">老用户密码找回</VantButton>
+      <VantButton color="#01c2c3" type="primary" @click="goBack">返回登录</VantButton>
     </div>
   </div>
 </template>
@@ -120,9 +189,15 @@ const goTo = (url: string) => {
   background-color: #ffffff;
   .loginImage {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 30px 0;
+    h2 {
+      font-size: 20px;
+      color: "#01c2c3";
+      margin-bottom: 10px;
+    }
     img {
       height: 80px;
       width: auto;
@@ -133,7 +208,7 @@ const goTo = (url: string) => {
       color: #397fe7;
     }
     .saveData {
-      margin-top: 60px;
+      margin-top: 100px;
       padding: 0 20px;
       & > button {
         font-size: 12px;

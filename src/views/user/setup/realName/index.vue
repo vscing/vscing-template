@@ -6,7 +6,8 @@ import {
   Field as VantField,
   Button as VantButton,
   Empty as VantEmpty,
-  Toast
+  Toast,
+  Dialog
 } from 'vant';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
@@ -65,7 +66,16 @@ const initCheckAuth = async() => {
 }
 
 if(!userInfo['is_name']) {
-  initCheckAuth();
+  Dialog.confirm({
+    title: '提示',
+    message:'实名认证需要缴纳1元，是否确认跳转支付宝支付？',
+  })
+  .then(() => {
+    initCheckAuth();
+  })
+  .catch(() => {
+    onClickLeft();
+  });
 }
 
 </script>

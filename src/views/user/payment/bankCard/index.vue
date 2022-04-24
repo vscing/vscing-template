@@ -7,7 +7,8 @@ import {
   Button as VantButton,
   Popup as VantPopup,
   Picker as VantPicker,
-  Toast
+  Toast,
+  Dialog
 } from 'vant';
 import { useRouter } from 'vue-router';
 import { reactive, ref } from 'vue';
@@ -49,21 +50,24 @@ const init = async() => {
     const [err2, res2] = await to(setAuth({
       type: 2
     }))
-    // const div = document.createElement('div')
-    // /* 此处form就是后台返回接收到的数据 */
-    // div.innerHTML = res.form
-    // document.body.appendChild(div)
-    // document.forms['alipay_submit'].submit()
-    let divForm = document.getElementsByTagName('divform')
-    if (divForm.length) {
-      document.body.removeChild(divForm[0])
-    }
-    const div: any = document.createElement('divform')
-    div.innerHTML = res2.form
-    document.body.appendChild(div)
-    document.getElementById('alipay_submit')?.submit();
+    Dialog.confirm({
+      title: '提示',
+      message:'绑定银行卡需要缴纳1元，是否确认跳转支付宝支付？',
+    })
+    .then(() => {
+      let divForm = document.getElementsByTagName('divform')
+      if (divForm.length) {
+        document.body.removeChild(divForm[0])
+      }
+      const div: any = document.createElement('divform')
+      div.innerHTML = res2.form
+      document.body.appendChild(div)
+      document.getElementById('alipay_submit')?.submit();
+    })
+    .catch(() => {
+      router.go(-1)
+    });
   }
-  
 }
 
 init();

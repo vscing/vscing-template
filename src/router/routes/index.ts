@@ -339,6 +339,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/user/register/index.vue'),
+    meta: {
+      title: '注册',
+    },
+  },
+  {
+    path: '/forgot',
+    name: 'Forgot',
+    component: () => import('@/views/user/forgot/index.vue'),
+    meta: {
+      title: '找回密码',
+    },
+  },
+  {
     path: '/agree',
     name: 'Agree',
     component: () => import('@/views/user/agree/index.vue'),

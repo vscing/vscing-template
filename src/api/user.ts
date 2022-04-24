@@ -12,6 +12,12 @@ enum Api {
   setPaasWord = '/user/setPaasWord',
   getCodeImage = '/user/getCodeImage',
   checkCodeImage = '/user/checkCodeImage',
+
+  login1 = '/user/login1',
+  register = '/user/register',
+  forgot = '/user/forgot',
+  getForgotCode = '/user/getForgotCode',
+  getRegisterCode = '/user/getRegisterCode',
 }
 
 export const getUserInfo = (params?: any) =>
@@ -45,3 +51,15 @@ export const getCodeImage = (params?: any) =>
   defHttp.get<any>({ url: Api.getCodeImage, params });
 
 export const checkCodeImage = (data?: any) => defHttp.post<any>({ url: Api.checkCodeImage, data});
+
+// 登录
+export const login1 = (data?: any) => defHttp.post<any>({ url: Api.login1, data}); 
+
+export const register = (data?: any) => defHttp.post<any>({ url: Api.register, data}); 
+export const forgot = (data?: any) => defHttp.post<any>({ url: Api.forgot, data}); 
+
+// 短信
+export const getForgotCode = (params?: any) => defHttp.get<any>({ url: Api.getForgotCode, params}); 
+// 短信
+export const getRegisterCode = (params?: any) => defHttp.get<any>({ url: Api.getRegisterCode, params}); 
+
