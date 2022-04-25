@@ -73,7 +73,7 @@
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
 
-  <div class="luckey">
+  <div class="luckey" v-if="homeData.currentGoods && homeData.currentGoods?.status == 20">
       <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/lucky.png" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
   </div>
 
@@ -100,10 +100,10 @@
           </div>
           <p>发售价格：<span class="product-item-value">¥{{homeData.currentGoods?.price}}</span></p>
           <p>发售时间：<span class="product-item-value">{{columnToDateTime(homeData.currentGoods?.presell_time)}}</span></p>
-          <p>抢购倒计时：<span class="product-item-value product-item-color">00:00:00:00</span></p>
+          <!-- <p>抢购倒计时：<span class="product-item-value product-item-color">00:00:00:00</span></p> -->
           <p class="btn-list">
             <span></span>
-            <!-- <VantButton color="#393742" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton> -->
+            <VantButton color="#393742" v-if="false" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton>
             <VantButton color="#01c2c3" @click="onDetail(homeData.currentGoods?.id)">限时抢购</VantButton>
           </p>
         </div>

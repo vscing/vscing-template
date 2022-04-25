@@ -124,6 +124,10 @@ init();
           <VantIcon name="scan" size="20" />
           <span>扫一扫</span>
         </div>
+        <div class="dashboard-item" @click="goTo('/prize')">
+          <VantIcon name="point-gift-o" size="20" />
+          <span>我的抽签</span>
+        </div>
       </div>
 
       <div class="dashboard2" v-show="true">

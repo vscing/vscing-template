@@ -275,6 +275,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/prize',
+    name: 'Prize',
+    component: () => import('@/views/user/prize/index.vue'),
+    meta: {
+      title: '我的抽签',
+    },
+  },
+  {
     path: '/setup',
     name: 'Setup',
     component: () => import('@/views/user/setup/index.vue'),

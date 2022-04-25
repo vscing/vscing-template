@@ -36,15 +36,16 @@ console.log('%c [ userInfo ]-28', 'font-size:13px; background:pink; color:#bf2c9
     <VantNavBar class="nav-bar" title="第三方支付" left-arrow @click-left="onClickLeft" />
     <div class="modal-show">
       <VantForm @submit="onSubmit">
+        <!-- :readonly="userInfo.alipay_account ? true:false" -->
         <VantField
-          :readonly="userInfo.alipay_account ? true:false"
           v-model="formData.alipay_account"
           clearable
           name="支付宝账号"
           label="支付宝账号"
           placeholder="请输入支付宝账号"
         />
-        <div class="saveData" v-if="!userInfo.alipay_account">
+        <!--  v-if="!userInfo.alipay_account" -->
+        <div class="saveData">
           <VantButton round block native-type="submit">保存</VantButton>
         </div>
       </VantForm>

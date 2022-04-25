@@ -84,9 +84,11 @@ init()
 }
 .luckey {
   margin-top: 50px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #01c2c335;
   .img {
     padding: 30px 0;
   }
