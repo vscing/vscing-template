@@ -128,7 +128,8 @@ const onClickButton = () => {
           <VantImage class="product-item-img" :src="item.img" :show-loading="false" :show-error="false" width="100%"
             fit="cover" lazy-load :radius="4" />
           <div class="product-item-info">
-            <h2>#{{item.goods_number}} {{ item.title }}</h2>
+            <h2>{{ item.title }}</h2>
+            <!-- #{{item.goods_number}}  -->
             <p class="product-item-price">￥{{ item.goods_price }}</p>
             <p class="product-item-desc">
               <!-- {{ item.user_name }} -->

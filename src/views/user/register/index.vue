@@ -73,7 +73,7 @@ const onSubmit = async () => {
   const [_, res] = await to(register({
     phone: phone.value,
     code: code.value,
-    password: code.value,
+    password: password.value,
     user_id: user_id
   }));
   if (res) {

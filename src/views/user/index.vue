@@ -193,12 +193,12 @@ init();
       <div class="order-status">
         <div class="order-desc" @click="goTo('/order/buy')">
           <VantIcon name="cart-o" size="20" />
-          <span>发售订单</span>
+          <span>我买到的</span>
         </div>
-        <div class="order-desc" @click="goTo('/order/market')">
+        <!-- <div class="order-desc" @click="goTo('/order/market')">
           <VantIcon name="goods-collect-o" size="20" />
           <span>市场订单</span>
-        </div>
+        </div> -->
         <div class="order-desc" @click="goTo('/order/publish')">
           <VantIcon name="guide-o" size="20" />
           <span>我发布的</span>
