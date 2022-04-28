@@ -65,18 +65,18 @@ const initCheckAuth = async() => {
   }
 }
 
-if(!userInfo['is_name']) {
-  Dialog.confirm({
-    title: '提示',
-    message:'实名认证需要缴纳1元，是否确认跳转支付宝支付？',
-  })
-  .then(() => {
-    initCheckAuth();
-  })
-  .catch(() => {
-    onClickLeft();
-  });
-}
+// if(!userInfo['is_name']) {
+//   Dialog.confirm({
+//     title: '提示',
+//     message:'实名认证需要缴纳1元，是否确认跳转支付宝支付？',
+//   })
+//   .then(() => {
+//     initCheckAuth();
+//   })
+//   .catch(() => {
+//     onClickLeft();
+//   });
+// }
 
 </script>
 <template>
