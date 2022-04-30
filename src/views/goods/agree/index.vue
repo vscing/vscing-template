@@ -13,8 +13,8 @@ import { useUserStore } from '@/store/modules/user';
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
 const info = ref<string>('');
-const disabled = ref<boolean>(true);
-const num = ref<number>(2);
+const disabled = ref<boolean>(false);
+const num = ref<number>(0);
 
 const router = useRouter();
 const route = useRoute();
@@ -38,14 +38,14 @@ const { id } = route.query || {}
 //   window.removeEventListener("scroll", handleScroll);
 // })
 
-const timer = setInterval(()=> {
-  num.value = num.value - 1;
-}, 1000)
+// const timer = setInterval(()=> {
+//   num.value = num.value - 1;
+// }, 1000)
 
-setTimeout(()=>{
-  disabled.value = false;
-  clearInterval(timer);
-}, 2000)
+// setTimeout(()=>{
+//   disabled.value = false;
+//   clearInterval(timer);
+// }, 2000)
 
 const init = async () => {
   const [_, res] = await to(getConfig({type: 2}));

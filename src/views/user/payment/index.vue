@@ -137,14 +137,12 @@ const onWithdraw = async() => {
   </VantCellGroup>
 
   <p class="setup">提现金额最小为10元，小于100元有2元提现手续费</p>
-  <p class="setup">请使用与实名认证相同的支付宝账户，避免转账无效</p>
+  <p class="setup">请使用与实名认证相同的支付宝账号，避免转账失效</p>
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>
     <VantButton round block color="#01c2c3" @click="withdraw = true">可用金额提现</VantButton>
   </div>
-
-  
 
   <VantOverlay :show="recharge" @click="recharge = false">
     <div class="wrapper" @click.stop>
@@ -161,6 +159,7 @@ const onWithdraw = async() => {
             </VantRadioGroup>
           </template>
         </VantField>
+        <p class="setup">如需充值请点击右上角浏览器打开登陆进行充值，可直接跳转支付宝，直接复制网页否则有可能充值不成功。</p>
         <div class="btnList">
           <VantButton class="cancel" round block @click="recharge = false">
             取消
