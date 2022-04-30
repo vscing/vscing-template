@@ -137,6 +137,7 @@ const onWithdraw = async() => {
   </VantCellGroup>
 
   <p class="setup">提现金额最小为10元，小于100元有2元提现手续费</p>
+  <p class="setup">请使用与实名认证相同的支付宝账户，避免转账无效</p>
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>

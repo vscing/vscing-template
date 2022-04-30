@@ -61,7 +61,7 @@
   </div>
   
   <VantSwipe :autoplay="3000" lazy-render indicator-color="#000">
-    <VantSwipeItem v-for="item in homeData.banner" :key="item.id">
+    <VantSwipeItem v-for="item in homeData.banner" :key="item.id" @click="lucky('/compound')">
       <img class="swiper-img" :src="item.img" height="200"/>
     </VantSwipeItem>
   </VantSwipe>

@@ -22,6 +22,10 @@ const route = useRoute();
 const { id } = route.query || {}
 
 const onSubmit = async() => {
+  if(Number(formData.price) > 100000) {
+    Toast.fail('产品最高金额10万')
+    return 
+  }
   Dialog.confirm({
     title: '提示',
     message: '手续费6%，4%版权交易费直接扣除',
@@ -49,7 +53,9 @@ const onSubmit = async() => {
         <VantField
           v-model="formData.price"
           clearable
+          type="number"
           name="price"
+          maxlength="6"
           label="产品金额"
           placeholder="请填写产品金额"
           :rules="[{ required: true, message: '请填写产品金额' }]"
