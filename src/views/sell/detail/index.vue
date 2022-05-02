@@ -35,15 +35,40 @@ const init = async () => {
 init();
 
 const goOrder = () => {
-  if(data.value.status != 30) {
-    return false;
-  }
-  if(userInfo){
-    router.push(`/sell/agree?id=${id}`)
+  if(data.value.status == 30 || (data.value.status == 20 && data.value.vipNum > 0)) {
+    if(userInfo){
+      router.push(`/sell/agree?id=${id}`)
+    } else {
+      Toast.fail('请登录')
+    }
   } else {
-    Toast.fail('请登录')
+    Toast.fail('产品暂无法购买')
   }
 }
+
+const getBtn = () => {
+  console.log('%c [ data ]-49', 'font-size:13px; background:pink; color:#bf2c9f;', data.value)
+  if(data.value.status == 30 || (data.value.status == 20 && data.value.vipNum > 0)) {
+    return '产品购买';
+  }
+  if(data.value.stock == 0 || data.value.status > 30) {
+    return '产品已售罄';
+  } 
+  if(data.value.status == 20 && data.value.vipNum == 0) {
+    return '产品预售中';
+  }
+}
+
+const getDisabled = () => {
+  console.log('%c [ data ]-62', 'font-size:13px; background:pink; color:#bf2c9f;', data.value)
+  if(data.value.status == 30 || (data.value.status == 20 && data.value.vipNum > 0)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+console.log('%c [ getDisabled ]-61', 'font-size:13px; background:pink; color:#bf2c9f;', getBtn(), getDisabled())
 
 </script>
 
@@ -95,31 +120,14 @@ const goOrder = () => {
     </ul>
   </div>
 
-  <!-- <div class="config-box">
-    <h2>价格波动</h2>
-    <ul>
-      <li></li>
-    </ul>
-  </div> -->
-
-  <!-- <div class="config-box">
-    <h2>合成信息</h2>
-    <ul>
-      <li>将2张同一种类的卡片整合到一张卡片上，次数为两张卡片的剩余次数之和，最高不超过此卡片本身的次数上限。</li>
-      <li>将2张同一种类的卡片整合到一张卡片上，次数为两张卡片的剩余次数之和，最高不超过此卡片本身的次数上限。</li>
-      <li>将2张同一种类的卡片整合到一张卡片上，次数为两张卡片的剩余次数之和，最高不超过此卡片本身的次数上限。</li>
-      <li>将2张同一种类的卡片整合到一张卡片上，次数为两张卡片的剩余次数之和，最高不超过此卡片本身的次数上限。</li>
-    </ul>
-  </div> -->
-
   <div class="info-box">
     <h2>商品描述</h2>
     <div v-html="data.content"></div>
   </div>
 
   <div class="btn-list">
-    <VantButton type="primary" round block color="#01c2c3" :disabled="data.status != 30" @click="goOrder">
-      {{data.status != 30 ? (data.status != 20 ?'产品已售罄':'产品预售中'):'产品购买'}}
+    <VantButton type="primary" round block color="#01c2c3" :disabled="getDisabled()" @click="goOrder">
+      {{getBtn()}}
     </VantButton>
   </div>
 </template>

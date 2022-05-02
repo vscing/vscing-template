@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-  import Web3 from 'web3';
+  // import Web3 from 'web3';
   import '@/assets/style/main.less';
   import { useTitle } from '@/hooks/web/useTitle';
 

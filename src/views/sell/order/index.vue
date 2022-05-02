@@ -18,7 +18,7 @@ const userInfo = userStore.getUserInfo;
 console.log('%c [ userInfo ]-16', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
 const result = ref('账户余额支付');
 const showPicker = ref(false);
-const columns = ref(['账户余额支付', '支付宝支付']);
+const columns = ref(['账户余额支付']); // , '支付宝支付'
 const router = useRouter();
 const route = useRoute();
 const data = ref<any>({});

@@ -23,7 +23,11 @@
   const homeData = reactive<any>({
     banner: [],
     currentGoods: null,
-    goodsList: []
+    goodsList: [],
+    config: {
+      blind: 2,
+      lottery: 2
+    }
   });
 
   const router = useRouter();
@@ -47,6 +51,7 @@
       homeData.banner = res.banner;
       homeData.currentGoods = res.currentGoods;
       homeData.goodsList = res.goodsList;
+      homeData.config = res.config;
     }
   }
 
@@ -73,8 +78,13 @@
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
 
-  <div class="luckey" v-if="homeData.currentGoods && homeData.currentGoods?.status == 20">
+  <!-- homeData.currentGoods && homeData.currentGoods?.status == 20 &&  -->
+  <div class="luckey" v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1">
       <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/lucky.png" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
+  </div>
+
+  <div class="luckey" v-if="homeData.config.blind == 1">
+      <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/lucky.png" @click="lucky(`/blind`)" />
   </div>
 
   <div class="product" v-if="homeData.currentGoods">

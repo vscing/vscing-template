@@ -3,7 +3,6 @@ import { useRouter, useRoute } from 'vue-router';
 import {
   NavBar as VantNavBar,
   Button as VantButton,
-  Image as VantImage,
   Toast
 } from 'vant';
 import { ref } from 'vue';
@@ -29,7 +28,7 @@ const onTake = async() => {
     goods_id: id
   }));
   if(res) {
-    Toast.success('抽签完成')
+    Toast.success('盲盒抽取')
     init();
   }
 }
@@ -47,7 +46,7 @@ const init = async() => {
 init()
 
 const initConfig = async () => {
-  const [_, res] = await to(getConfig({type: 4}));
+  const [_, res] = await to(getConfig({type: 5}));
   if(res) {
     info.value = res.data || ''
   }
@@ -57,13 +56,10 @@ initConfig();
 </script>
 
 <template>
-  <VantNavBar class="nav-bar" title="抽签环节" left-arrow @click-left="onClickLeft" safe-area-inset-top />
+  <VantNavBar class="nav-bar" title="盲盒" left-arrow @click-left="onClickLeft" safe-area-inset-top />
 
   <div class="luckey">
-    <VantImage class="img" :src="img" fit="cover" lazy-load width="80%" :radius="4" :show-loading="false"
-          :show-error="false" />
-    <p>本次活动剩余抽签次数 {{num}} 次</p>
-    <VantButton type="primary" :disabled="num ? false:true" round :color="num ? '#01c2c3':'#999999'" @click="onTake">抽签</VantButton>
+    <VantButton type="primary" :disabled="num ? false:true" round :color="num ? '#01c2c3':'#999999'" @click="onTake">抽取</VantButton>
     <div class="info" v-html="info">
     </div>
   </div>

@@ -32,10 +32,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           find: /@\//,
           replacement: pathResolve('src') + '/',
         },
-        {
-          find: 'web3',
-          replacement: resolve(__dirname, './node_modules/web3/dist/web3.min.js')
-        }
+        // {
+        //   find: 'web3',
+        //   replacement: resolve(__dirname, './node_modules/web3/dist/web3.min.js')
+        // }
       ],
     },
     server: {

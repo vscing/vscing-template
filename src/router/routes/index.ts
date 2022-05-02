@@ -19,6 +19,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/blind',
+    name: 'Blind',
+    component: () => import('@/views/blind/index.vue'),
+    meta: {
+      title: '盲盒',
+    },
+  },
+  {
     path: '/sell/list',
     name: 'SellList',
     component: () => import('@/views/sell/list/index.vue'),

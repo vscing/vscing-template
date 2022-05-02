@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     token: undefined,
     userInfo: null,
-    whiteList: ['/', '/news/list', '/news/detail', '/sell/list', '/sell/detail', '/agree', '/about', '/register', '/forgot']
+    whiteList: ['/', '/news/list', '/news/detail', '/sell/list', '/agree', '/about', '/register', '/forgot', '/group']
   }),
   getters: {
     getUserInfo: (state) => {
