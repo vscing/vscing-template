@@ -211,6 +211,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/locked/list',
+    name: 'LockedList',
+    component: () => import('@/views/user/locked/List.vue'),
+    meta: {
+      title: '我的藏品',
+    },
+  },
+  {
     path: '/locked/detail',
     name: 'LockedDetail',
     component: () => import('@/views/user/locked/detail.vue'),
@@ -395,11 +403,11 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
-    path: '/distribute/order',
-    name: 'DistributeOrder',
-    component: () => import('@/views/user/distribute/order/index.vue'),
+    path: '/distribute/child',
+    name: 'DistributeChild',
+    component: () => import('@/views/user/distribute/child/index.vue'),
     meta: {
-      title: '分销订单',
+      title: '邀请列表',
     },
   },
   {

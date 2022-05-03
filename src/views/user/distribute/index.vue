@@ -44,7 +44,7 @@ init2();
   </div>
 
   <VantCellGroup class="distribute-list">
-    <!-- <VantCell title="分销订单" is-link to="/distribute/order" /> -->
+    <VantCell title="邀请列表" is-link to="/distribute/child" />
     <VantCell title="邀请码" is-link to="/distribute/wechat" />
   </VantCellGroup>
 </template>

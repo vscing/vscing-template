@@ -6,6 +6,7 @@
     "dev": "vite",
     "build:tsc": "vue-tsc --noEmit && vite build",
     "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
+    "build:test": "cross-env NODE_ENV=production vite build --mode test && esno ./build/script/postBuild.ts",
     "preview": "vite preview"
   },
   "dependencies": {

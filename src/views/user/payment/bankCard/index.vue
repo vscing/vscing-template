@@ -7,6 +7,7 @@ import {
   Button as VantButton,
   Popup as VantPopup,
   Picker as VantPicker,
+  NoticeBar as VantNoticeBar,
   Toast,
   Dialog
 } from 'vant';
@@ -30,6 +31,7 @@ const formData = reactive({
 const bankName = ref<string>('');
 const showPicker = ref(false);
 const columns = ref([]);
+const disabledBtn = ref(false);
 
 const onConfirm = (value) => {
   bankName.value = value.bank_name;
@@ -42,7 +44,6 @@ const init = async() => {
   if(res){
     columns.value = res.list
   }
-
   const [err1, res1] = await to(checkAuth({
     type: 2
   }));
@@ -76,14 +77,26 @@ const validatePhone = (val: string) => /^1(3|4|5|6|7|8|9)\d{9}$/.test(val);
 
 const onClickLeft = () => router.go(-1);
 
-const onSubmit = async() => {
-  const [_, res] = await to(addBank(formData));
-  if (res) {
-    Toast.success('绑定成功');
-    userInfo['is_bank'] = true;
-    userStore.setUserInfo(userInfo);
-    onClickLeft();
-  }
+const onSubmit = () => {
+  Dialog.confirm({
+      title: '提示',
+      message:'确定所填信息无误？',
+    })
+    .then(async() => {
+      disabledBtn.value = true;
+      const [_, res] = await to(addBank(formData));
+      if (res) {
+        Toast.success('绑定成功');
+        userInfo['is_bank'] = true;
+        userStore.setUserInfo(userInfo);
+        onClickLeft();
+        return
+      }
+      disabledBtn.value = false;
+    })
+    .catch(() => {
+
+    })
 }
 </script>
 <template>
@@ -131,8 +144,14 @@ const onSubmit = async() => {
             :rules="[{ validator: validatePhone, message: '请输入正确银行卡预留手机号' }]"
           />
         </VantCellGroup>
+        <VantNoticeBar
+          wrapable
+          :scrollable="false"
+          text="银行卡绑定请使用实名认证的银行卡号，且信息确定无误后点击提交，否则无法绑定成功。"
+        />
+        <p></p>
         <div class="modal-show-button">
-          <VantButton round block color="#01c2c3" native-type="submit">确定</VantButton>
+          <VantButton round block color="#01c2c3" native-type="submit" :disabled="disabledBtn">确定</VantButton>
         </div>
       </VantForm>
     </div>

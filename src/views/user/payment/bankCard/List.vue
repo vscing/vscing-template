@@ -40,8 +40,8 @@ const onDefault = () => Toast.success('暂未开通')
         <VantIcon name="success" size="30" v-if="item.isDefault === 1"/>
       </div>
       <div class="operate">
-        <div class="btn" @click="onDefault"> 设定默认 </div>
-        <div class="btn" @click="onDefault"> 解绑 </div>
+        <!-- <div class="btn" @click="onDefault"> 设定默认 </div>
+        <div class="btn" @click="onDefault"> 解绑 </div> -->
       </div>
     </li>
   </ul>

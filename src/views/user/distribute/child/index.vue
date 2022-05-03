@@ -2,26 +2,28 @@
 import { ref } from 'vue';
 import {
   NavBar as VantNavBar,
-  Image as VantImage,
-  Icon as VantIcon
+  Empty as VantEmpty,
+  Pagination as VantPagination
 } from 'vant';
 import { useRouter } from 'vue-router';
-import { getUserCategory } from '@/api/goods';
+import { getChildList } from '@/api/distribute';
 import { to } from '@/utils';
+import { Images } from '@/assets/images';
+import { columnToDateTime } from '@/utils/dateUtil';
 
 const router = useRouter();
 
-const data = ref<any>({});
-
-const goList = (id: number) => {
-  router.push('/locked/list?goods_id='+id)  
-}
+const page = ref<number>(1);
+const total = ref<number>(0);
+const list = ref<any[]>([]);
 
 const onLoad = async () => {
-  const [_, res] = await to(getUserCategory({}))
-  console.log('%c [ res ]-27', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+  const [_, res] = await to(getChildList({
+    page: page.value
+  }))
   if (res) {
-    data.value = res.data || {}
+    list.value = res.list || []
+    total.value = Math.ceil(res.total / 10) || 0
   }
 }
 
@@ -33,20 +35,20 @@ const onClickLeft = () => {
 </script>
 
 <template>
-  <VantNavBar class="nav-bar" safe-area-inset-top fixed left-arrow @click-left="onClickLeft" title="藏品管理" />
-  <div>
+  <VantNavBar class="nav-bar" safe-area-inset-top fixed left-arrow @click-left="onClickLeft" title="邀请列表" />
+  <div v-if="list.length > 0">
     <ul class="product-list">
-      <li class="product-item" v-for="item of data" :key="item.goods_id" @click="goList(item.goods_id)">
-        <VantImage class="product-item-img"
-          :src="item.img"
-          :show-loading="false" :show-error="false" width="100%" fit="cover" lazy-load :radius="4" />
-        <div class="product-item-info">
-          <h2>藏品：{{ item.title }}</h2>
-          <p class="product-item-price">拥有{{ item.count }}个</p>
-        </div>
+      <li class="product-item" v-for="item in list" :key="item.id">
+        <h2>昵称：{{item.nickname}}</h2>
+        <p>手机号：{{item.phone}}</p>
+        <p>实名认证：{{item.is_real == 1 ? '已认证':'未认证'}}</p>
+        <p>绑定银行卡：{{item.is_bank == 1 ? '已绑定':'未绑定'}}</p>
+        <p>注册时间：{{columnToDateTime(item.created_at)}}</p>
       </li>
     </ul>
+    <VantPagination v-model="page" :page-count="total" mode="simple" @change="onLoad" />
   </div>
+  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无商品`" />
 </template>
 
 <style lang="less" scoped>
@@ -77,7 +79,7 @@ const onClickLeft = () => {
   .product-item {
     padding: 10px;
     margin-top: 10px;
-    width: calc(50% - 5px);
+    width: 100%;
     border-radius: 4px;
     background-color: #ffffff;
     box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
