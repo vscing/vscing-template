@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="Home">
   import { reactive, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import {
@@ -80,11 +80,11 @@
 
   <!-- homeData.currentGoods && homeData.currentGoods?.status == 20 &&  -->
   <div class="luckey" v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1">
-      <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/lucky.png" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
+      <img src="https://public.ysxqbjz.com/nft/web/lucky.png" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
   </div>
 
   <div class="luckey" v-if="homeData.config.blind == 1">
-      <img src="https://wcf123.oss-cn-chengdu.aliyuncs.com/nft/web/lucky.png" @click="lucky(`/blind`)" />
+      <img src="https://public.ysxqbjz.com/nft/web/lucky.png" @click="lucky(`/blind`)" />
   </div>
 
   <div class="product" v-if="homeData.currentGoods">

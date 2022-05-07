@@ -6,6 +6,7 @@ export const RootRoute: AppRouteRecordRaw = {
   component: () => import('@/views/home/index.vue'),
   meta: {
     title: '首页',
+    // keepAlive: true,
   },
 };
 
@@ -64,6 +65,7 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/goods/list/index.vue'),
     meta: {
       title: '市场',
+      keepAlive: true,
     },
   },
   {
@@ -96,6 +98,7 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/user/index.vue'),
     meta: {
       title: '我的',
+      // keepAlive: true,
     },
   },
   {

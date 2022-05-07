@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="User">
 import { TabList } from '@/components/TabList';
 import { Image as VantImage, Icon as VantIcon, Toast, Skeleton as VantSkeleton, Dialog } from 'vant';
 import { SvgIcon } from '@/components/SvgIcon';

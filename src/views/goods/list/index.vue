@@ -1,8 +1,9 @@
-<script setup lang="ts">
+<script setup lang="ts" name="Goods">
 import { reactive, ref } from 'vue';
 import {
   DropdownMenu,
   DropdownItem,
+  Popup as VantPopup,
   Image as VantImage,
   // Pagination as VantPagination,
   Empty as VantEmpty,
@@ -13,13 +14,17 @@ import {
 } from 'vant';
 import { TabList } from '@/components/TabList';
 import { useRouter } from 'vue-router';
-import { getGoodsList } from '@/api/goods';
+import { getGoodsList, getGoodsCategory } from '@/api/goods';
 // import { to } from '@/utils';
 import { List } from '@/components/List';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
+import { to } from '@/utils';
 
 const title = ref<string>('');
+const show = ref(false);
+const categoryList = ref<any>([]);
+const categoryId = ref(0)
 // const timeVal = ref<number>(0);
 // const priceVal = ref<number>(0);
 // const page = ref<number>(1);
@@ -45,17 +50,19 @@ const params = reactive<{
   timeSort: number
   priceSort: number
   title: string
+  categoryId: number 
 }>({
   timeSort: 0,
   priceSort: 0,
-  title: ''
+  title: '',
+  categoryId: 0
 });
 
 const onDetail = (id: number) => {
   router.push(`/goods/detail?id=${id}`)
 }
 
-const init = () => {
+const init = async () => {
   if(!userInfo?.is_name){
     Dialog.confirm({
       title: '提示',
@@ -68,6 +75,11 @@ const init = () => {
       router.push('/user')
     });
     return
+  }
+  const [_, res] = await to(getGoodsCategory({}))
+  console.log('%c [ res ]-76', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+  if (res) {
+    categoryList.value = res.list || []
   }
 }
 
@@ -95,28 +107,44 @@ init()
 //   onLoad();
 // }
 
-const onClickButton = () => {
+const onCategory = (id) => {
+  if(id == categoryId) {
+    categoryId.value = 0;
+  } else {
+    categoryId.value = id;
+  }
+}
+
+const onSearchCategory = () => {
+  params.categoryId = categoryId.value;
+  show.value = false;
+}
+
+const onSearch = () => {
   params.title = title.value;
 }
 
 </script>
 
 <template>
-  <VantSearch
-    class="search-box"
-    v-model="title"
-    show-action
-    label="商品"
-    placeholder="请输入商品名称关键词"
-  >
-    <template #action>
-      <div @click="onClickButton">搜索</div>
-    </template>
-  </VantSearch>
-  <DropdownMenu class="screen-box" :z-index="9999" active-color="#01c2c3">
-    <DropdownItem v-model="params.timeSort" :options="option1" />
-    <DropdownItem v-model="params.priceSort" :options="option2" />
-  </DropdownMenu>
+  <form action="/">
+    <VantSearch
+      class="search-box"
+      v-model="title"
+      show-action
+      placeholder="请输入商品名称关键词"
+      @search="onSearch"
+    />
+  </form>
+  
+  <div class="screen-box">
+    <DropdownMenu class="screen-drop" :z-index="9999" active-color="#01c2c3">
+      <DropdownItem v-model="params.timeSort" :options="option1" />
+      <DropdownItem v-model="params.priceSort" :options="option2" />
+    </DropdownMenu>
+    <VantIcon name="bars" class="screen-icon" @click="show = !show"/>
+  </div>
+  
   <List
     :apiFunc="getGoodsList"
     :params="params"
@@ -150,6 +178,31 @@ const onClickButton = () => {
       />
     </template>
   </List>
+
+  <VantPopup
+    safe-area-inset-top
+    safe-area-inset-bottom
+    v-model:show="show"
+    position="right"
+    :overlay-style="{zIndex: 99999}"
+    :style="{ width: '80vw', height: '100vh', zIndex: 100000 }" 
+    closeable
+    close-icon="close"
+  >
+    <div class="category-box">
+      <div class="category-title">
+        <VantIcon name="send-gift-o" />
+        <span>分类标签</span>
+      </div>
+      <ul class="category-list">
+        <li :class="{'category-item': true, 'active': item.id == categoryId}" v-for="item in categoryList" :key="item.id" @click="onCategory(item.id)"> {{item.title}} </li>
+      </ul>
+    </div>
+    <div class="btnList">
+      <div class="btnCancel" @click="categoryId = 0">重置</div>
+      <div @click="onSearchCategory">确定筛选</div>
+    </div>
+  </VantPopup>
 
   <!-- <div v-if="list.length > 0">
     <ul class="product-list">
@@ -191,8 +244,77 @@ const onClickButton = () => {
   left: 0;
   width: 100%;
   z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  .screen-drop {
+    flex: 1;
+    :deep(.van-dropdown-menu__bar) {
+      box-shadow: none;
+      width: 200px;
+    }
+  }
+  .screen-icon {
+    font-size: 24px;
+    margin-right: 12px;
+  }
 }
-
+.category-box {
+  padding: 60px 10px 0;
+  .category-title {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+    :deep(.van-icon) {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+  }
+}
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(2, 48%);
+  grid-column-gap: 4%;
+  grid-row-gap: 10px;
+  .category-item {
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(0,0,0,.7);
+    background: #f9f9f9;
+    border-radius: 4px;
+  }
+  .active {
+    color: #01c2c3;
+    background-color: rgba(9, 195, 195, .2);
+  }
+}
+.btnList {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  background: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  &>div{
+    flex: 3;
+    height: 40px;
+    line-height: 40px;
+    background: linear-gradient(90deg,#35d3d5,#01c2c3);
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .btnCancel {
+    flex: 2;
+    background: #e5e5e5;
+    color: rgba(0,0,0,.7);
+  }
+}
 .product-list {
   width: 100%;
   display: flex;

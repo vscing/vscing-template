@@ -2,6 +2,7 @@ import { defHttp } from '@/utils/http/axios';
 
 enum Api {
   getSellList = '/sell/getList',
+  getGoodsCategory = '/sell/getCategory',
   getSellInfo = '/sell/getInfo',
   getSellOrderInfo = '/sell/getOrderInfo',
   buySell = '/sell/buy',
@@ -29,6 +30,9 @@ export const getSellOrderInfo = (params?: any) =>
 
 export const buySell = (data?: any) =>
   defHttp.post<any>({ url: Api.buySell, data });  
+
+export const getGoodsCategory = (params?: any) =>
+  defHttp.get<any>({ url: Api.getGoodsCategory, params });
 
 export const getGoodsList = (params?: any) =>
   defHttp.get<any>({ url: Api.getGoodsList, params });

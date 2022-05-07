@@ -1,5 +1,9 @@
 <template>
-  <RouterView />
+  <router-view v-slot="{ Component }">
+	  <keep-alive :include="includeList">
+	    <component :is="Component"/>
+	  </keep-alive>
+	</router-view>
 </template>
 
 <script lang="ts" setup>
@@ -8,9 +12,26 @@
   import { useTitle } from '@/hooks/web/useTitle';
 
   import 'dayjs/locale/zh-cn';
+  import { ref, watch } from 'vue';
+  import { useRoute } from 'vue-router';
 
   // Listening to page changes and dynamically changing site titles
   useTitle();
+
+  const includeList = ref([]);
+
+  const route = useRoute()
+  // const router = useRouter()
+  watch(
+    () => route,
+    (newVal, _)=>{
+      if(newVal.meta.keepAlive && includeList.value.indexOf(newVal.name as never) === -1){
+        includeList.value.push(newVal.name as never);
+        console.log(includeList.value);
+      }
+    },
+    {deep:true}
+  )
 
   // setInterval(() => {
   //   getBlockNumber();
