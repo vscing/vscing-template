@@ -5,9 +5,10 @@ import {
   Tab as VantTab,
   Image as VantImage,
   Pagination as VantPagination,
-  Empty as VantEmpty
+  Empty as VantEmpty,
+  Button as VantButton,
 } from 'vant';
-import { getOrderList } from '@/api/order';
+import { getOrderList, orderCancel } from '@/api/order';
 import { to } from '@/utils';
 import { columnToDateTime } from '@/utils/dateUtil';
 import { Images } from '@/assets/images';
@@ -20,8 +21,8 @@ const active = ref<number>(0);
 const onLoad = async () => {
   const [_, res] = await to(getOrderList({
     page: page.value,
-    type: 2,
-    // type: active.value
+    // type: 2,
+    type: active.value
   }));
   if (res) {
     list.value = res.list || []
@@ -40,15 +41,24 @@ const getStatusText = (status: number) => {
     return '已取消';
   }
 }
+
+const onCancel = async(id: number) => {
+  const [_, res] = await to(orderCancel({
+    id
+  }));
+  if(res) {
+    onLoad()
+  }
+}
 </script>
 
 <template>
-  <!-- <VantTabs class="tabs-box" v-model:active="active" @change="onLoad">
+  <VantTabs class="tabs-box" v-model:active="active" @change="onLoad">
     <VantTab title="全部"></VantTab>
     <VantTab title="待付款"></VantTab>
     <VantTab title="已完成"></VantTab>
     <VantTab title="已取消"></VantTab>
-  </VantTabs> -->
+  </VantTabs>
   <div v-if="list.length > 0">
     <ul class="product-list">
       <li class="product-item" v-for="item in list" :key="item.id">
@@ -83,6 +93,8 @@ const getStatusText = (status: number) => {
             <span>下单日期：</span>
             <span>{{columnToDateTime(item.created_at)}}</span>
           </p>
+          <VantButton type="primary" v-if="item.payment_status == 10" @click="onCancel(item.id)">取消</VantButton>
+          <p class="setup" v-if="item.payment_status == 10">如已付款请不要点击取消，否则藏品不到账</p>
         </div>
       </li>
     </ul>
@@ -110,7 +122,7 @@ const getStatusText = (status: number) => {
   justify-content: flex-start;
   margin-bottom: 10px;
   padding: 0 10px;
-  // padding-top: 50px;
+  padding-top: 50px;
 
   .product-item {
     padding: 10px;
@@ -163,6 +175,11 @@ const getStatusText = (status: number) => {
       }
     }
   }
+}
+.setup {
+  color: #ff0000;
+  display: inline-block;
+  max-width: 200px;
 }
 .empty {
   padding-top: 20vh;

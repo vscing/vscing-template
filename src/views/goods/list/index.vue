@@ -153,6 +153,7 @@ const onSearch = () => {
     <template #default="defaultProps">
       <ul class="product-list">
         <li class="product-item" v-for="item in defaultProps.list" :key="item.id" @click="onDetail(item.id)">
+          <span class="payment" v-if="item.status == 30">支付中</span>
           <VantImage class="product-item-img" :src="item.img" :show-loading="false" :show-error="false" width="100%"
             fit="cover" lazy-load :radius="4" />
           <div class="product-item-info">
@@ -324,12 +325,21 @@ const onSearch = () => {
   padding: 100px 10px 0;
 
   .product-item {
+    position: relative;
     padding: 10px;
     margin-top: 10px;
     width: calc(50% - 5px);
     border-radius: 4px;
     background-color: #ffffff;
     box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
+    .payment {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      color: #ff0000;
+      font-weight: 700;
+      z-index: 99;
+    }
 
     &:nth-child(2n) {
       margin-left: 10px;

@@ -4,44 +4,46 @@ import {
   NavBar as VantNavBar,
   Image as VantImage,
   Button as VantButton,
+  Overlay as VantOverlay,
+  Field as VantField,
   Popup,
   Picker,
+  Toast,
 } from 'vant';
-import { getGoodsOrderInfo, buyGoods } from '@/api/goods';
+import { getGoodsOrderInfo, createOrder, receiptpayment } from '@/api/goods';
 import { to } from '@/utils';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useUserStore } from '@/store/modules/user';
 import { getPayInfo } from '@/api/pay';
+import { getBankCard } from '@/api/bank';
 
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
 console.log('%c [ userInfo ]-16', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
-const result = ref('账户余额支付');
+const result = ref('B余额支付');
 const showPicker = ref(false);
-const columns = ref(['账户余额支付']); // , '支付宝支付'
+const show = ref(false);
+const columns = ref(['B余额支付', 'A银行卡支付']); // , '支付宝支付'
 const router = useRouter();
 const route = useRoute();
 const data = ref<any>({});
 const payInfo = ref<any>({});
+
+// 银行卡id
+const list = ref([]);
+const showCard = ref(false);
+const bankCardId = ref(0);
+const showPicker2 = ref(false);
+const result2 = ref('请选择');
+
+// 短信确认
+const payeaseObj = reactive({
+  merchantId: '',
+  requestId: '',
+  paymentOrderId: '',
+  kaptchaCode: ''
+})
 const { id } = route.query || {}
-
-const onConfirm = (value) => {
-  result.value = value;
-  showPicker.value = false;
-};
-
-const init2 = async () => {
-  const [_, res] = await to(getPayInfo())
-  if (res) {
-    payInfo.value = res.payInfo || {}
-    if(Number(res.payInfo['useMoney']) === 0) {
-      result.value = '支付宝支付';
-      columns.value = ['支付宝支付']; 
-    }
-  }
-}
-
-init2();
 
 const init = async () => {
   const [_, res] = await to(getGoodsOrderInfo({ id }));
@@ -49,37 +51,105 @@ const init = async () => {
     data.value = res.data || {}
   }
 }
-
 init();
+
+const init2 = async () => {
+  const [_, res] = await to(getPayInfo())
+  if (res) {
+    payInfo.value = res.payInfo || {}
+    // if(Number(res.payInfo['useMoney']) === 0) {
+    //   result.value = '支付宝支付';
+    //   columns.value = ['支付宝支付']; 
+    // }
+  }
+}
+init2();
+
+const init3 = async() => {
+  const [_, res] = await to(getBankCard());
+  if(res) {
+    list.value = res.list || []
+  }
+}
+init3()
 
 const goBackDetail = () => {
   router.go(-2);
 };
 
-const getProductBuy = async() => {
-  let type = 1;
-  if(result.value === '支付宝支付') {
-    type = 2
+const onConfirm = (value) => {
+  if(value === 'A银行卡支付') {
+    showCard.value = true;
+  } else {
+    showCard.value = false;
   }
-  const [_, res] = await to(buyGoods({
+  result.value = value;
+  showPicker.value = false;
+};
+
+const onConfirm2 = (value) => {
+  result2.value = value.number
+  bankCardId.value = value.id
+  showPicker2.value = false;
+}
+
+const getProductBuy = async() => {
+  const data = {
     id,
-    type
-  }));
+    type: 1
+  }
+  if(result.value === 'A银行卡支付') {
+    if(!bankCardId.value) {
+      Toast.fail('请选择支付银行卡');
+      return;
+    }
+    data.type = 3;
+  }
+  const [_, res] = await to(createOrder(data));
 
   if(res) {
-    if(type == 1) {
-      router.push('/pay/success');
+    console.log('%c [ res ]-111', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+    if(data.type == 1) {
+      router.push(`/goods/pay?order_id=${res.order_id}&goods_price=${res.goods_price}&type=${data.type}`);
     }
-    if(type == 2) {
-      let divForm = document.getElementsByTagName('divform')
-      if (divForm.length) {
-        document.body.removeChild(divForm[0])
-      }
-      const div: any = document.createElement('divform')
-      div.innerHTML = res.form // res.data就是sb支付宝返回给你的form
-      document.body.appendChild(div)
-      document.getElementById('alipay_submit')?.submit();
+    if(data.type == 3) {
+      router.push(`/goods/pay?order_id=${res.order_id}&goods_price=${res.goods_price}&type=${data.type}&bank_card_id=${bankCardId.value}`);
     }
+    // if(data.type == 1) {
+    //   router.push('/pay/success');
+    // }
+    // if(data.type == 3) {
+    //   console.log('%c [ res ]-77', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+    //   if(res.needKaptcha) {
+    //     show.value = true;
+    //     payeaseObj.merchantId = res.merchantId;
+    //     payeaseObj.requestId = res.requestId;
+    //     payeaseObj.paymentOrderId = res.paymentOrderId;
+    //     payeaseObj.kaptchaCode = '';
+    //   }
+    // }
+    
+    // if(type == 2) {
+    //   let divForm = document.getElementsByTagName('divform')
+    //   if (divForm.length) {
+    //     document.body.removeChild(divForm[0])
+    //   }
+    //   const div: any = document.createElement('divform')
+    //   div.innerHTML = res.form // res.data就是sb支付宝返回给你的form
+    //   document.body.appendChild(div)
+    //   document.getElementById('alipay_submit')?.submit();
+    // }
+  }
+}
+
+const onCheck = async() => {
+  if(!payeaseObj.kaptchaCode) {
+    Toast.fail('短信验证码错误');
+    return;
+  }
+  const [_, res] = await to(receiptpayment(payeaseObj));
+  if(res) {
+    router.push('/pay/success');
   }
 }
 </script>
@@ -90,6 +160,13 @@ const getProductBuy = async() => {
   <div class="image-box">
     <VantImage width="100%" height="auto" :src="data.img" />
   </div>
+
+  <VantOverlay :show="show" @click="show = false">
+    <div class="captcha-box" @click.stop>
+      <VantField v-model="payeaseObj.kaptchaCode" type="number" />
+      <VantButton type="primary" style="margin-top: 60px;" @click="onCheck">提交短信验证码</VantButton>
+    </div>
+  </VantOverlay>
 
   <div class="content-product">
     <div class="content-product-list">
@@ -121,9 +198,22 @@ const getProductBuy = async() => {
               <Picker :columns="columns" @confirm="onConfirm" @cancel="showPicker = false" />
             </Popup>
           </div>
+          <div class="content-button" v-if="showCard">
+            <div>付款银行卡（可选）</div>
+            <div @click="showPicker2 = true" style="color: #1e80ff">
+              {{result2}}
+            </div>
+            <Popup v-model:show="showPicker2" position="bottom">
+              <Picker :columns="list" :columns-field-names="{text: 'number'}" @confirm="onConfirm2" @cancel="showPicker2 = false" />
+            </Popup>
+          </div>
         </div>
       </div>
     </div>
+
+    <p class="setup">农业银行，招商银行，兴业银行不支持银行卡支付</p>
+    <p class="setup">超过3次待支付当天之内不能购买</p>
+
     <div class="settlementPay">
       <VantButton class="content-product-button" type="primary" @click="goBackDetail">返回详情</VantButton>
       <VantButton class="content-product-button" type="primary" @click="getProductBuy">立即支付</VantButton>
@@ -316,5 +406,18 @@ const getProductBuy = async() => {
       border-radius: 20px;
     }
   }
+}
+
+.captcha-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 35vh;
+}
+
+.setup {
+  padding: 15px 15px 0;
+  color: #ff0000;
 }
 </style>

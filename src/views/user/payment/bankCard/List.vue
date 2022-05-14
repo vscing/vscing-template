@@ -7,7 +7,7 @@ import {
 } from 'vant';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getBankCard } from '@/api/bank';
+import { getBankCard, defaultBankCard, deleteBankCard } from '@/api/bank';
 import { to } from '@/utils';
 
 const router = useRouter();
@@ -23,14 +23,34 @@ const init = async() => {
 }
 init()
 
+const onDefault = async(id: number) => {
+  const [_, res] = await to(defaultBankCard({
+    id
+  }));
+  if(res) {
+    Toast.success('设置成功');
+    init()
+  }
+}
+
+const onDelete = async(id: number) => {
+  const [_, res] = await to(deleteBankCard({
+    id
+  }));
+  if(res) {
+    Toast.success('解绑成功');
+    init()
+  }
+}
+
 const onAdd = () => router.push('/bankCard/add');
-const onDefault = () => Toast.success('暂未开通')
 </script>
 
 <template>
   <VantNavBar class="nav-bar" title="银行卡列表" left-arrow @click-left="onClickLeft" />
   <div class="cardTitle">
     <h1>全部</h1>
+    <p>默认银行卡为支付和提现银行卡</p>
   </div>
   <ul class="cardList">
     <li class="cardItem" v-for="item in list" :key="item.id">
@@ -40,8 +60,8 @@ const onDefault = () => Toast.success('暂未开通')
         <VantIcon name="success" size="30" v-if="item.isDefault === 1"/>
       </div>
       <div class="operate">
-        <!-- <div class="btn" @click="onDefault"> 设定默认 </div>
-        <div class="btn" @click="onDefault"> 解绑 </div> -->
+        <div class="btn" @click="onDefault(item.id)"> 设定默认 </div>
+        <div class="btn" @click="onDelete(item.id)"> 解绑 </div>
       </div>
     </li>
   </ul>
@@ -55,7 +75,16 @@ const onDefault = () => Toast.success('暂未开通')
 <style scoped lang="less">
 .cardTitle {
   padding: 15px;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  h1 {
+    font-size: 16px;
+  }
+  p {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #ff0000;
+  }
 }
 .cardItem {
   background-color: #ffffff;

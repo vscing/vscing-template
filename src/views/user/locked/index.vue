@@ -3,11 +3,12 @@ import { ref } from 'vue';
 import {
   NavBar as VantNavBar,
   Image as VantImage,
-  Icon as VantIcon
+  Empty as VantEmpty,
 } from 'vant';
 import { useRouter } from 'vue-router';
 import { getUserCategory } from '@/api/goods';
 import { to } from '@/utils';
+import { Images } from '@/assets/images';
 
 const router = useRouter();
 
@@ -34,7 +35,7 @@ const onClickLeft = () => {
 
 <template>
   <VantNavBar class="nav-bar" safe-area-inset-top fixed left-arrow @click-left="onClickLeft" title="藏品管理" />
-  <div>
+  <div v-if="Object.keys(data).length > 0">
     <ul class="product-list">
       <li class="product-item" v-for="item of data" :key="item.goods_id" @click="goList(item.goods_id)">
         <VantImage class="product-item-img"
@@ -47,6 +48,7 @@ const onClickLeft = () => {
       </li>
     </ul>
   </div>
+  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无商品`" />
 </template>
 
 <style lang="less" scoped>

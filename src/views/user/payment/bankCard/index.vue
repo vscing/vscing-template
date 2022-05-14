@@ -44,31 +44,31 @@ const init = async() => {
   if(res){
     columns.value = res.list
   }
-  const [err1, res1] = await to(checkAuth({
-    type: 2
-  }));
-  if(res1) {
-    const [err2, res2] = await to(setAuth({
-      type: 2
-    }))
-    Dialog.confirm({
-      title: '提示',
-      message:'绑定银行卡需要缴纳1元，是否确认跳转支付宝支付？',
-    })
-    .then(() => {
-      let divForm = document.getElementsByTagName('divform')
-      if (divForm.length) {
-        document.body.removeChild(divForm[0])
-      }
-      const div: any = document.createElement('divform')
-      div.innerHTML = res2.form
-      document.body.appendChild(div)
-      document.getElementById('alipay_submit')?.submit();
-    })
-    .catch(() => {
-      router.go(-1)
-    });
-  }
+  // const [err1, res1] = await to(checkAuth({
+  //   type: 2
+  // }));
+  // if(res1) {
+  //   const [err2, res2] = await to(setAuth({
+  //     type: 2
+  //   }))
+  //   Dialog.confirm({
+  //     title: '提示',
+  //     message:'绑定银行卡需要缴纳1元，是否确认跳转支付宝支付？',
+  //   })
+  //   .then(() => {
+  //     let divForm = document.getElementsByTagName('divform')
+  //     if (divForm.length) {
+  //       document.body.removeChild(divForm[0])
+  //     }
+  //     const div: any = document.createElement('divform')
+  //     div.innerHTML = res2.form
+  //     document.body.appendChild(div)
+  //     document.getElementById('alipay_submit')?.submit();
+  //   })
+  //   .catch(() => {
+  //     router.go(-1)
+  //   });
+  // }
 }
 
 init();
@@ -147,7 +147,7 @@ const onSubmit = () => {
         <VantNoticeBar
           wrapable
           :scrollable="false"
-          text="银行卡绑定请使用实名认证的银行卡号，且信息确定无误后点击提交，否则无法绑定成功。"
+          text="银行卡绑定请使用实名认证的银行卡号，且信息确定无误后点击提交，否则无法绑定成功。农业银行，招商银行，兴业银行不支持银行卡支付"
         />
         <p></p>
         <div class="modal-show-button">

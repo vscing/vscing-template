@@ -79,6 +79,15 @@ const onWithdraw = async() => {
       });
       return
   }
+  if(withdrawForm.model == 2 && payInfo.value.aUseMoney < withdrawForm.price) {
+    Toast.fail('A账户可用余额不足');
+    return;
+  }
+  if(withdrawForm.model == 1 && payInfo.value.useMoney < withdrawForm.price) {
+    Toast.fail('B账户可用余额不足');
+    return;
+  }
+  
   const [_, res] = await to(setWithdraw(withdrawForm))
   if(res) {
     Toast.success('提现申请成功');
@@ -105,16 +114,29 @@ const onWithdraw = async() => {
           </div>
           <div class="panel-top-bill" @click="onPay('/fillmount')">账单</div>
         </div>
+
         <div class="payment-panel-bottom">
           <div>
-            <p>可用金额（元）</p>
+            <p>A账户可用金额（元）</p>
+            <h1>{{ show ? `¥ ${payInfo.aUseMoney}` : ' *** ' }}</h1>
+          </div>
+          <div>
+            <p>A账户冻结金额（元）</p>
+            <h1>{{ show ? `¥ ${payInfo.aFreezeMoney}` : ' *** ' }}</h1>
+          </div>
+        </div>
+
+        <div class="payment-panel-bottom">
+          <div>
+            <p>B账户可用金额（元）</p>
             <h1>{{ show ? `¥ ${payInfo.useMoney}` : ' *** ' }}</h1>
           </div>
           <div>
-            <p>冻结金额（元）</p>
+            <p>B账户冻结金额（元）</p>
             <h1>{{ show ? `¥ ${payInfo.freezeMoney}` : ' *** ' }}</h1>
           </div>
         </div>
+
       </div>
       <!-- <div class="payment-info">
         <div class="info-list">
@@ -132,12 +154,11 @@ const onWithdraw = async() => {
   </div>
 
   <VantCellGroup class="payment-way">
-    <VantCell title="第三方支付" is-link @click="onPay('/alipay')" />
+    <!-- <VantCell title="第三方支付" is-link @click="onPay('/alipay')" /> -->
     <VantCell title="银行卡绑定" is-link @click="onPay('/bankCard')" />
   </VantCellGroup>
 
-  <p class="setup">提现金额最小为10元，小于100元有2元提现手续费</p>
-  <p class="setup">请使用与实名认证相同的支付宝账号，避免转账失效</p>
+  <p class="setup">提现金额最小为10元，有1元提现手续费</p>
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>
@@ -149,13 +170,13 @@ const onWithdraw = async() => {
       <VantForm @submit="onRecharge">
         <VantField name="stepper" label="充值金额">
           <template #input>
-            <VantStepper v-model="rechargeForm.price"  min="0.1" max="50000" />
+            <VantStepper v-model="rechargeForm.price"  min="1" max="50000" />
           </template>
         </VantField>
         <VantField name="radio" label="充值渠道">
           <template #input>
             <VantRadioGroup v-model="rechargeForm.model" direction="horizontal">
-              <VantRadio name="alipay">支付宝</VantRadio>
+              <VantRadio name="alipay">B账户</VantRadio>
             </VantRadioGroup>
           </template>
         </VantField>
@@ -182,12 +203,13 @@ const onWithdraw = async() => {
         </VantField>
         <VantField name="radio" label="提现渠道">
           <template #input>
-            <VantRadioGroup v-model="withdrawForm.model" direction="horizontal">
-              <VantRadio name="2">支付宝</VantRadio>
+            <VantRadioGroup v-model="withdrawForm.model">
+              <VantRadio name="2">A账户</VantRadio>
+              <VantRadio name="1">B账户</VantRadio>
             </VantRadioGroup>
           </template>
         </VantField>
-        <p class="setup">提现金额最小为10元，小于100元有2元提现手续费</p>
+        <p class="setup">提现金额最小为10元，有1元提现手续费</p>
         <div class="btnList">
           <VantButton class="cancel" round block @click="withdraw = false">
             取消
@@ -256,7 +278,7 @@ const onWithdraw = async() => {
         padding-top: 20px;
         border-top: 1px solid hsla(0, 0%, 100%, 0.1);
         & > div {
-          width: 33.3333%;
+          width: 50%;
           & > p {
             color: hsla(0, 0%, 100%, 0.4);
             font-size: 12px;

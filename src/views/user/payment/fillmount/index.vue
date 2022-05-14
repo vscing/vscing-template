@@ -47,32 +47,6 @@ const params = reactive({
 //       return bill_type;
 // }
 
-//支付方式
-const payment = (type) => {
-      let pay = '';
-      switch (type) {
-        case 1:
-          pay = '银行卡'
-          break;
-
-        case 2:
-          pay = '支付宝'
-          break;
-
-        case 3:
-          pay = '微信'
-          break;
-
-        case 4:
-          pay = '余额'
-          break;
-
-        default:
-          break;
-      }
-      return pay;
-}
-
 watch(active, (val: any, old: any) => {
   if(val !== old) {
     params.type = val;
@@ -91,6 +65,8 @@ const getPaymentName = (type: number) => {
     return '微信';
   } else if(type == 4) {
     return '余额';
+  }  else if(type == 5) {
+    return '三方支付';
   } else {
     return '';
   }
@@ -104,6 +80,17 @@ const getStatus = (status: number, type: number) => {
     return type == 1 ? '已付款':'已通过';
   } else if(status == 30) {
     return type == 1 ? '已取消':'已拒绝';
+  } else {
+    return '';
+  }
+}
+
+// 账户类型
+const getAccountName  = (type: number) => {
+  if(type == 1) {
+    return 'B账户';
+  } else if(type == 2) {
+    return 'A账户';
   } else {
     return '';
   }
@@ -126,7 +113,7 @@ const getStatus = (status: number, type: number) => {
               <div class="bill">
                 <div class="bill_payment">
                     <div class="bill_name">{{item.bill_name}}</div>
-                    <div class="bill_value">{{getStatus(item.status, item.bill_type)}}</div>
+                    <div class="bill_value" :style="{color:(item.status==20? '#4caf50':'#f44336')}">{{getStatus(item.status, item.bill_type)}}</div>
                 </div>
                 <div class="bill_type">
                     <div class="bill_name">支付方式</div>
@@ -143,6 +130,10 @@ const getStatus = (status: number, type: number) => {
                 <div class="bill_time">
                     <div class="bill_name">支付时间</div>
                     <div class="bill_value">{{columnToDateTime(item.created_at)}}</div>
+                </div>
+                <div class="bill_type">
+                    <div class="bill_name">账户类型</div>
+                    <div class="bill_value">{{getAccountName(item.account_type)}}</div>
                 </div>
                 <div class="bill_amount">
                     <div class="bill_name">变更后可用金额</div>
@@ -201,7 +192,7 @@ const getStatus = (status: number, type: number) => {
           font-size: 16px;
       }
       .bill_value{
-          color: #01c2c3;
+          color: #4caf50;
           font-weight: 700;
           font-size: 16px;
       }
@@ -217,7 +208,7 @@ const getStatus = (status: number, type: number) => {
         }
         .bill_value{
             font-weight: 700;
-            color: rgba(0, 0, 0, 0.4);
+            color: #01c2c3;
             font-size: 14px;
         }
   }

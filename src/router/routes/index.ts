@@ -93,6 +93,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/goods/pay',
+    name: 'GoodsPay',
+    component: () => import('@/views/goods/pay/index.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
     path: '/user',
     name: 'User',
     component: () => import('@/views/user/index.vue'),
