@@ -125,8 +125,12 @@ init();
           <span>扫一扫</span>
         </div>
         <div class="dashboard-item" @click="goTo('/prize')">
-          <VantIcon name="point-gift-o" size="20" />
+          <VantIcon name="send-gift-o" size="20" />
           <span>我的抽签</span>
+        </div>
+        <div class="dashboard-item" @click="goTo('/blind')">
+          <VantIcon name="point-gift-o" size="20" />
+          <span>盲盒列表</span>
         </div>
       </div>
 
