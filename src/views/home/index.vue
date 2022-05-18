@@ -11,6 +11,7 @@
     Button as VantButton,
     Image as VantImage,
     Empty as VantEmpty,
+    NoticeBar as VantNoticeBar,
     Toast
   } from 'vant';
   import { TabList } from '@/components/TabList';
@@ -57,6 +58,9 @@
 
   init();
 
+  const onNotice = () => {
+    router.push('/webview')
+  }
 </script>
 
 <template>
@@ -65,6 +69,15 @@
     <VantSearch v-model="value" placeholder="请输入搜索关键词" />
   </div>
   
+  <VantNoticeBar
+    color="#1989fa" 
+    background="#ecf9ff"
+    left-icon="volume-o"
+    scrollable
+    text="【食艺术】公告"
+    @click="onNotice"
+  />
+
   <VantSwipe :autoplay="3000" lazy-render indicator-color="#000">
     <VantSwipeItem v-for="item in homeData.banner" :key="item.id" @click="lucky('/compound')">
       <img class="swiper-img" :src="item.img" height="200"/>

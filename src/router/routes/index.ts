@@ -12,6 +12,14 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/webview',
+    name: 'WebView',
+    component: () => import('@/views/webview/index.vue'),
+    meta: {
+      title: '食艺术公告',
+    },
+  },
+  {
     path: '/lottery',
     name: 'Lottery',
     component: () => import('@/views/lottery/index.vue'),
@@ -259,6 +267,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     component: () => import('@/views/user/locked/sendSku.vue'),
     meta: {
       title: '藏品发布',
+    },
+  },
+  {
+    path: '/merchant',
+    name: 'Merchant',
+    component: () => import('@/views/user/locked/merchant.vue'),
+    meta: {
+      title: '入网设置',
     },
   },
   {

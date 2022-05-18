@@ -9,7 +9,7 @@ import {
 } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { reactive, ref } from 'vue';
-import { setSend, onNetwork } from '@/api/goods';
+import { setSend, onNetwork, getMerchant } from '@/api/goods';
 import { to } from '@/utils';
 
 const disabled = ref(false);
@@ -21,6 +21,23 @@ const onClickLeft = () => router.go(-3);
 
 const route = useRoute();
 const { id } = route.query || {}
+
+const init = async() => {
+  const [_, res] = await to(getMerchant());
+  if(res && !res.isMerchant) {
+    Dialog.confirm({
+      title: '提示',
+      message:'请前往入网，否则无法发布',
+    })
+    .then(async() => {
+      router.push('/merchant')
+    })
+    .catch(() => {
+      router.go(-1)
+    })
+  }
+}
+init();
 
 const onSubmit = async() => {
   if(Number(formData.price) > 100000) {

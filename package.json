@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^2.1.2",
+    "@vant/area-data": "^1.2.4",
     "@vue/runtime-core": "^3.2.31",
     "@vue/shared": "^3.2.31",
     "@vueuse/core": "^8.0.0",

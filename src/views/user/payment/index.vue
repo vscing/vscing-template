@@ -59,7 +59,7 @@ const onRecharge = async() => {
   div.style = "display: none";
   div.innerHTML = res.form
   document.body.appendChild(div);
-  document.getElementById('alipay_submit')?.submit();
+  (document.getElementById('alipay_submit') as unknown as any).submit();
 }
 
 // 提现
@@ -160,6 +160,7 @@ const onWithdraw = async() => {
   </VantCellGroup>
 
   <p class="setup">提现金额最小为10元，有1元提现手续费</p>
+  <p class="setup">工商，农业，招商，兴业正在对接暂不支持充值</p>
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>

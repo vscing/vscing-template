@@ -24,7 +24,8 @@ import { to } from '@/utils';
 const title = ref<string>('');
 const show = ref(false);
 const categoryList = ref<any>([]);
-const categoryId = ref(0)
+const categoryId = ref(0);
+const isFlavour = ref(false);
 // const timeVal = ref<number>(0);
 // const priceVal = ref<number>(0);
 // const page = ref<number>(1);
@@ -51,11 +52,13 @@ const params = reactive<{
   priceSort: number
   title: string
   categoryId: number 
+  goodsCategoryId: number
 }>({
   timeSort: 0,
   priceSort: 0,
   title: '',
-  categoryId: 0
+  categoryId: 0,
+  goodsCategoryId: 1
 });
 
 const onDetail = (id: number) => {
@@ -124,6 +127,12 @@ const onSearch = () => {
   params.title = title.value;
 }
 
+const onSwitch = () => {
+  let flavour = !isFlavour.value;
+  params.goodsCategoryId = flavour ? 2:1;
+  isFlavour.value = flavour;
+}
+
 </script>
 
 <template>
@@ -142,6 +151,7 @@ const onSearch = () => {
       <DropdownItem v-model="params.timeSort" :options="option1" />
       <DropdownItem v-model="params.priceSort" :options="option2" />
     </DropdownMenu>
+    <div @click="onSwitch" :class="{'actived': isFlavour}">调料市场</div>
     <VantIcon name="bars" class="screen-icon" @click="show = !show"/>
   </div>
   
@@ -251,10 +261,14 @@ const onSearch = () => {
   background-color: #ffffff;
   .screen-drop {
     flex: 1;
+    max-width: 180px;
     :deep(.van-dropdown-menu__bar) {
       box-shadow: none;
-      width: 200px;
+      width: 180px;
     }
+  }
+  .actived {
+    color: #01c2c3;
   }
   .screen-icon {
     font-size: 24px;

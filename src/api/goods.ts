@@ -11,6 +11,7 @@ enum Api {
   getGoodsInfo = '/goods/getInfo',
   getGoodsOrderInfo = '/goods/getOrderInfo',
   onNetwork = '/goods/onNetwork',
+  getMerchant = '/goods/getMerchant',
   setSend = '/goods/setSend',
   setNotSend = '/goods/setNotSend',
   createOrder = '/goods/createOrder',
@@ -66,6 +67,9 @@ export const getSendGoods = (params?: any) =>
 
 export const onNetwork = (data?: any) =>
   defHttp.post<any>({ url: Api.onNetwork, data }); 
+
+export const getMerchant  = (params?: any) =>
+  defHttp.get<any>({ url: Api.getMerchant, params });
 
 export const setSend = (data?: any) =>
   defHttp.post<any>({ url: Api.setSend, data }); 
