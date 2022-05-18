@@ -46,7 +46,7 @@ init();
 // 充值
 const rechargeForm = reactive<any>({
   price: 1,
-  model: 'alipay'
+  model: 'shande'
 })
 const onRecharge = async() => {
   const [_, res] = await to(setRecharge(rechargeForm))
@@ -56,8 +56,9 @@ const onRecharge = async() => {
     document.body.removeChild(divForm[0])
   }
   const div: any = document.createElement('divform')
+  div.style = "display: none";
   div.innerHTML = res.form
-  document.body.appendChild(div)
+  document.body.appendChild(div);
   document.getElementById('alipay_submit')?.submit();
 }
 
@@ -176,7 +177,7 @@ const onWithdraw = async() => {
         <VantField name="radio" label="充值渠道">
           <template #input>
             <VantRadioGroup v-model="rechargeForm.model" direction="horizontal">
-              <VantRadio name="alipay">B账户</VantRadio>
+              <VantRadio name="shande">B账户</VantRadio>
             </VantRadioGroup>
           </template>
         </VantField>

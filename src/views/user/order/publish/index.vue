@@ -49,7 +49,7 @@ onLoad();
           <h2>#{{item.goods_number}} {{ item.title }}</h2>
           <p class="product-item-price">￥{{ item.goods_price }}</p>
           <p class="product-item-desc">
-            <span>艺术家 {{ item.user_name }}</span>
+            <span>艺术家 食艺术</span>
             <span class="product-item-like">
               <VantIcon name="like-o" />
             </span>
