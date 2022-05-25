@@ -178,6 +178,7 @@ const onWithdraw = async() => {
         <VantField name="radio" label="充值渠道">
           <template #input>
             <VantRadioGroup v-model="rechargeForm.model" direction="horizontal">
+              <!-- <VantRadio name="shouxin">A账户</VantRadio> -->
               <VantRadio name="shande">B账户</VantRadio>
             </VantRadioGroup>
           </template>

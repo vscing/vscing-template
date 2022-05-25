@@ -22,22 +22,22 @@ const onClickLeft = () => router.go(-3);
 const route = useRoute();
 const { id } = route.query || {}
 
-const init = async() => {
-  const [_, res] = await to(getMerchant());
-  if(res && !res.isMerchant) {
-    Dialog.confirm({
-      title: '提示',
-      message:'请前往入网，否则无法发布',
-    })
-    .then(async() => {
-      router.push('/merchant')
-    })
-    .catch(() => {
-      router.go(-1)
-    })
-  }
-}
-init();
+// const init = async() => {
+//   const [_, res] = await to(getMerchant());
+//   if(res && !res.isMerchant) {
+//     Dialog.confirm({
+//       title: '提示',
+//       message:'请前往入网，否则无法发布',
+//     })
+//     .then(async() => {
+//       router.push('/merchant')
+//     })
+//     .catch(() => {
+//       router.go(-1)
+//     })
+//   }
+// }
+// init();
 
 const onSubmit = async() => {
   if(Number(formData.price) > 100000) {
@@ -45,30 +45,24 @@ const onSubmit = async() => {
     return 
   }
   disabled.value = true;
-  const [_, data] = await to(onNetwork());
-  if(data) {
-    Dialog.confirm({
-      title: '提示',
-      message: '手续费6%，4%版权交易费直接扣除',
-    })
-    .then(async() => {
-      const [_, res] = await to(setSend({
-        id: id,
-        goods_price: formData.price
-      }));
-      if(res) {
-        Toast.success('产品发布成功')
-        onClickLeft()
-      }
-    })
-    .catch(() => {
-      // on cancel
-    });
+  Dialog.confirm({
+    title: '提示',
+    message: '手续费6%，4%版权交易费直接扣除',
+  })
+  .then(async() => {
+    const [_, res] = await to(setSend({
+      id: id,
+      goods_price: formData.price
+    }));
+    if(res) {
+      Toast.success('产品发布成功')
+      onClickLeft()
+    }
     disabled.value = false;
-  } else {
+  })
+  .catch(() => {
     disabled.value = false;
-    Toast.fail('入网失败，联系客服')
-  }
+  });
 }
 </script>
 <template>

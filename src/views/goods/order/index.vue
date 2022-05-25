@@ -23,7 +23,7 @@ console.log('%c [ userInfo ]-16', 'font-size:13px; background:pink; color:#bf2c9
 const result = ref('B余额支付');
 const showPicker = ref(false);
 const show = ref(false);
-const columns = ref(['B余额支付', 'A银行卡支付']); // , '支付宝支付'
+const columns = ref(['B余额支付']); // , '支付宝支付' , 'A银行卡支付'
 const router = useRouter();
 const route = useRoute();
 const data = ref<any>({});

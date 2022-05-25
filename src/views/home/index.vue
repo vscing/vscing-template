@@ -11,8 +11,7 @@
     Button as VantButton,
     Image as VantImage,
     Empty as VantEmpty,
-    NoticeBar as VantNoticeBar,
-    Toast
+    NoticeBar as VantNoticeBar
   } from 'vant';
   import { TabList } from '@/components/TabList';
   import { Images } from '@/assets/images';
@@ -74,12 +73,12 @@
     background="#ecf9ff"
     left-icon="volume-o"
     scrollable
-    text="【食艺术】公告"
+    text="520活动公告"
     @click="onNotice"
   />
 
   <VantSwipe :autoplay="3000" lazy-render indicator-color="#000">
-    <VantSwipeItem v-for="item in homeData.banner" :key="item.id" @click="lucky('/compound')">
+    <VantSwipeItem v-for="item in homeData.banner" :key="item.id">
       <img class="swiper-img" :src="item.img" height="200"/>
     </VantSwipeItem>
   </VantSwipe>
