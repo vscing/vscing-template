@@ -47,7 +47,7 @@ const onSubmit = async() => {
   disabled.value = true;
   Dialog.confirm({
     title: '提示',
-    message: '手续费6%，4%版权交易费直接扣除',
+    message: '持有创世华釜客户交易手续费3%，版权费4%。正常客户交易手续费5%，版权费4%。',
   })
   .then(async() => {
     const [_, res] = await to(setSend({

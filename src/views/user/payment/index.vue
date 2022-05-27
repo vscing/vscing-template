@@ -194,8 +194,9 @@ const onWithdraw = async() => {
     <VantCell title="银行卡绑定" is-link @click="onPay('/bankCard')" />
   </VantCellGroup>
 
-  <p class="setup">提现金额最小为10元，有1元提现手续费</p>
-  <p class="setup">工商，农业，招商，兴业正在对接暂不支持充值</p>
+  <p class="setup">提现金额最小为10元，有1%+1元提现手续费</p>
+  <p class="setup">工商银行请在A账户进行充值</p>
+  <p class="setup">农业，招商，兴业正在对接暂不支持充值</p>
 
   <div class="btn-list">
     <VantButton round block color="#01c2c3" @click="recharge = true">可用金额充值</VantButton>

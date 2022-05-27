@@ -23,7 +23,7 @@ const payeaseObj = reactive({
 
 const router = useRouter();
 const route = useRoute();
-const { type=1, order_id=0, goods_price=0.00, bank_card_id=0 } = route.query || {}
+const { type=1, order_id=0, goods_price=0.00, bank_card_id=0 }: any = route.query || {}
 
 const onClickLeft = () => {
   router.go(-4);
@@ -35,7 +35,7 @@ const getProductBuy = async() => {
     bank_card_id
   }));
   if(res) {
-    if(type == 1) {
+    if(type == 1 || type == 2) {
       router.push('/pay/success');
     } else {
       if(res.needKaptcha) {

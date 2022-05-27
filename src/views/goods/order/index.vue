@@ -23,7 +23,7 @@ console.log('%c [ userInfo ]-16', 'font-size:13px; background:pink; color:#bf2c9
 const result = ref('B余额支付');
 const showPicker = ref(false);
 const show = ref(false);
-const columns = ref(['B余额支付']); // , '支付宝支付' , 'A银行卡支付'
+const columns = ref(['B余额支付', 'A余额支付']); // , '支付宝支付' , 'A银行卡支付'
 const router = useRouter();
 const route = useRoute();
 const data = ref<any>({});
@@ -105,11 +105,14 @@ const getProductBuy = async() => {
     }
     data.type = 3;
   }
+  if(result.value === 'A余额支付') {
+    data.type = 2;
+  }
   const [_, res] = await to(createOrder(data));
 
   if(res) {
     console.log('%c [ res ]-111', 'font-size:13px; background:pink; color:#bf2c9f;', res)
-    if(data.type == 1) {
+    if(data.type == 1 || data.type == 2) {
       router.push(`/goods/pay?order_id=${res.order_id}&goods_price=${res.goods_price}&type=${data.type}`);
     }
     if(data.type == 3) {
@@ -184,7 +187,13 @@ const onCheck = async() => {
             </div>
           </div>
           <div class="content-button">
-            <div>可用余额</div>
+            <div>A账户可用余额</div>
+            <div>
+              <div>￥{{ payInfo['aUseMoney'] }}</div>
+            </div>
+          </div>
+          <div class="content-button">
+            <div>B账户可用余额</div>
             <div>
               <div>￥{{ payInfo['useMoney'] }}</div>
             </div>

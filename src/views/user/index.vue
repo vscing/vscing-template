@@ -104,7 +104,7 @@ init();
           <span>条件清单</span> 
           <!--  @click="goTo('/job')" -->
         </div>
-        <div class="dashboard-item" @click="goTo('/payment')">
+        <div class="dashboard-item" @click="goTo('/paymented')">
           <VantIcon name="balance-pay" size="20" />
           <span>支付管理</span>
         </div>
@@ -120,10 +120,10 @@ init();
           <VantIcon name="manager-o" size="20" />
           <span>实名认证</span>
         </div>
-        <!-- <div class="dashboard-item" @click="() => Toast('敬请期待')">
+        <div class="dashboard-item" @click="() => Toast('敬请期待')">
           <VantIcon name="scan" size="20" />
           <span>扫一扫</span>
-        </div> -->
+        </div>
         <div class="dashboard-item" @click="goTo('/prize')">
           <VantIcon name="send-gift-o" size="20" />
           <span>我的抽签</span>
@@ -132,10 +132,10 @@ init();
           <VantIcon name="point-gift-o" size="20" />
           <span>盲盒列表</span>
         </div>
-        <div class="dashboard-item" @click="goTo('/ranking')">
+        <!-- <div class="dashboard-item" @click="goTo('/ranking')">
           <VantIcon name="label-o" size="20" />
           <span>排行榜</span>
-        </div>
+        </div> -->
       </div>
 
       <div class="dashboard2" v-show="true">

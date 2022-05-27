@@ -166,7 +166,7 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
-    path: '/payment',
+    path: '/paymented',
     name: 'Payment',
     component: () => import('@/views/user/payment/index.vue'),
     meta: {

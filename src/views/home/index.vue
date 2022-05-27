@@ -11,7 +11,8 @@
     Button as VantButton,
     Image as VantImage,
     Empty as VantEmpty,
-    NoticeBar as VantNoticeBar
+    NoticeBar as VantNoticeBar,
+    Toast
   } from 'vant';
   import { TabList } from '@/components/TabList';
   import { Images } from '@/assets/images';
@@ -25,6 +26,7 @@
     currentGoods: null,
     goodsList: [],
     config: {
+      site_notice: '食艺术公告',
       blind: 2,
       lottery: 2
     }
@@ -74,7 +76,7 @@
     background="#ecf9ff"
     left-icon="volume-o"
     scrollable
-    text="520活动公告"
+    :text="homeData.config.site_notice"
     @click="onNotice"
   />
 
@@ -87,7 +89,7 @@
   <VantGrid>
     <VantGridItem icon="fire-o" text="最新活动" @click="goto('/news/list?type=0')" />
     <VantGridItem icon="notes-o" text="合成策略" @click="goto('/news/list?type=1')" />
-    <VantGridItem icon="like-o" text="我的收藏" />
+    <VantGridItem icon="link-o" text="餐饮合作" @click="() => Toast('明日开启')"/>
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
 
@@ -127,7 +129,7 @@
           <p class="btn-list">
             <span></span>
             <VantButton color="#393742" v-if="false" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton>
-            <VantButton color="#01c2c3" @click="onDetail(homeData.currentGoods?.id)">限时抢购</VantButton>
+            <VantButton v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1" color="#01c2c3" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)">限时抽签</VantButton>
           </p>
         </div>
       </li>
