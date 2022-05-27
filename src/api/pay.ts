@@ -6,8 +6,12 @@ enum Api {
   withdraw = '/userPay/withdraw',
   setAuth = '/userPay/setAuth',
   checkAuth = '/userPay/checkAuth',
-  getPayList = '/userPay/getPayList'
+  getPayList = '/userPay/getPayList',
+  receiptpayment = '/userPay/receiptpayment'
 }
+
+export const receiptpayment = (data?: any) =>
+  defHttp.post<any>({ url: Api.receiptpayment, data });
 
 export const setRecharge = (data?: any) =>
   defHttp.post<any>({ url: Api.recharge, data });

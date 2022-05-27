@@ -33,6 +33,7 @@
   const router = useRouter();
 
   const goto = (url: string) => {
+    if(!url) return;
     router.push(url);
   }
 
@@ -78,7 +79,7 @@
   />
 
   <VantSwipe :autoplay="3000" lazy-render indicator-color="#000">
-    <VantSwipeItem v-for="item in homeData.banner" :key="item.id">
+    <VantSwipeItem v-for="item in homeData.banner" :key="item.id" @click="goto(item.url)">
       <img class="swiper-img" :src="item.img" height="200"/>
     </VantSwipeItem>
   </VantSwipe>

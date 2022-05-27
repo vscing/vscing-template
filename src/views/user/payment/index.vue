@@ -15,7 +15,7 @@ import {
   Dialog,
 } from 'vant';
 import { useRouter } from 'vue-router';
-import { getPayInfo, setRecharge, setWithdraw } from '@/api/pay';
+import { getPayInfo, setRecharge, setWithdraw, receiptpayment } from '@/api/pay';
 import { to } from '@/utils';
 import { ref, reactive } from 'vue';
 import { useUserStore } from '@/store/modules/user';
@@ -49,18 +49,53 @@ const rechargeForm = reactive<any>({
   model: 'shande'
 })
 const onRecharge = async() => {
-  const [_, res] = await to(setRecharge(rechargeForm))
   recharge.value = false
-  let divForm = document.getElementsByTagName('divform')
-  if (divForm.length) {
-    document.body.removeChild(divForm[0])
+  const [_, res] = await to(setRecharge(rechargeForm))
+  console.log('%c [ res ]-54', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+  if(rechargeForm.model === 'shande') {
+    let divForm = document.getElementsByTagName('divform')
+    if (divForm.length) {
+      document.body.removeChild(divForm[0])
+    }
+    const div: any = document.createElement('divform')
+    div.style = "display: none";
+    div.innerHTML = res.form
+    document.body.appendChild(div);
+    (document.getElementById('alipay_submit') as unknown as any).submit();
+  } else if(res.form.status == 'SUCCESS') {
+    verify.value = true;
+    payeaseObj.merchantId = res.form.merchantId;
+    payeaseObj.requestId = res.form.requestId;
+    payeaseObj.paymentOrderId = res.form.paymentOrderId;
+    payeaseObj.kaptchaCode = '';
+  } else {
+    Toast.fail(res.form.error ?  res.form.error : '支付异常');
   }
-  const div: any = document.createElement('divform')
-  div.style = "display: none";
-  div.innerHTML = res.form
-  document.body.appendChild(div);
-  (document.getElementById('alipay_submit') as unknown as any).submit();
 }
+
+// 短信确认
+const verify = ref(false);
+const payeaseObj = reactive({
+  merchantId: '',
+  requestId: '',
+  paymentOrderId: '',
+  kaptchaCode: ''
+})
+
+// 提交短信
+const onCheck = async() => {
+  if(!payeaseObj.kaptchaCode) {
+    Toast.fail('短信验证码错误');
+    return;
+  }
+  const [_, res] = await to(receiptpayment(payeaseObj));
+  if(res) {
+    Toast.success('充值成功');
+  }
+  verify.value = false;
+  init();
+}
+
 
 // 提现
 const withdrawForm = reactive<any>({
@@ -178,7 +213,7 @@ const onWithdraw = async() => {
         <VantField name="radio" label="充值渠道">
           <template #input>
             <VantRadioGroup v-model="rechargeForm.model" direction="horizontal">
-              <!-- <VantRadio name="shouxin">A账户</VantRadio> -->
+              <VantRadio name="shouxin">A账户</VantRadio>
               <VantRadio name="shande">B账户</VantRadio>
             </VantRadioGroup>
           </template>
@@ -222,6 +257,13 @@ const onWithdraw = async() => {
           </VantButton>
         </div>
       </VantForm>
+    </div>
+  </VantOverlay>
+
+  <VantOverlay :show="verify" @click="verify = false">
+    <div class="captcha-box" @click.stop>
+      <VantField v-model="payeaseObj.kaptchaCode" type="number" />
+      <VantButton type="primary" style="margin-top: 60px;" @click="onCheck">提交短信验证码</VantButton>
     </div>
   </VantOverlay>
 </template>
@@ -358,5 +400,12 @@ const onWithdraw = async() => {
       border: 0;
     }
   }
+}
+.captcha-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 35vh;
 }
 </style>

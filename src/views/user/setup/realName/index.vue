@@ -31,7 +31,7 @@ const onSubmit = async () => {
     'real_name': username.value
   }));
   if (res) {
-    Toast.success(res.message);
+    Toast.success('认证成功');
     userInfo['is_name'] = true;
     userStore.setUserInfo(userInfo);
   }

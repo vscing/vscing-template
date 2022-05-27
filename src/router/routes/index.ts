@@ -12,6 +12,14 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/ranking',
+    name: 'Ranking',
+    component: () => import('@/views/user/ranking/index.vue'),
+    meta: {
+      title: '排行榜',
+    },
+  },
+  {
     path: '/webview',
     name: 'WebView',
     component: () => import('@/views/webview/index.vue'),

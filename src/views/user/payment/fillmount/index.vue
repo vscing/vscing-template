@@ -136,7 +136,11 @@ const getAccountName  = (type: number) => {
                     <div class="bill_value">{{getAccountName(item.account_type)}}</div>
                 </div>
                 <div class="bill_amount">
-                    <div class="bill_name">变更后可用金额</div>
+                    <div class="bill_name">变更后A账户可用金额</div>
+                    <div class="bill_value">￥{{item.a_use_money}}</div>
+                </div>
+                <div class="bill_amount">
+                    <div class="bill_name">变更后B账户可用金额</div>
                     <div class="bill_value">￥{{item.use_money}}</div>
                 </div>
               </div>
