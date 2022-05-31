@@ -89,13 +89,13 @@
   <VantGrid>
     <VantGridItem icon="fire-o" text="最新活动" @click="goto('/news/list?type=0')" />
     <VantGridItem icon="notes-o" text="合成策略" @click="goto('/news/list?type=1')" />
-    <VantGridItem icon="link-o" text="餐饮合作" @click="() => Toast('明日开启')"/>
+    <VantGridItem icon="link-o" text="餐饮合作" @click="goto('/canteen')"/>
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
 
   <!-- homeData.currentGoods && homeData.currentGoods?.status == 20 &&  -->
   <div class="luckey" v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1">
-      <img src="https://public.ysxqbjz.com/nft/web/lucky.png" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
+      <img :src="Images.lucky" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)" />
   </div>
 
   <div class="luckey" v-if="homeData.config.blind == 1">

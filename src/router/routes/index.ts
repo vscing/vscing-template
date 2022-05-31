@@ -174,6 +174,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/canteen',
+    name: 'Canteen',
+    component: () => import('@/views/canteen/index.vue'),
+    meta: {
+      title: '餐饮合作',
+    },
+  },
+  {
     path: '/fillmount',
     name: 'Fillmount',
     component: () => import('@/views/user/payment/fillmount/index.vue'),

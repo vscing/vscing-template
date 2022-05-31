@@ -11,7 +11,6 @@ const router = useRouter();
 const onClickLeft = () => router.go(-1);
 
 const list = ref([]);
-const date = new Date();
 
 const init = async() => {
   const [_, res] = await to(rankingList());
@@ -23,15 +22,9 @@ const init = async() => {
 init();
 </script>
 
-
 <template>
   <VantNavBar class="nav-bar" title="排行榜" left-arrow @click-left="onClickLeft" />
   <div class="ranking">
-    <div class="ranking-items">
-      <div class="ranking-item">
-        2022/5/1 - {{ date.toLocaleDateString() }}
-      </div>
-    </div>
     <div class="ranking-headers">
       <div class="ranking-header-one">
         <span>排名</span>
@@ -49,7 +42,6 @@ init();
         </li>
       </ul>
     </div>
-    <div class="ranking-footer"> 仅展示前10名 </div>
   </div>
 </template>
 
@@ -57,48 +49,36 @@ init();
 .ranking {
   min-height: 100vh;
   margin: 0;
-  background-image: url('@/assets/images/ranking/ranking.png');
+  background-image: url('@/assets/images/ranking/ranking.jpg');
   background-repeat: no-repeat;
-  background-size: 375px 972px;
-  .ranking-items {
-    padding-top: 160px;
-    padding-left: 140px;
-    .ranking-item {
-      border: 1px solid #fff;
-      border-radius: 20px;
-      font-size: 18px;
-      color: #fff;
-      width: 220px;
-      height: 40px;
+  background-size: 100% 100%;
+  .ranking-headers{
+    padding-top: 350px;
+  }
+  .ranking-header-one {
+    color: #000;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 24px;
+    height: 60px;
+    font-size: 18px;
+    margin: 0px;
+    span {
+      width: 109px;
       display: flex;
-        align-items: center;
-        justify-content: center;
-      
+      align-items: center;
+      justify-content: center;
     }
   }
-  .ranking-headers {
-    padding-top: 90px;
-    padding-left: 25px;
-    .ranking-header-one {
-      color: #000;
-      display: flex;
-      justify-content: space-around;
-      width: 320px;
-      height: 60px;
-      font-size: 18px;
-      margin: 0px;
-      span {
-        width: 109px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
+  .ranking-header{
+    display: block;
+    height: 330px;
+    overflow-x: hidden;
+    overflow-y: scroll;
     .ranking-header-two {
       font-size: 16px;
-      width: 326px;
-      height: 56px;
-      margin: 0px;
+      margin: 0 24px;
+      height: 50px;
       display: flex;
       flex-flow: wrap nowrap;
       text-decoration: none;
@@ -106,7 +86,7 @@ init();
       p {
         list-style: none;
         width: 108px;
-        height: 56px;
+        height: 50px;
         margin: 0;
         padding: 0;
         display: flex;

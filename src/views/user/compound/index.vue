@@ -21,7 +21,14 @@ const active = ref<number>(0);
 console.log('%c [ active ]-21', 'font-size:13px; background:pink; color:#bf2c9f;', active)
 
 const goCompound = async (id: number) => {
+  disabled.value = true;
+  Toast.loading({
+    duration: 0,
+    forbidClick: true,
+    message: '加载中...',
+  });
   const [_, res] = await to(setCompound({id}));
+  Toast.clear();
   if(res) {
     Toast.success('合成成功,请前往藏品管理查看')
     init();
