@@ -56,7 +56,7 @@ onLoad();
     </div>
     <VantPagination v-model="page" :page-count="total" mode="simple" @change="onLoad" />
   </div>
-  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无往期发售`" />
+  <VantEmpty v-else class="empty" :image="Images.empty" :description="`暂无优惠卷`" />
 </template>
 
 <style lang="less" scoped>
