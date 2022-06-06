@@ -32,6 +32,11 @@ const formData = reactive({
 const disable = ref(false)
 
 const onSubmit = async() => {
+  const regex = /^1[3456789]\d{9}$/;
+  if(!regex.test(formData.phone)) {
+    Toast.fail('请输入正确手机格式')
+    return;
+  }
   disable.value = true
   const [_, res] = await to(enterRestaurant({
     ...formData

@@ -469,6 +469,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
       title: '邀请码',
     },
   },
+  {
+    path: '/coupon/list',
+    name: 'CouponList',
+    component: () => import('@/views/user/coupon/List.vue'),
+    meta: {
+      title: '优惠券列表',
+    },
+  },
+  {
+    path: '/coupon/detail',
+    name: 'CouponDetail',
+    component: () => import('@/views/user/coupon/detail.vue'),
+    meta: {
+      title: '优惠券详情',
+    },
+  },
 ]
 
 export const LoginRoute: AppRouteRecordRaw = {

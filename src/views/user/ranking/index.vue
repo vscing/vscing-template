@@ -3,14 +3,16 @@ import { ref } from 'vue';
 import { rankingList } from '@/api/market';
 import { to } from '@/utils';
 import { useRouter } from 'vue-router';
+import { Images } from '@/assets/images';
 import {
-  NavBar as VantNavBar
+  NavBar as VantNavBar,
+  Image as VantImage,
 } from 'vant';
   
 const router = useRouter();
 const onClickLeft = () => router.go(-1);
 
-const list = ref([]);
+const list = ref<any[]>([]);
 
 const init = async() => {
   const [_, res] = await to(rankingList());
@@ -25,6 +27,8 @@ init();
 <template>
   <VantNavBar class="nav-bar" title="排行榜" left-arrow @click-left="onClickLeft" />
   <div class="ranking">
+    <VantImage :src="Images.cc"/>
+    <div class="ranking-title">- 排行榜 -</div>
     <div class="ranking-headers">
       <div class="ranking-header-one">
         <span>排名</span>
@@ -42,18 +46,18 @@ init();
         </li>
       </ul>
     </div>
+    <div class="ranking-footer">仅展示前100名</div>
   </div>
 </template>
 
 <style  lang="less" scoped>
 .ranking {
   min-height: 100vh;
-  margin: 0;
-  background-image: url('@/assets/images/ranking/ranking.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-color: #0c053d;
   .ranking-headers{
-    padding-top: 350px;
+    margin: 0 20px;
+    background: #ffffff;
+    border-radius: 5px;
   }
   .ranking-header-one {
     color: #000;
@@ -77,7 +81,7 @@ init();
     overflow-y: scroll;
     .ranking-header-two {
       font-size: 16px;
-      margin: 0 24px;
+      // margin: 0 24px;
       height: 50px;
       display: flex;
       flex-flow: wrap nowrap;
@@ -132,6 +136,14 @@ init();
 .item-ranking {
   opacity: 0.5;
   font-weight:900;
+}
+.ranking-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-size: 18px;
+  color: #f5f5f5;
 }
 .ranking-footer {
   display: flex;

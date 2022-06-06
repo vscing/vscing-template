@@ -12,7 +12,9 @@ import { getOrderList, orderCancel } from '@/api/order';
 import { to } from '@/utils';
 import { columnToDateTime } from '@/utils/dateUtil';
 import { Images } from '@/assets/images';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const page = ref<number>(1);
 const total = ref<number>(0);
 const list = ref<any[]>([]);
@@ -50,6 +52,12 @@ const onCancel = async(id: number) => {
     onLoad()
   }
 }
+
+const onPayment = (item: any) => {
+  const type = item.payment_type == 6 ? 1:2;
+  router.push(`/goods/pay?order_id=${item.id}&goods_price=${item.order_price}&type=${type}`);
+}
+
 </script>
 
 <template>
@@ -93,7 +101,10 @@ const onCancel = async(id: number) => {
             <span>下单日期：</span>
             <span>{{columnToDateTime(item.created_at)}}</span>
           </p>
-          <VantButton type="primary" v-if="item.payment_status == 10" @click="onCancel(item.id)">取消</VantButton>
+          <div class="btn-list" v-if="item.payment_status == 10">
+            <VantButton type="default" @click="onCancel(item.id)">取消</VantButton>
+            <VantButton type="primary" @click="onPayment(item)">继续支付</VantButton>
+          </div>
           <p class="setup" v-if="item.payment_status == 10">如已付款请不要点击取消，否则藏品不到账</p>
         </div>
       </li>
@@ -183,5 +194,10 @@ const onCancel = async(id: number) => {
 }
 .empty {
   padding-top: 20vh;
+}
+.btn-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>

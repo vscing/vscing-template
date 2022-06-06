@@ -11,8 +11,7 @@
     Button as VantButton,
     Image as VantImage,
     Empty as VantEmpty,
-    NoticeBar as VantNoticeBar,
-    Toast
+    NoticeBar as VantNoticeBar
   } from 'vant';
   import { TabList } from '@/components/TabList';
   import { Images } from '@/assets/images';

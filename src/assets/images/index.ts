@@ -16,4 +16,5 @@ export const Images = {
   payError: new URL('payError.png', import.meta.url).href,
   paying: new URL('paying.png', import.meta.url).href,
   lucky: new URL('lucky.jpg', import.meta.url).href,
+  cc: new URL('cc.png', import.meta.url).href,
 }

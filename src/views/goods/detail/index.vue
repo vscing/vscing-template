@@ -12,6 +12,7 @@ import { to, sliceStr } from '@/utils';
 import { useUserStore } from '@/store/modules/user';
 import { ref } from 'vue';
 import { getGoodsInfo } from '@/api/goods';
+import useClipboard from 'vue-clipboard3';
 
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
@@ -44,6 +45,18 @@ const goOrder = () => {
     Toast.fail('请登录')
   }
 }
+
+const { toClipboard } = useClipboard()
+
+const copy = async (value: string) => {
+  try {
+    await toClipboard(value)
+    Toast.success('复制成功')
+  } catch (e) {
+    console.error(e)
+    Toast.fail('复制失败')
+  }
+}
 </script>
 
 <template>
@@ -73,14 +86,14 @@ const goOrder = () => {
         <span>合约地址</span>
         <p>
           <span>{{sliceStr(data.contract_address)}}</span>
-          <SvgIcon name="copy" />
+          <SvgIcon name="copy" @click="copy(data.contract_address)" />
         </p>
       </li>
       <li class="config-item">
         <span>认证标识</span>
         <p>
           <span>{{sliceStr(data.token_id)}}</span>
-          <SvgIcon name="copy" />
+          <SvgIcon name="copy" @click="copy(data.token_id)" />
         </p>
       </li>
       <li class="config-item">
