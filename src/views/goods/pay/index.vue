@@ -23,10 +23,10 @@ const payeaseObj = reactive({
 
 const router = useRouter();
 const route = useRoute();
-const { type=1, order_id=0, goods_price=0.00, bank_card_id=0 }: any = route.query || {}
+const { type=1, order_id=0, goods_price=0.00, bank_card_id=0, go=0 }: any = route.query || {}
 
 const onClickLeft = () => {
-  router.go(-4);
+  router.go(go ? -1:-4);
 };
 
 const getProductBuy = async() => {

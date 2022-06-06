@@ -55,7 +55,7 @@ const onCancel = async(id: number) => {
 
 const onPayment = (item: any) => {
   const type = item.payment_type == 6 ? 1:2;
-  router.push(`/goods/pay?order_id=${item.id}&goods_price=${item.order_price}&type=${type}`);
+  router.push(`/goods/pay?order_id=${item.id}&goods_price=${item.order_price}&type=${type}&go=1`);
 }
 
 </script>
