@@ -136,6 +136,10 @@ init();
           <VantIcon name="coupon-o" size="20" />
           <span>优惠券</span>
         </div>
+        <div class="dashboard-item" @click="() => Toast('敬请期待')">
+          <VantIcon name="hotel-o" size="20" />
+          <span>食艺街</span>
+        </div>
         <!-- <div class="dashboard-item" @click="goTo('/ranking')">
           <VantIcon name="label-o" size="20" />
           <span>排行榜</span>
