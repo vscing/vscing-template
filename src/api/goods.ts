@@ -8,6 +8,7 @@ enum Api {
   buySell = '/sell/buy',
 
   getGoodsList = '/goods/getList',
+  getGoodsListV2 = '/goods/getListV2',
   getGoodsInfo = '/goods/getInfo',
   getGoodsOrderInfo = '/goods/getOrderInfo',
   onNetwork = '/goods/onNetwork',
@@ -40,6 +41,9 @@ export const getGoodsCategory = (params?: any) =>
 
 export const getGoodsList = (params?: any) =>
   defHttp.get<any>({ url: Api.getGoodsList, params });
+
+export const getGoodsListV2 = (params?: any) =>
+  defHttp.get<any>({ url: Api.getGoodsListV2, params });
 
 export const getGoodsInfo = (params?: any) =>
   defHttp.get<any>({ url: Api.getGoodsInfo, params });

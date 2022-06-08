@@ -28,7 +28,7 @@ watch(
   (val, _) => {
     console.log('%c [ val ]-27', 'font-size:13px; background:pink; color:#bf2c9f;', val)
     page.value = 1;
-    total.value = 0;
+    is_check.value = 0;
     list.value = [];
     onLoad()
   },
@@ -43,7 +43,7 @@ const onRefresh = () => {
   console.log('%c [ 下拉刷新事件 ]-29', 'font-size:13px; background:pink; color:#bf2c9f;')
   // 清空列表数据
   list.value = [];
-  total.value = 0;
+  is_check.value = 0;
   page.value = 1;
   finished.value = false;
   // 重新加载数据
@@ -55,7 +55,7 @@ const onRefresh = () => {
 // 分页参数
 const page = ref(props.page);
 const pageSize = ref(props.pageSize);
-const total = ref(0);
+const is_check = ref(0);
 // 数据列表
 const list = ref<any[]>([]);
 // 加载状态
@@ -74,11 +74,11 @@ const onLoad = async () => {
   console.log('%c [ err, res ]-55', 'font-size:13px; background:pink; color:#bf2c9f;', err, res)
   if(res){
     list.value = list.value.concat(res.list)
-    total.value = res.total
-    if(list.value.length === total.value) {
+    is_check.value = res.is_check
+    if(!is_check.value) {
       finished.value = true;
     }
-    if(list.value.length < total.value) {
+    if(is_check.value) {
       page.value = page.value + 1;
     }
   }

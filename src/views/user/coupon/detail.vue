@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import {
+  Button as VantButton,
   NavBar as VantNavBar,
   Toast
 } from "vant";
 import { useRoute, useRouter } from "vue-router";
 import { ref } from "vue";
-import { getInfo } from '@/api/coupon';
+import { getInfo, confirmUseCoupon } from '@/api/coupon';
 import { to } from "@/utils";
 import useClipboard from 'vue-clipboard3';
 
@@ -40,6 +41,14 @@ const copy = async (value: string) => {
   }
 }
 
+const confirm = async () => {
+  const [_, res] = await to(confirmUseCoupon({id}));
+  if (res) {
+    Toast.success('操作成功')
+    init()
+  }
+}
+
 </script>
 
 <template>
@@ -53,6 +62,10 @@ const copy = async (value: string) => {
       <a :href="data.link" target="_bank">{{data.link}}</a>
       <span @click="copy(data.link)">复制</span>
     </div>
+  </div>
+
+  <div class="use" v-if="data.use_status == 1">
+    <VantButton class="btn" round @click.stop="confirm">确认使用</VantButton>
   </div>
 </template>
 
@@ -91,5 +104,12 @@ const copy = async (value: string) => {
   text-align: center;
   border-left: 1px solid #999;
   color: #00cccc;
+}
+.use {
+  text-align: center;
+  .btn {
+    background-color: #00cccc;
+    color: #ffffff;
+  }
 }
 </style>

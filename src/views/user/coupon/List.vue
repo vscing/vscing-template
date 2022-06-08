@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {
   NavBar as VantNavBar,
+  Tabs as VantTabs,
+  Tab as VantTab,
   Pagination as VantPagination,
   Empty as VantEmpty,
   Button as VantButton,
@@ -15,9 +17,10 @@ import { Images } from '@/assets/images';
 const page = ref<number>(1);
 const total = ref<number>(0);
 const list = ref<any[]>([]);
+const active = ref<number>(0);
 
 const router = useRouter();
-const onClickLeft = () => router.go(-1);
+// const onClickLeft = () => router.go(-1);
 
 const onDetail = (id: number) => {
   router.push(`/coupon/detail?id=${id}`)
@@ -25,7 +28,8 @@ const onDetail = (id: number) => {
 
 const onLoad = async () => {
   const [_, res] = await to(getList({
-    page: page.value
+    page: page.value,
+    use_status: active.value
   }))
   if (res) {
     list.value = res.list || []
@@ -37,7 +41,11 @@ onLoad();
 </script>
 
 <template>
-  <VantNavBar left-arrow fixed safe-area-inset-top class="nav-bar" title="优惠卷列表" @click-left="onClickLeft"/>
+  <VantTabs class="tabs-box" v-model:active="active" @change="onLoad">
+    <VantTab title="全部"></VantTab>
+    <VantTab title="未使用"></VantTab>
+    <VantTab title="已使用"></VantTab>
+  </VantTabs>
   <div class="list" v-if="list.length > 0">
     <div class="item" v-for="item in list" @click="onDetail(item.id)">
       <div class="item-logo">
@@ -60,6 +68,16 @@ onLoad();
 </template>
 
 <style lang="less" scoped>
+.tabs-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  :deep(.van-tabs__line) {
+    background-color: #01c2c3;
+  }
+}
 .list {
   padding-top: 55px;
   .item {
