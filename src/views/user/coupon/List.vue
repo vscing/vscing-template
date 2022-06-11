@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  NavBar as VantNavBar,
   Tabs as VantTabs,
   Tab as VantTab,
   Pagination as VantPagination,

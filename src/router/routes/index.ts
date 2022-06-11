@@ -52,6 +52,22 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/blind/agree',
+    name: 'BlindAgree',
+    component: () => import('@/views/user/blind/agree.vue'),
+    meta: {
+      title: '盲盒发布协议',
+    },
+  },
+  {
+    path: '/blind/sendSku',
+    name: 'BlindSendSku',
+    component: () => import('@/views/user/blind/sendSku.vue'),
+    meta: {
+      title: '盲盒发布',
+    },
+  },
+  {
     path: '/sell/list',
     name: 'SellList',
     component: () => import('@/views/sell/list/index.vue'),
@@ -84,11 +100,52 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/blindBox',
+    name: 'BlindBox',
+    component: () => import('@/views/blindBox/list/index.vue'),
+    meta: {
+      title: '盲盒市场',
+      keepAlive: true,
+    },
+  },
+  {
+    path: '/blindBox/detail',
+    name: 'BlindBoxDetail',
+    component: () => import('@/views/blindBox/detail/index.vue'),
+    meta: {
+      title: '盲盒详情',
+    },
+  },
+  {
+    path: '/blindBox/agree',
+    name: 'BlindBoxAgree',
+    component: () => import('@/views/blindBox/agree/index.vue'),
+    meta: {
+      title: '购买协议',
+    },
+  },
+  {
+    path: '/blindBox/order',
+    name: 'BlindBoxOrder',
+    component: () => import('@/views/blindBox/order/index.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
+    path: '/blindBox/pay',
+    name: 'BlindBoxPay',
+    component: () => import('@/views/blindBox/pay/index.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
     path: '/goods',
     name: 'Goods',
     component: () => import('@/views/goods/list/index.vue'),
     meta: {
-      title: '市场',
+      title: '藏品市场',
       keepAlive: true,
     },
   },
@@ -318,6 +375,14 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/order/blindBuy',
+    name: 'BlindBuy',
+    component: () => import('@/views/user/order/blindBuy/index.vue'),
+    meta: {
+      title: '我买到的',
+    },
+  },
+  {
     path: '/order/market',
     name: 'Market',
     component: () => import('@/views/user/order/market/index.vue'),
@@ -334,9 +399,25 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/order/blindPublish',
+    name: 'BlindPublish',
+    component: () => import('@/views/user/order/blindPublish/index.vue'),
+    meta: {
+      title: '我发布的',
+    },
+  },
+  {
     path: '/order/sale',
     name: 'Sale',
     component: () => import('@/views/user/order/sale/index.vue'),
+    meta: {
+      title: '我卖出的',
+    },
+  },
+  {
+    path: '/order/blindSale',
+    name: 'BlindSale',
+    component: () => import('@/views/user/order/blindSale/index.vue'),
     meta: {
       title: '我卖出的',
     },

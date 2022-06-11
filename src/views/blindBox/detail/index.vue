@@ -3,24 +3,21 @@ import { useRoute, useRouter } from 'vue-router';
 import {
   NavBar as VantNavBar,
   Image as VantImage,
+  Icon as VantIcon,
   Button as VantButton,
-  Overlay as VantOverlay,
-  Dialog,
   Toast
 } from 'vant';
-import { to } from '@/utils';
+import { SvgIcon } from '@/components/SvgIcon';
+import { to, sliceStr } from '@/utils';
 import { useUserStore } from '@/store/modules/user';
 import { ref } from 'vue';
-import { getBlindInfo, openBlind, setNotSend } from '@/api/blind';
+import { getBlindInfo } from '@/api/blindMarket';
+import useClipboard from 'vue-clipboard3';
 
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
-console.log('%c [ userInfo ]-18', 'font-size:13px; background:pink; color:#bf2c9f;', userInfo)
 const router = useRouter();
 const data = ref<any>({});
-const disabled = ref<boolean>(false);
-const show = ref<boolean>(false);
-const goodsInfo = ref<any>({});
 
 const onClickLeft = () => {
   router.go(-1);
@@ -38,39 +35,33 @@ const init = async () => {
 
 init();
 
-const hanleOpen = () => {
-  Dialog.confirm({
-    title: '提示',
-    message: '是否确认开启盲盒？',
-  })
-  .then(async() => {
-    disabled.value = true;
-    const [_, res] = await to(openBlind({ id }));
-    if (res) {
-      goodsInfo.value = res.data || {};
-      show.value = true;
-    }
-    disabled.value = false;
-  })
-  .catch(() => {
-  });
-}
-
-const hanleSend = async() => {
-  if(data.value.sell_status == 10) {
-    router.push('/blind/agree?id='+id)
+const goOrder = () => {
+  if (data.value.sell_status != 20) {
+    return false;
+  }
+  if (userInfo) {
+    router.push(`/blindBox/agree?id=${id}`)
   } else {
-    const [_, res] = await to(setNotSend({id}));
-    if(res) {
-      Toast.success('产品下架成功')
-      onClickLeft()
-    }
+    Toast.fail('请登录')
   }
 }
+
+const { toClipboard } = useClipboard()
+console.log('%c [ toClipboard ]-50', 'font-size:13px; background:pink; color:#bf2c9f;', toClipboard)
+
+// const copy = async (value: string) => {
+//   try {
+//     await toClipboard(value)
+//     Toast.success('复制成功')
+//   } catch (e) {
+//     console.error(e)
+//     Toast.fail('复制失败')
+//   }
+// }
 </script>
 
 <template>
-  <VantNavBar class="nav-bar" title="盲盒详情" left-arrow @click-left="onClickLeft" safe-area-inset-top />
+  <VantNavBar class="nav-bar" title="商品详情" left-arrow @click-left="onClickLeft" safe-area-inset-top />
 
   <div class="image-box">
     <VantImage width="100%" height="auto" :src="data.img" />
@@ -82,30 +73,22 @@ const hanleSend = async() => {
     </div>
     <div class="price-box">
       <span class="goods-price">￥{{data.blind_price}}</span>
-    </div>
-  </div>
-
-  <div class="btn-list">
-    <VantButton type="primary" round block color="#01c2c3" :disabled="disabled" @click="hanleSend">
-      {{data.sell_status != 10 ? '盲盒下架':'发布盲盒'}}
-    </VantButton>
-    <VantButton type="primary" round block color="#01c2c3" :disabled="disabled" @click="hanleOpen">
-      开启盲盒
-    </VantButton>
-  </div>
-
-  <VantOverlay :show="show">
-    <div class="wrapper" @click.stop>
-      <div class="goods-box">
-        <VantImage width="100%" height="auto" :src="goodsInfo.img" />
-        <p class="title">{{goodsInfo.title}}</p>
-        <p class="number">编号：#{{goodsInfo.goods_number}}</p>
-        <VantButton type="primary" round block color="#01c2c3" @click="router.go(-2)">
-          前往查看
-        </VantButton>
+      <div class="price-like-box">
+        <VantIcon name="like-o" />
       </div>
     </div>
-  </VantOverlay>
+  </div>
+
+  <!-- <div class="info-box">
+    <h2>商品描述</h2>
+    <div v-html="data.content"></div>
+  </div> -->
+
+  <div class="btn-list">
+    <VantButton type="primary" round block :color="data.sell_status != 20 ? '#999999':'#01c2c3'" :disabled="data.sell_status != 20" @click="goOrder">
+      {{data.sell_status != 20 ? '盲盒未寄售':'盲盒购买'}}
+    </VantButton>
+  </div>
 </template>
 
 <style lang="less" scoped>
@@ -231,32 +214,8 @@ const hanleSend = async() => {
   justify-content: space-between;
   background-color: #ffffff;
   box-shadow: rgba(182, 182, 182, 0.16) 0px 2px 10px 0px;
-  :deep(.van-button) {
-    width: 48%;
-  }
-}
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-.goods-box {
-  background-color: #ffffff;
-  border-radius: 5px;
-  padding: 10px;
-  max-width: 80vw;
-  .title {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .number {
-    text-align: center;
-    margin: 10px 0;
-    font-size: 16px;
-    font-weight: 700;
-  }
+  // :deep(.van-button) {
+  //   width: 48%;
+  // }
 }
 </style>
