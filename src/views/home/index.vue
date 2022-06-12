@@ -14,6 +14,7 @@
     NoticeBar as VantNoticeBar
   } from 'vant';
   import { TabList } from '@/components/TabList';
+  import { One } from '@/components/One';
   import { Images } from '@/assets/images';
   import { getHome } from '@/api/index';
   import { to } from '@/utils';
@@ -24,10 +25,12 @@
     banner: [],
     currentGoods: null,
     goodsList: [],
+    num: 0,
     config: {
       site_notice: '食艺术公告',
       blind: 2,
-      lottery: 2
+      lottery: 2,
+      unitary: 2
     }
   });
 
@@ -54,6 +57,7 @@
       homeData.currentGoods = res.currentGoods;
       homeData.goodsList = res.goodsList;
       homeData.config = res.config;
+      homeData.num = res.num;
     }
   }
 
@@ -91,6 +95,8 @@
     <VantGridItem icon="link-o" text="餐饮合作" @click="goto('/canteen')"/>
     <VantGridItem icon="service-o" text="客服帮助" @click="goto('/news/list?type=2')" />
   </VantGrid>
+
+  <One v-if="homeData.config.unitary == 1" :num="homeData.num" />
 
   <!-- homeData.currentGoods && homeData.currentGoods?.status == 20 &&  -->
   <div class="luckey" v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1">

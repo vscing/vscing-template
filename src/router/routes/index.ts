@@ -28,6 +28,38 @@ export const MainRoute: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/one',
+    name: 'One',
+    component: () => import('@/views/home/one/index.vue'),
+    meta: {
+      title: '一元盲盒限时抢购',
+    },
+  },
+  {
+    path: '/one/agree',
+    name: 'OneAgree',
+    component: () => import('@/views/home/one/agree.vue'),
+    meta: {
+      title: '购买协议',
+    },
+  },
+  {
+    path: '/one/order',
+    name: 'OneOrder',
+    component: () => import('@/views/home/one/order.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
+    path: '/one/pay',
+    name: 'OnePay',
+    component: () => import('@/views/home/one/pay.vue'),
+    meta: {
+      title: '订单详情',
+    },
+  },
+  {
     path: '/lottery',
     name: 'Lottery',
     component: () => import('@/views/lottery/index.vue'),

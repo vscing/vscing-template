@@ -10,7 +10,20 @@ enum Api {
   orderCancel = '/blindMarket/orderCancel',
   getBlindPublishList = '/blindMarket/getBlindPublishList',
   getBlindSaleList = '/blindMarket/getBlindSaleList',
+
+  getSpecialBlindInfo = '/blindMarket/getSpecialBlindInfo',
+  createSpecialBlindOrder = '/blindMarket/createSpecialBlindOrder',
+  specialBlindOrderPay = '/blindMarket/specialBlindOrderPay'
 }
+
+export const createSpecialBlindOrder = (data?: any) =>
+  defHttp.post<any>({ url: Api.createSpecialBlindOrder, data });
+
+export const specialBlindOrderPay = (data?: any) =>
+  defHttp.post<any>({ url: Api.specialBlindOrderPay, data });
+
+export const getSpecialBlindInfo = (params?: any) =>
+  defHttp.get<any>({ url: Api.getSpecialBlindInfo, params });
 
 export const getBlindList = (params?: any) =>
   defHttp.get<any>({ url: Api.getBlindList, params });
