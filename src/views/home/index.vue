@@ -134,7 +134,7 @@
           <p class="btn-list">
             <span></span>
             <VantButton color="#393742" v-if="false" @click="onDetail(homeData.currentGoods?.id)">优先抢购</VantButton>
-            <VantButton v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1" color="#01c2c3" @click="lucky(`/lottery?id=${homeData.currentGoods?.id}`)">限时抽签</VantButton>
+            <VantButton v-if="homeData.currentGoods && homeData.currentGoods?.status == 20 && homeData.config.lottery == 1" color="#01c2c3" @click.stop="lucky(`/lottery?id=${homeData.currentGoods?.id}`)">限时抽签</VantButton>
           </p>
         </div>
       </li>

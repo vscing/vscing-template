@@ -55,7 +55,11 @@ const onCancel = async(id: number) => {
 }
 
 const onPayment = (item: any) => {
-  router.push(`/blindBox/pay?order_id=${item.id}&blind_price=${item.order_price}&go=1`);
+  if(item.is_special == 1) {
+    router.push(`/one/pay?order_id=${item.id}&blind_price=${item.order_price}&go=1`);
+  } else {
+    router.push(`/blindBox/pay?order_id=${item.id}&blind_price=${item.order_price}&go=1`);
+  }
 }
 
 </script>

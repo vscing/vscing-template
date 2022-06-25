@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Goods">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import {
   DropdownMenu,
   DropdownItem,
@@ -8,7 +8,7 @@ import {
   Empty as VantEmpty,
   Icon as VantIcon,
   Dialog,
-  Toast
+  Popup as VantPopup,
 } from 'vant';
 import { TabList } from '@/components/TabList';
 import { useRouter } from 'vue-router';
@@ -17,12 +17,18 @@ import { List } from '@/components/List';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 
+
+const show = ref(false);
+const categoryId = ref(0);
+
 const params = reactive<{
   timeSort: number
   priceSort: number
+  categoryId: number
 }>({
   timeSort: 0,
-  priceSort: 0
+  priceSort: 0,
+  categoryId: 0
 });
 
 const router = useRouter();
@@ -43,6 +49,19 @@ const option2 = [
 
 const onDetail = (id: number) => {
   router.push(`/blindBox/detail?id=${id}`)
+}
+
+const onCategory = (id) => {
+  if(id == categoryId) {
+    categoryId.value = 0;
+  } else {
+    categoryId.value = id;
+  }
+}
+
+const onSearchCategory = () => {
+  params.categoryId = categoryId.value;
+  show.value = false;
 }
 
 const init = async () => {
@@ -72,7 +91,7 @@ init()
       <DropdownItem v-model="params.timeSort" :options="option1" />
       <DropdownItem v-model="params.priceSort" :options="option2" />
     </DropdownMenu>
-    <VantIcon name="bars" class="screen-icon" @click="() => Toast('敬请期待')"/>
+    <VantIcon name="bars" class="screen-icon" @click="show = !show"/>
   </div>
 
   <List
@@ -107,6 +126,34 @@ init()
       />
     </template>
   </List>
+
+  <VantPopup
+    safe-area-inset-top
+    safe-area-inset-bottom
+    v-model:show="show"
+    position="right"
+    :overlay-style="{zIndex: 99999}"
+    :style="{ width: '80vw', height: '100vh', zIndex: 100000 }" 
+    closeable
+    close-icon="close"
+  >
+    <div class="category-box">
+      <div class="category-title">
+        <VantIcon name="send-gift-o" />
+        <span>分类标签</span>
+      </div>
+      <ul class="category-list">
+        <li :class="{'category-item': true, 'active': categoryId == 1}"  @click="onCategory(1)"> 普通盲盒 </li>
+        <li :class="{'category-item': true, 'active': categoryId == 2}"  @click="onCategory(2)"> 1元盲盒 </li>
+        <li :class="{'category-item': true, 'active': categoryId == 3}"  @click="onCategory(3)"> 29.9元盲盒 </li>
+      </ul>
+    </div>
+    <div class="btnList">
+      <div class="btnCancel" @click="categoryId = 0">重置</div>
+      <div @click="onSearchCategory">确定筛选</div>
+    </div>
+  </VantPopup>
+
 
   <TabList />
 </template>
@@ -165,6 +212,8 @@ init()
   grid-template-columns: repeat(2, 48%);
   grid-column-gap: 4%;
   grid-row-gap: 10px;
+  height: calc(100vh - 150px);
+  overflow: scroll;
   .category-item {
     line-height: 40px;
     text-align: center;

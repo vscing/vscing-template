@@ -42,7 +42,7 @@ const init = () => {
     let s = 60-(new Date()).getSeconds();
     if(s < 10) {
       timeVal.s1 = 0;
-      timeVal.s2 = i;
+      timeVal.s2 = s;
     } else {
       timeVal.s1 = String(s).slice(0,1);
       timeVal.s2 = String(s).slice(1,2);
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
       <div class="limit">
-        <p class="limit-label">限量</p>
+        <p class="limit-label">剩余</p>
         <p class="limit-value">{{props.num}}份</p>
       </div>
       <VantButton
@@ -133,6 +133,7 @@ onBeforeUnmount(() => {
         left: -12px;
         z-index: 1;
         width: 100px;
+        height: auto;
       }
     }
     .one-name {

@@ -79,10 +79,10 @@ console.log('%c [ toClipboard ]-50', 'font-size:13px; background:pink; color:#bf
     </div>
   </div>
 
-  <!-- <div class="info-box">
+  <div class="info-box">
     <h2>商品描述</h2>
-    <div v-html="data.content"></div>
-  </div> -->
+    <div v-html="data.desc"></div>
+  </div>
 
   <div class="btn-list">
     <VantButton type="primary" round block :color="data.sell_status != 20 ? '#999999':'#01c2c3'" :disabled="data.sell_status != 20" @click="goOrder">

@@ -85,6 +85,11 @@ const hanleSend = async() => {
     </div>
   </div>
 
+  <div class="info-box">
+    <h2>商品描述</h2>
+    <div v-html="data.desc"></div>
+  </div>
+
   <div class="btn-list">
     <VantButton type="primary" round block color="#01c2c3" :disabled="disabled" @click="hanleSend">
       {{data.sell_status != 10 ? '盲盒下架':'发布盲盒'}}

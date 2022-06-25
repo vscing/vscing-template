@@ -49,7 +49,7 @@ const init = async () => {
     let s = 60-(new Date()).getSeconds();
     if(s < 10) {
       timeVal.s1 = 0;
-      timeVal.s2 = i;
+      timeVal.s2 = s;
     } else {
       timeVal.s1 = String(s).slice(0,1);
       timeVal.s2 = String(s).slice(1,2);
@@ -101,8 +101,8 @@ onBeforeUnmount(() => {
     <div class="mian-floo">
       <span>1元盲盒</span>
       <div class="limit">
-        <p class="limit-label">限量</p>
-        <p class="limit-value">{{data.hourSum}}份</p>
+        <p class="limit-label">剩余</p>
+        <p class="limit-value">{{data.hourCount}}份</p>
       </div>
     </div>
     <div class="jiage">
@@ -117,7 +117,20 @@ onBeforeUnmount(() => {
   </div> -->
   <div class="miaoshu">
     <h3>商品描述</h3>
-    <span>这里是商品描述说明这里是商品描述说明这里是商品描述说明这里是商品描述说明这里是商品描述说明这里是商品描述说明这里是商品描述说明这里是商品描述说明这里是商品描述说明</span>
+    <div>
+      <p>新老用户邀请3人实名注册并绑定银行卡可购买1元限定盲盒，每人限购一份。</p>
+      <p>盲盒内容：</p>
+      <p>“川·冒菜·曹操”5份</p>
+      <p>商铺碎片995份</p>
+      <p>新品盲盒空投卡500份</p>
+      <p>新品盲盒空投碎片3500份</p>
+      <p>合成品“川·宫保鸡丁·关兴”2份</p>
+      <p>合成品静图“宫保鸡丁·关兴”20个ssr级</p>
+      <p>sr级240个（鸡肉 姜维）</p>
+      <p>s级462个（葱 魏延）</p>
+      <p>r级个638（花生 许褚）</p>
+      <p>r级638个（黄瓜 关平）</p>
+    </div>
   </div>
   <div class="btn-list">
     <VantButton type="primary" round block color="#01c2c3" :color="data.status != 1 ? '#999999':'#01c2c3'" :disabled="data.status != 1" @click="goOrder">
