@@ -14,9 +14,10 @@ import {
 } from 'vant';
 import { TabList } from '@/components/TabList';
 import { useRouter } from 'vue-router';
-import { getGoodsList, getGoodsCategory } from '@/api/goods';
+import { getGoodsList, getGoodsListV2, getGoodsCategory } from '@/api/goods';
 // import { to } from '@/utils';
 import { List } from '@/components/List';
+import { ListV2 } from '@/components/ListV2';
 import { Images } from '@/assets/images';
 import { useUserStore } from '@/store/modules/user';
 import { to } from '@/utils';
@@ -155,8 +156,8 @@ const onSwitch = () => {
     <VantIcon name="bars" class="screen-icon" @click="show = !show"/>
   </div>
   
-  <List
-    :apiFunc="getGoodsList"
+  <ListV2
+    :apiFunc="getGoodsListV2"
     :params="params"
     :offset="30"
   >
@@ -189,7 +190,7 @@ const onSwitch = () => {
         :description="`尽请期待`"
       />
     </template>
-  </List>
+  </ListV2>
 
   <VantPopup
     safe-area-inset-top
