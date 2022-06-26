@@ -59,14 +59,14 @@ init()
           placeholder="请填写确认密码"
           :rules="[{ required: true, message: '请填写确认密码' }]"
         />
-        <VantField
+        <!-- <VantField
           v-model="formData.idCard"
           clearable
           name="idCard"
           label="身份证号"
           placeholder="请填写身份证号"
           :rules="[{ required: true, message: '请填写身份证号' }]"
-        />
+        /> -->
         <div class="saveData">
           <VantButton round block native-type="submit">
             {{isBol ? '修改密码':'保存密码'}}

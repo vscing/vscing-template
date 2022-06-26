@@ -1,25 +1,40 @@
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
   Image as VantImage
 } from 'vant';
 import { Images } from '@/assets/images';
+import { isWechat } from '@/utils';
 
-const onApp = () => {
-  window.open('http://d.firim.pro/4lqa')
+const isShow = ref<boolean>(false);
+
+const onApp = (type) => {
+  if(isWechat()) {
+    isShow.value = true;
+    return
+  }
+  if(type === 1){
+    window.open('itms-services:///?action=download-manifest&url=https://public.ysxqbjz.com/nft/app.plist')
+  } else {
+    window.open('https://public.ysxqbjz.com/nft/app.apk')
+  }
 }
-
 </script>
 
 <template>
+  <div class="tips" v-show="isShow" @click="isShow = false">
+    <img :src="Images.d1" class="d1" />
+    <img :src="Images.d2" class="d2" />
+  </div>
   <div class="download">
     <VantImage :src="Images.app" />
     <div class="btnList">
-      <div class="btnItem" @click="onApp()">
+      <div class="btnItem" @click="onApp(1)">
         <VantImage :src="Images.ios" class="icon" />
         <span>iphone 版本下载</span>
       </div>
-      <div class="btnItem" @click="onApp()">
+      <div class="btnItem" @click="onApp(2)">
         <VantImage :src="Images.android" class="icon" />
         <span>android 版本下载</span>
       </div>
@@ -28,6 +43,27 @@ const onApp = () => {
 </template>
 
 <style scoped lang="less">
+.tips {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000cc;
+  z-index: 1;
+  .d1 {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    width: 200px;
+  }
+  .d2 {
+    position: absolute;
+    top: 30px;
+    right: 22px;
+    width: 180px;
+  }
+}
 .download {
   font-family: PingFang SC-Bold, PingFang SC;
   background-color: #ffffff;
