@@ -21,4 +21,9 @@ export const Images = {
   yiyuan: new URL('yiyuan.jpg', import.meta.url).href,
   xsqg: new URL('xsqg.png', import.meta.url).href,
   icon: new URL('icon.png', import.meta.url).href,
+  android: new URL('android.png', import.meta.url).href,
+  ios: new URL('ios.png', import.meta.url).href,
+  app: new URL('app.jpg', import.meta.url).href,
+  you: new URL('you.png', import.meta.url).href,
+  zuo: new URL('zuo.png', import.meta.url).href,
 }

@@ -12,6 +12,22 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
+    path: '/download',
+    name: 'download',
+    component: () => import('@/views/download/index.vue'),
+    meta: {
+      title: 'App下载',
+    },
+  },
+  {
+    path: '/activity/forward',
+    name: 'forward',
+    component: () => import('@/views/activity/forward.vue'),
+    meta: {
+      title: '转发活动',
+    },
+  },
+  {
     path: '/ranking',
     name: 'Ranking',
     component: () => import('@/views/user/ranking/index.vue'),
