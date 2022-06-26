@@ -5,12 +5,8 @@ import {
 } from 'vant';
 import { Images } from '@/assets/images';
 
-const onApp = (type) => {
-  if(type === 1){
-    window.open('itms-services:///?action=download-manifest&url=https://public.ysxqbjz.com/nft/app.plist')
-  } else {
-    window.open('https://public.ysxqbjz.com/nft/app.apk')
-  }
+const onApp = () => {
+  window.open('http://d.firim.pro/4lqa')
 }
 
 </script>
@@ -19,11 +15,11 @@ const onApp = (type) => {
   <div class="download">
     <VantImage :src="Images.app" />
     <div class="btnList">
-      <div class="btnItem" @click="onApp(1)">
+      <div class="btnItem" @click="onApp()">
         <VantImage :src="Images.ios" class="icon" />
         <span>iphone 版本下载</span>
       </div>
-      <div class="btnItem" @click="onApp(2)">
+      <div class="btnItem" @click="onApp()">
         <VantImage :src="Images.android" class="icon" />
         <span>android 版本下载</span>
       </div>
