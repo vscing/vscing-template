@@ -15,6 +15,7 @@ const fileList1 = ref<any[]>([]);
 const fileList2 = ref<any[]>([]);
 const fileList3 = ref<any[]>([]);
 const phone = ref('');
+const btnDisable = ref(false);
 
 const beforeRead = (file) => {
   if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
@@ -50,6 +51,7 @@ const upload = async(file) => {
 }
 
 const submit = async() => {
+  btnDisable.value = true;
   if(!phone.value) {
     Toast('请输入手机号');
     return false;
@@ -71,7 +73,7 @@ const submit = async() => {
     Toast('请上传转发朋友圈截图');
     return false;
   }
-  const [_, res] = await to(forwardImg({
+  const [err, res] = await to(forwardImg({
     phone: phone.value,
     img1_url: fileList1.value[0]?.url,
     img2_url: fileList2.value[0]?.url,
@@ -79,9 +81,11 @@ const submit = async() => {
   }));
   if(res) {
     Toast.success('参加成功')
+    btnDisable.value = false;
     return
   }
-  Toast.fail('参加失败，请勿重复参加')
+  Toast.fail(err.message ? err.message : '参加失败')
+  btnDisable.value = false;
 }
 </script>
 
@@ -140,7 +144,7 @@ const submit = async() => {
         :max-size="15 * 1024 * 1024"
       />
     </div>
-    <VantButton class="button" @click="submit()">提交</VantButton>
+    <VantButton class="button" @click="submit()" :disabled="btnDisable">提交</VantButton>
   </div>
 </template>
 
