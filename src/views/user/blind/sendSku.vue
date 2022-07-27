@@ -30,7 +30,8 @@ const onSubmit = async() => {
   disabled.value = true;
   Dialog.confirm({
     title: '提示',
-    message: '持有创世华釜客户交易手续费3%，版权费4%。正常客户交易手续费5%，版权费4%。',
+    // message: '持有创世华釜客户交易手续费3%，版权费4%。正常客户交易手续费5%，版权费4%。',
+    message: '手续费限免活动6月29日12点-7月7日24点手续费0%，版权费4%'
   })
   .then(async() => {
     const [_, res] = await to(setSend({

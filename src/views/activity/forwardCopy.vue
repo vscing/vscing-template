@@ -61,10 +61,10 @@ const submit = async() => {
     Toast.fail('请输入正确手机格式')
     return;
   }
-  // if(fileList1.value.length === 0) {
-  //   Toast('请上传关注食艺术公众号截图');
-  //   return false;
-  // }
+  if(fileList1.value.length === 0) {
+    Toast('请上传关注食艺术公众号截图');
+    return false;
+  }
   if(fileList2.value.length === 0) {
     Toast('请上传转发社群截图');
     return false;
@@ -98,16 +98,17 @@ const submit = async() => {
         <img :src="Images.you" class="icon"/>
       </div>
       <ul class="tips">
-        <li>1.转发该文章到其他社群停留5分钟进行切图。</li>
-        <li>2.转发朋友圈进行切图。</li>
-        <li>3.填写平台注册手机号。</li>
+        <li>1.关注食艺术公众号并上传截图。</li>
+        <li>2.上传转发公众号文章至150人的数字藏品群（微信群或QQ群）至少保留3分钟，朋友圈转发公众号文章。</li>
+        <li>3.完成以上，截图填写至下方表格中。</li>
+        <li>4.填错手机号或超时，视为弃权！（需平台绑定的手机号）</li>
       </ul>
     </div>
     <div class="phone-box">
       <p>食艺术ID（绑定平台的手机号）</p>
       <VantField v-model="phone" placeholder="在此输入手机号" class="input" />
     </div>
-    <!-- <div class="upload-box">
+    <div class="upload-box">
       <p>关注食艺术公众号截图</p>
       <VantUploader 
         class="file" 
@@ -118,7 +119,7 @@ const submit = async() => {
         :max-count="1" 
         :max-size="15 * 1024 * 1024"
       />
-    </div> -->
+    </div>
     <div class="upload-box">
       <p>转发社群截图</p>
       <VantUploader 
