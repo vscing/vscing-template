@@ -12,7 +12,7 @@ export const RootRoute: AppRouteRecordRaw = {
 
 export const MainRoute: AppRouteRecordRaw[] = [
   {
-    path: '/download',
+    path: '/download1',
     name: 'download',
     component: () => import('@/views/download/index.vue'),
     meta: {
