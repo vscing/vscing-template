@@ -28,4 +28,5 @@ export const Images = {
   zuo: new URL('zuo.png', import.meta.url).href,
   d1: new URL('d1.png', import.meta.url).href,
   d2: new URL('d2.png', import.meta.url).href,
+  ranking2: new URL('./ranking/ranking2.png', import.meta.url).href,
 }
