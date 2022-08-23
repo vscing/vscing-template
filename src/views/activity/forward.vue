@@ -98,7 +98,7 @@ const submit = async() => {
         <img :src="Images.you" class="icon"/>
       </div>
       <ul class="tips">
-        <li>1.关注食艺术公众号切图。</li>
+        <li>1.关注食艺术小板报订阅号切图。</li>
         <li>1.转发该文章到其他社群停留5分钟进行切图。</li>
         <li>2.转发朋友圈进行切图。</li>
         <li>3.填写平台注册手机号。</li>
