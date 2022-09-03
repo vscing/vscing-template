@@ -61,18 +61,18 @@ const submit = async() => {
     Toast.fail('请输入正确手机格式')
     return;
   }
-  if(fileList1.value.length === 0) {
-    Toast('请上传关注食艺术公众号截图');
-    return false;
-  }
+  // if(fileList1.value.length === 0) {
+  //   Toast('请上传关注食艺术公众号截图');
+  //   return false;
+  // }
   if(fileList2.value.length === 0) {
     Toast('请上传转发社群截图');
     return false;
   }
-  if(fileList3.value.length === 0) {
-    Toast('请上传转发朋友圈截图');
-    return false;
-  }
+  // if(fileList3.value.length === 0) {
+  //   Toast('请上传转发朋友圈截图');
+  //   return false;
+  // }
   const [err, res] = await to(forwardImg({
     phone: phone.value,
     img1_url: fileList1.value[0]?.url,
@@ -98,17 +98,17 @@ const submit = async() => {
         <img :src="Images.you" class="icon"/>
       </div>
       <ul class="tips">
-        <li>1.关注食艺术小板报订阅号切图。</li>
+        <!-- <li>1.关注食艺术小板报订阅号切图。</li> -->
         <li>1.转发该文章到其他社群停留5分钟进行切图。</li>
-        <li>2.转发朋友圈进行切图。</li>
-        <li>3.填写平台注册手机号。</li>
+        <!-- <li>2.转发朋友圈进行切图。</li> -->
+        <li>2.填写平台注册手机号。</li>
       </ul>
     </div>
     <div class="phone-box">
       <p>食艺术ID（绑定平台的手机号）</p>
       <VantField v-model="phone" placeholder="在此输入手机号" class="input" />
     </div>
-    <div class="upload-box">
+    <!-- <div class="upload-box">
       <p>关注食艺术公众号截图</p>
       <VantUploader 
         class="file" 
@@ -119,7 +119,7 @@ const submit = async() => {
         :max-count="1" 
         :max-size="15 * 1024 * 1024"
       />
-    </div>
+    </div> -->
     <div class="upload-box">
       <p>转发社群截图</p>
       <VantUploader 
@@ -132,7 +132,7 @@ const submit = async() => {
         :max-size="15 * 1024 * 1024"
       />
     </div>
-    <div class="upload-box">
+    <!-- <div class="upload-box">
       <p>转发朋友圈截图</p>
       <VantUploader 
         class="file" 
@@ -143,7 +143,7 @@ const submit = async() => {
         :max-count="1" 
         :max-size="15 * 1024 * 1024"
       />
-    </div>
+    </div> -->
     <VantButton class="button" @click="submit()" :disabled="btnDisable">提交</VantButton>
   </div>
 </template>
