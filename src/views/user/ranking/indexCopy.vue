@@ -20,6 +20,10 @@ const init = async() => {
 }
 init();
 
+const onTab = (val:number) => {
+  type.value = val;
+}
+
 watch(
   () => type.value,
   (news, olds) => {
@@ -33,12 +37,30 @@ watch(
 <template>
   <!-- <VantNavBar class="nav-bar" title="排行榜" left-arrow @click-left="onClickLeft" /> -->
   <div class="ranking">
-    <VantImage :src="Images.ranking3"/>
+    <VantImage :src="Images.ranking2"/>
+    <div class="ranking-tab">
+      <span @click="onTab(1)" class="tab-item" :class="{ active: type == 1 }"
+        >持有臧品排行榜</span
+      >
+      <span @click="onTab(2)" class="tab-item" :class="{ active: type == 2 }"
+        >平台消费排行榜</span
+      >
+    </div>
     <div class="ranking-rule">
       <h2>排行榜规则</h2>
-      <p>
+      <p v-show="type == 1">
         <ul>
-          <li>拉新最少50个有效用户，且活动结束后拉新排名在前50的用户，可以获得相应名次奖励</li>
+          <li>本次持仓榜活动藏品为川·宫保鸡丁 关兴+川星球·毛血旺！</li>
+          <li>活动时间：2022年8月9日14:00-8月16日14:00</li>
+          <li>活动规则：只计算活动藏品的数量，其他藏品不计，以总持有量排名</li>
+        </ul>
+      </p>
+      <p v-show="type == 2">
+        <ul>
+          <li>活动藏品：平台寄售市场所有藏品</li>
+          <li>活动时间：2022年8月9日14:00-8月16日14:00</li>
+          <li>活动规则：在活动时间内购买平台藏品，均可获得打榜积分，比例为1:1，如发现购买藏品价格虚标所获积分，直接不予算成绩</li>
+          <li>榜单更新：每10分钟进行榜单更新</li>
         </ul>
       </p>
     </div>
@@ -61,7 +83,7 @@ watch(
           </li>
         </ul>
       </div>
-      <div class="ranking-footer">仅展示前100名</div>
+      <div class="ranking-footer">仅展示前10名</div>
     </div>
   </div>
 </template>

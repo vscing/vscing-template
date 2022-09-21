@@ -29,4 +29,5 @@ export const Images = {
   d1: new URL('d1.png', import.meta.url).href,
   d2: new URL('d2.png', import.meta.url).href,
   ranking2: new URL('./ranking/ranking2.png', import.meta.url).href,
+  ranking3: new URL('./ranking/ranking3.jpg', import.meta.url).href,
 }
